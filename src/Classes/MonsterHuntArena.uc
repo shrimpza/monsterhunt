@@ -1,19 +1,16 @@
-//--[[[[----
 // ============================================================
 // MonsterHuntArena
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
 class MonsterHuntArena expands MonsterHunt
 	config(MonsterHunt);
 
-defaultproperties
-{
+defaultproperties {
      GoalTeamScore=500.000000
      StartUpTeamMessage="Welcome to the ultimate arena battle!"
      FragLimit=500
@@ -29,5 +26,3 @@ defaultproperties
      GameName="Monster Arena"
      GameReplicationInfoClass=Class'Botpack.TournamentGameReplicationInfo'
 }
-
-//--]]]]----

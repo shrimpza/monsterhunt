@@ -1,4 +1,3 @@
-//--[[[[----
 // ============================================================
 // Origionally from OldSkool by UsAaR33.
 // Check it out at http://www.unreality.org/usaar33
@@ -12,42 +11,37 @@
 // ============================================================
 
 class OSLightWallHitEffect expands LightWallHitEffect;
-simulated function SpawnEffects()
-{
+simulated function SpawnEffects() {
   local Actor A;
   local float decision;
-  if ( Level.NetMode == NM_DedicatedServer )
+  if (Level.NetMode == NM_DedicatedServer)
   return;
   decision = FRand();
-  if (decision<0.2) 
-    PlaySound(sound'ricochet',, 1,,1200, 0.5+FRand());    
-  else if ( decision < 0.4 )
-    PlaySound(sound'Impact1',, 3.0,,800);
-  else if ( decision < 0.6 )
-    PlaySound(sound'Impact2',, 3.0,,800);
+  if (decision < 0.2) 
+    PlaySound(sound'ricochet', , 1, ,1200, 0.5 + FRand());
+  else if (decision < 0.4)
+    PlaySound(sound'Impact1', , 3.0, ,800);
+  else if (decision < 0.6)
+    PlaySound(sound'Impact2', , 3.0, ,800);
 
-  if (FRand()< 0.2) 
-  {
+  if (FRand()< 0.2) {
     A = spawn(class'Chip');
-    if ( A != None )
+    if (A != None)
       A.RemoteRole = ROLE_None;
   }
-  if ( !Level.bHighDetailMode )
+  if (!Level.bHighDetailMode)
     return;
-   If(class'MonsterHunt.UIweapons'.default.bUseDecals&& Level.NetMode != NM_DedicatedServer )
+   if (class'MonsterHunt.UIweapons'.default.bUseDecals&& Level.NetMode != NM_DedicatedServer)
 Spawn(class'Pock');
-   if ( Level.bDropDetail )
+   if (Level.bDropDetail)
     return;
-  if (FRand()< 0.2)
-  {
-    A = spawn(class'SmallSpark',,,,Rotation + RotRand());
-    if ( A != None )
+  if (FRand()< 0.2) {
+    A = spawn(class'SmallSpark', ,, ,Rotation + RotRand());
+    if (A != None)
       A.RemoteRole = ROLE_None;
   }
 }
 
-defaultproperties
-{
+defaultproperties {
 }
 
-//--]]]]----

@@ -1,12 +1,10 @@
-//--[[[[----
 // ============================================================
 // MonsterStingerProjectile
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
 // This is the larger stinger projectile used for the boss
@@ -14,10 +12,7 @@
 
 class MonsterStingerProjectile expands StingerProjectile;
 
-defaultproperties
-{
+defaultproperties {
      Damage=25.000000
      DrawScale=2.500000
 }
-
-//--]]]]----

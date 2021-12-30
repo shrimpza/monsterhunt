@@ -1,4 +1,3 @@
-//--[[[[----
 // ============================================================
 // Origionally from OldSkool by UsAaR33.
 // Check it out at http://www.unreality.org/usaar33
@@ -12,17 +11,14 @@
 // ============================================================
 
 class OSRocket expands Rocket;
-simulated function PostBeginPlay()      //decals or no decals?
-  {
+simulated function PostBeginPlay() { //decals or no decals?
     Super.PostBeginPlay();
     if (class'MonsterHunt.uiweapons'.default.busedecals)
-    ExplosionDecal=Class'Botpack.BlastMark';
+      ExplosionDecal = Class'Botpack.BlastMark';
     else
-    ExplosionDecal=None;
-    }
-
-defaultproperties
-{
+      ExplosionDecal=None;
 }
 
-//--]]]]----
+defaultproperties {
+}
+

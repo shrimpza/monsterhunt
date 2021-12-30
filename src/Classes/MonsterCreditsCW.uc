@@ -1,26 +1,22 @@
-//--[[[[----
 // ============================================================
 // MonsterCreditsCW
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
 class MonsterCreditsCW expands UTCreditsCW;
 
 #exec TEXTURE IMPORT NAME=MHCreditsBG FILE=Textures\MHCreditsBG.PCX GROUP=Rules LODSET=0
 
-function Paint(Canvas C, float X, float Y)
-{
+function Paint(Canvas C, float X, float Y) {
 	Super.Paint(C, X, Y);
 	DrawStretchedTexture(C, 0, 0, WinWidth, WinHeight, Texture'MHCreditsBG');
 }
 
-defaultproperties
-{
+defaultproperties {
      ProgrammerNames(0)="Kenneth 'Shrimp' Watson"
      MaxProgs=1
      DesignerNames(0)="Shrimp"
@@ -47,8 +43,6 @@ defaultproperties
      BizNames(0)="A ShrimpWorks production"
      BizNames(1)=" "
      BizNames(2)="Email - support@shrimpworks.za.net"
-     BizNames(3)="Web - http://shrimpworks.za.net/"
+     BizNames(3)="Web - https://shrimpworks.za.net/"
      MaxBiz=4
 }
-
-//--]]]]----

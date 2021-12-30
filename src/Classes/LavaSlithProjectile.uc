@@ -1,47 +1,33 @@
-//--[[[[----
 // ============================================================
 // LavaSlithProjectile
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
 class LavaSlithProjectile expands SlithProjectile;
 
-var rotator RandRot;
-var vector SurfaceNormal;	
-var bool bInAir;
-var float DotProduct;
-var int i;
-
-function Timer()
-{
+function Timer() {
 	local BlackSmoke gsp;
 
-	gsp = Spawn(class'BlackSmoke',,,Location+SurfaceNormal*9);
-	if (i!=-1) 
-	{
+	gsp = Spawn(class'BlackSmoke', ,, Location + SurfaceNormal * 9);
+	if (i !=-1) {
 		if (LightBrightness > 10) LightBrightness -= 10;
-		DrawScale = 0.9*DrawScale;
-		gsp.DrawScale = DrawScale*5;
+		DrawScale = 0.9 * DrawScale;
+		gsp.DrawScale = DrawScale * 5;
 		i++;
-		if (i>12) Explode(Location, vect(0,0,0));
+		if (i > 12) Explode(Location, vect(0, 0, 0));
 	}
 }
 
-function Explode(vector HitLocation, vector HitNormal)
-{
-	local FlameBall f;
-
-  	HurtRadius(damage * DrawScale, DrawScale * 200, 'burned', MomentumTransfer, HitLocation);
-	Destroy();	
+function Explode(vector HitLocation, vector HitNormal) {
+ 	HurtRadius(damage * DrawScale, DrawScale * 200, 'burned', MomentumTransfer, HitLocation);
+	Destroy();
 }
 
-defaultproperties
-{
+defaultproperties {
      Style=STY_Translucent
      MultiSkins(0)=Texture'UnrealShare.Skins.Jflameball1'
      MultiSkins(1)=Texture'UnrealShare.Skins.Jflameball1'
@@ -49,5 +35,3 @@ defaultproperties
      LightHue=21
      LightSaturation=31
 }
-
-//--]]]]----

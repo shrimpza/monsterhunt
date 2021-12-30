@@ -1,18 +1,15 @@
-//--[[[[----
 // ============================================================
 // LavaRock
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
 class LavaRock expands BigRock;
 
-defaultproperties
-{
+defaultproperties {
      MultiSkins(0)=Texture'UnrealShare.Skins.Jflameball1'
      MultiSkins(1)=Texture'UnrealShare.Skins.Jflameball1'
      MultiSkins(2)=Texture'UnrealShare.Skins.Jflameball1'
@@ -28,5 +25,3 @@ defaultproperties
      LightSaturation=21
      LightRadius=6
 }
-
-//--]]]]----

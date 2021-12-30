@@ -1,4 +1,3 @@
-//--[[[[----
 // ============================================================
 // Origionally from OldSkool by UsAaR33.
 // Check it out at http://www.unreality.org/usaar33
@@ -11,21 +10,18 @@
 
 class OLGESBioRifle expands UIweapons;
 
-var float ChargeSize,Count;
+var float ChargeSize, Count;
 var bool bBurst;
 
 // ============================================================
 // Set priority to same as the UT version - Shrimp
 
-function SetSwitchPriority(pawn Other)
-{
+function SetSwitchPriority(pawn Other) {
 	local int i;
 
-	if ( PlayerPawn(Other) != None )
-	{
-		for ( i=0; i<20; i++)
-			if ( PlayerPawn(Other).WeaponPriority[i] == 'UT_BioRifle' )
-			{
+	if (PlayerPawn(Other) != None) {
+		for (i = 0; i < 20; i++)
+			if (PlayerPawn(Other).WeaponPriority[i] == 'UT_BioRifle') {
 				AutoSwitchPriority = i;
 				return;
 			}
@@ -36,62 +32,53 @@ function SetSwitchPriority(pawn Other)
 //
 // ===========================================================
 
-function float RateSelf( out int bUseAltMode )
-{
+function float RateSelf(out int bUseAltMode) {
   local float EnemyDist;
   local bool bRetreating;
   local vector EnemyDir;
 
-  if ( AmmoType.AmmoAmount <=0 )
+  if (AmmoType.AmmoAmount <=0)
     return -2;
-  if ( Pawn(Owner).Enemy == None )
-  {
+  if (Pawn(Owner).Enemy == None) {
     bUseAltMode = 0;
     return AIRating;
   }
 
   EnemyDir = Pawn(Owner).Enemy.Location - Owner.Location;
   EnemyDist = VSize(EnemyDir);
-  if ( EnemyDist > 1400 )
-  {
+  if (EnemyDist > 1400) {
     bUseAltMode = 0;
     return 0;
   }
-  bRetreating = ( ((EnemyDir/EnemyDist) Dot Owner.Velocity) < -0.7 );
-  if ( (EnemyDist > 500) && (EnemyDir.Z > -0.4 * EnemyDist) )
-  {
+  bRetreating = (((EnemyDir / EnemyDist) Dot Owner.Velocity) < -0.7);
+  if ((EnemyDist > 500) && (EnemyDir.Z > -0.4 * EnemyDist)) {
     // only use if enemy not too far and retreating
-    if ( (EnemyDist > 800) || !bRetreating )
-    {
+    if ((EnemyDist > 800) || !bRetreating) {
       bUseAltMode = 0;
       return 0;
     }
     return AIRating;
   }
 
-  bUseAltMode = int( bRetreating && (FRand() < 0.3) );
+  bUseAltMode = int(bRetreating && (FRand() < 0.3));
 
-  if ( bRetreating || (EnemyDir.Z < -0.7 * EnemyDist) )
+  if (bRetreating || (EnemyDir.Z < -0.7 * EnemyDist))
     return (AIRating + 0.15);
   return AIRating;
 }
 
 // return delta to combat style
-function float SuggestAttackStyle()
-{
+function float SuggestAttackStyle() {
   return -0.3;
 }
 
-function float SuggestDefenseStyle()
-{
+function float SuggestDefenseStyle() {
   return -0.2;
 }
 
-function AltFire( float Value )
-{
-  bPointing=True;
-  if ( AmmoType.UseAmmo(1) ) 
-  {
+function AltFire(float Value) {
+  bPointing = True;
+  if (AmmoType.UseAmmo(1)) {
     CheckVisibility();
     GoToState('AltFiring');
     bCanClientFire = true;
@@ -99,8 +86,7 @@ function AltFire( float Value )
   }
 }
 
-simulated function bool ClientAltFire( float Value )
-{
+simulated function bool ClientAltFire(float Value) {
   local bool bResult;
 
   InstFlash = 0.0;
@@ -109,46 +95,40 @@ simulated function bool ClientAltFire( float Value )
   return bResult;
 }
 
-function Projectile ProjectileFire(class<projectile> ProjClass, float ProjSpeed, bool bWarn)
-{
-  local Vector Start, X,Y,Z;
+function Projectile ProjectileFire(class < projectile> ProjClass, float ProjSpeed, bool bWarn) {
+  local Vector Start, X, Y, Z;
 
   Owner.MakeNoise(Pawn(Owner).SoundDampening);
-  GetAxes(Pawn(owner).ViewRotation,X,Y,Z);
+  GetAxes(Pawn(owner).ViewRotation, X, Y, Z);
   Start = Owner.Location + CalcDrawOffset() + FireOffset.X * X + FireOffset.Y * Y + FireOffset.Z * Z; 
   AdjustedAim = pawn(owner).AdjustToss(ProjSpeed, Start, 0, True, (bWarn || (FRand() < 0.4)));  
-  if ( Owner.IsA('PlayerPawn') )
-    PlayerPawn(Owner).ClientInstantFlash( -0.3, vect( 278, 435, 143));
-  return Spawn(ProjClass,,, Start,AdjustedAim);
+  if (Owner.IsA('PlayerPawn'))
+    PlayerPawn(Owner).ClientInstantFlash(-0.3, vect(278, 435, 143));
+  return Spawn(ProjClass, ,, Start, AdjustedAim);
 }
 
 ///////////////////////////////////////////////////////
 //better in net mode.......
-simulated function PlayAltFiring()         //screwy
-{
-  PlayOwnedSound(Misc1Sound, SLOT_Misc, 1.3*Pawn(Owner).SoundDampening);   //loading goop
-  PlayAnim('Charging',0.24,0.05);
+simulated function PlayAltFiring() { //screwy
+  PlayOwnedSound(Misc1Sound, SLOT_Misc, 1.3 * Pawn(Owner).SoundDampening);   //loading goop
+  PlayAnim('Charging', 0.24, 0.05);
 }
 
-state AltFiring         //another attempt....
-{
-  function Tick( float DeltaTime )
-  {
+state AltFiring         { //another attempt....
+  function Tick(float DeltaTime) {
     ChargeSize += DeltaTime;
-    if( (pawn(Owner).bAltFire==0)) 
+    if ((pawn(Owner).bAltFire == 0))
       GoToState('ShootLoad');
     Count += DeltaTime;
-    if (Count > 1.0) 
-    {
+    if (Count > 1.0) {
       Count = 0.0;
-      if ( (PlayerPawn(Owner) == None) && (FRand() < 0.3) )
+      if ((PlayerPawn(Owner) == None) && (FRand() < 0.3))
         GoToState('ShootLoad');
       else if (!AmmoType.UseAmmo(1)) 
         GoToState('ShootLoad');
     }
   }
-  function Animend()     //so it goes to the right place (tourney weapon screws this up)
-  {
+  function Animend() { //so it goes to the right place (tourney weapon screws this up)
    GoToState('ShootLoad');
   }
 
@@ -157,24 +137,20 @@ Begin:
   Count = 0.0;
 }
 
-state ShootLoad
-{
-  function ForceFire()
-  {
+state ShootLoad {
+  function ForceFire() {
     bForceFire = true;
   }
 
-  function ForceAltFire()
-  {
+  function ForceAltFire() {
     bForceAltFire = true;
   }
 
-  function BeginState()
-  {
+  function BeginState() {
     Local Projectile Gel;
 
     Gel = ProjectileFire(AltProjectileClass, AltProjectileSpeed, bAltWarnTarget);
-    Gel.DrawScale = 0.5 + ChargeSize/3.5;
+    Gel.DrawScale = 0.5 + ChargeSize / 3.5;
     PlayAltBurst();
   }
 
@@ -183,99 +159,85 @@ Begin:
   Finish();
 }
 
-state ClientAltFiring
-{
-  simulated function Tick(float DeltaTime)
-  {
-    if ( bBurst )
+state ClientAltFiring {
+  simulated function Tick(float DeltaTime) {
+    if (bBurst)
       return;
-    if ( !bCanClientFire || (Pawn(Owner) == None) )
+    if (!bCanClientFire || (Pawn(Owner) == None))
       GotoState('');
-    else if ( Pawn(Owner).bAltFire == 0 )
-    {
+    else if (Pawn(Owner).bAltFire == 0) {
       PlayAltBurst();
       bBurst = true;
     }
   }
 
-  simulated function AnimEnd()
-  {
-  if ( bBurst )
-    {
+  simulated function AnimEnd() {
+  if (bBurst) {
       bBurst = false;
       Super.AnimEnd();
     }
-    else{
+    else {
       PlayAltBurst();
       bBurst = true;
       }
     }
 }
-simulated function PlayAltBurst()
-{
-  if ( Owner.IsA('PlayerPawn') )
-    PlayerPawn(Owner).ClientInstantFlash( InstFlash, InstFog);
-  PlayOwnedSound(FireSound, SLOT_Misc, 1.7*Pawn(Owner).SoundDampening,,,fMax(0.5,1.35-ChargeSize/8.0) );  //shoot goop
-  PlayAnim('Fire',0.4, 0.05);
+simulated function PlayAltBurst() {
+  if (Owner.IsA('PlayerPawn'))
+    PlayerPawn(Owner).ClientInstantFlash(InstFlash, InstFog);
+  PlayOwnedSound(FireSound, SLOT_Misc, 1.7 * Pawn(Owner).SoundDampening, ,, fMax(0.5, 1.35 - ChargeSize / 8.0));  //shoot goop
+  PlayAnim('Fire', 0.4, 0.05);
 }
 // Finish a firing sequence
-function Finish()
-{
+function Finish() {
   local bool bForce, bForceAlt;
 
   bForce = bForceFire;
   bForceAlt = bForceAltFire;
   bForceFire = false;
   bForceAltFire = false;
-  if ( bChangeWeapon )
+  if (bChangeWeapon)
     GotoState('DownWeapon');
-  else if ( PlayerPawn(Owner) == None )
-  {
+  else if (PlayerPawn(Owner) == None) {
     Pawn(Owner).bAltFire = 0;
     Super.Finish();
-  }
-  else if ( (AmmoType.AmmoAmount<=0) || (Pawn(Owner).Weapon != self) )
+  } else if ((AmmoType.AmmoAmount <= 0) || (Pawn(Owner).Weapon != self))
     GotoState('Idle');
-  else if ( (Pawn(Owner).bFire!=0) || bForce )
+  else if ((Pawn(Owner).bFire != 0) || bForce)
     Global.Fire(0);
-  //else if ( (Pawn(Owner).bAltFire!=0) || bForceAlt )
+  //else if ((Pawn(Owner).bAltFire != 0) || bForceAlt)
     //Global.AltFire(0);
   else 
     GotoState('Idle');
 }
 
-
-simulated function PlayFiring()
-{
-  Owner.PlaySound(AltFireSound, SLOT_None, 1.7*Pawn(Owner).SoundDampening);  //fast fire goop
-  PlayAnim('Fire',1.1, 0.05);
+simulated function PlayFiring() {
+  Owner.PlaySound(AltFireSound, SLOT_None, 1.7 * Pawn(Owner).SoundDampening);  //fast fire goop
+  PlayAnim('Fire', 1.1, 0.05);
 }
 ///////////////////////////////////////////////////////////
-simulated function PlayIdleAnim()
-{
+simulated function PlayIdleAnim() {
   if (VSize(Owner.Velocity) > 10)
-    PlayAnim('Walking',0.3,0.3);
-  else if (FRand() < 0.3 )
-    PlayAnim('Drip', 0.1,0.3);
+    PlayAnim('Walking', 0.3, 0.3);
+  else if (FRand() < 0.3)
+    PlayAnim('Drip', 0.1, 0.3);
   else 
     TweenAnim('Still', 1.0);
   Enable('AnimEnd');
 }
 
-simulated function DripSound()
-{
-  Owner.PlaySound(Misc2Sound, SLOT_None, 0.5*Pawn(Owner).SoundDampening);  // Drip
+simulated function DripSound() {
+  Owner.PlaySound(Misc2Sound, SLOT_None, 0.5 * Pawn(Owner).SoundDampening);  // Drip
 }
 
-defaultproperties
-{
+defaultproperties {
      WeaponDescription="Classification: Toxic Tarydium waste Rifle"
      InstFlash=-0.150000
-     InstFog=(X=139.000000,Y=218.000000,Z=72.000000)
+     InstFog=(X=139.000000, Y=218.000000, Z=72.000000)
      AmmoName=Class'UnrealI.Sludge'
      PickupAmmoCount=25
      bAltWarnTarget=True
-     FireOffset=(X=12.000000,Y=-9.000000,Z=-16.000000)
+     FireOffset=(X=12.000000, Y=-9.000000, Z=-16.000000)
      ProjectileClass=Class'MonsterHunt.OSBioGel'
      AltProjectileClass=Class'MonsterHunt.OSBigBiogel'
      AIRating=0.600000
@@ -288,12 +250,12 @@ defaultproperties
      Misc1Sound=Sound'UnrealI.BioRifle.GelLoad'
      Misc2Sound=Sound'UnrealI.BioRifle.GelDrip'
      DeathMessage="%o drank a glass of %k's dripping green load."
-     NameColor=(R=0,B=0)
+     NameColor=(R=0, B=0)
      AutoSwitchPriority=8
      InventoryGroup=8
      PickupMessage="You got the GES BioRifle"
      ItemName="GES Bio Rifle"
-     PlayerViewOffset=(X=2.000000,Y=-0.700000,Z=-1.150000)
+     PlayerViewOffset=(X=2.000000, Y=-0.700000, Z=-1.150000)
      PlayerViewMesh=LodMesh'UnrealI.BRifle'
      PickupViewMesh=LodMesh'UnrealI.BRiflePick'
      ThirdPersonMesh=LodMesh'UnrealI.BRifle3'
@@ -306,4 +268,3 @@ defaultproperties
      CollisionHeight=15.000000
 }
 
-//--]]]]----

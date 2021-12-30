@@ -1,12 +1,10 @@
-//--[[[[----
 // ============================================================
 // MonsterEvent
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
 class MonsterEvent expands Triggers;
@@ -15,14 +13,10 @@ class MonsterEvent expands Triggers;
 
 var() localized string Message;
 
-function Trigger( actor Other, pawn EventInstigator )
-{
+function Trigger(actor Other, pawn EventInstigator) {
 	BroadcastMessage(Message, true, 'MonsterCriticalEvent');
 }
 
-defaultproperties
-{
+defaultproperties {
      Texture=Texture'MonsterHunt.MHEvent'
 }
-
-//--]]]]----

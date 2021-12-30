@@ -1,4 +1,3 @@
-//--[[[[----
 // ============================================================
 // Origionally from OldSkool by UsAaR33.
 // Check it out at http://www.unreality.org/usaar33
@@ -12,17 +11,13 @@
 // ============================================================
 
 class OSDAmmo2 expands DAmmo2;
-simulated function PostBeginPlay()      //decals or no decals?
-  {
-    Super.PostBeginPlay();
-    if (class'MonsterHunt.uiweapons'.default.busedecals)
+simulated function PostBeginPlay() { //decals or no decals?
+  Super.PostBeginPlay();
+  if (class'MonsterHunt.uiweapons'.default.busedecals)
     ExplosionDecal=Class'Botpack.energyimpact';
-    else
+  else
     ExplosionDecal=None;
-    }
-
-defaultproperties
-{
 }
 
-//--]]]]----
+defaultproperties {
+}

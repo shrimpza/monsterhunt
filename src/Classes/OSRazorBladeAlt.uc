@@ -1,4 +1,3 @@
-//--[[[[----
 // ============================================================
 // Origionally from OldSkool by UsAaR33.
 // Check it out at http://www.unreality.org/usaar33
@@ -12,16 +11,14 @@
 // ============================================================
 
 class OSRazorBladeAlt expands RazorBladeAlt;
-auto state Flying
-{
-simulated function HitWall (vector HitNormal, actor Wall)
-  {
-  super.Hitwall(hitnormal,wall);
-  If (class'MonsterHunt.uiweapons'.default.bUseDecals)
-  Spawn(class'WallCrack',,,Location, rotator(HitNormal)); } }
-
-defaultproperties
-{
+auto state Flying {
+  simulated function HitWall (vector HitNormal, actor Wall) {
+    super.Hitwall(hitnormal, wall);
+    if (class'MonsterHunt.uiweapons'.default.bUseDecals)
+      Spawn(class'WallCrack', ,, Location, rotator(HitNormal));
+  }
 }
 
-//--]]]]----
+defaultproperties {
+}
+

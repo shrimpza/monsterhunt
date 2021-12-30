@@ -1,12 +1,10 @@
-//--[[[[----
 // ============================================================
 // MonsterBotConfig
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
 class MonsterBotConfig expands UTBotConfigClient
@@ -14,49 +12,37 @@ class MonsterBotConfig expands UTBotConfigClient
 
 #exec TEXTURE IMPORT NAME=MHBotsBG FILE=Textures\MHBotsBG.PCX GROUP=Rules LODSET=0
 
-function Created()
-{
+function Created() {
 	Super.Created();
 	BalanceTeamsCheck.HideWindow();	
-
 }
 
-function Paint(Canvas C, float X, float Y)
-{
+function Paint(Canvas C, float X, float Y) {
 	Super.Paint(C, X, Y);
 	DrawStretchedTexture(C, 0, 0, WinWidth, WinHeight, Texture'MHBotsBG');
 }
 
-function NumBotsChanged()
-{
-	if (int(NumBotsEdit.GetValue()) > 32)
-		NumBotsEdit.SetValue("32");
+function NumBotsChanged() {
+	if (int(NumBotsEdit.GetValue()) > 32) NumBotsEdit.SetValue("32");
 
-	if(BotmatchParent.bNetworkGame)
-		class<MonsterHunt>(BotmatchParent.GameClass).default.MinPlayers = int(NumBotsEdit.GetValue());
-	else
-		class<MonsterHunt>(BotmatchParent.GameClass).default.InitialBots = int(NumBotsEdit.GetValue());
+	if (BotmatchParent.bNetworkGame) class<MonsterHunt>(BotmatchParent.GameClass).default.MinPlayers = int(NumBotsEdit.GetValue());
+	else class<MonsterHunt>(BotmatchParent.GameClass).default.InitialBots = int(NumBotsEdit.GetValue());
 	BotmatchParent.GameClass.static.StaticSaveConfig();
 }
 
-function LoadCurrentValues()
-{
+function LoadCurrentValues() {
 	Super.LoadCurrentValues();
-	if(BotmatchParent.bNetworkGame)
-		NumBotsEdit.SetValue(string(class'MonsterHunt'.Default.MinPlayers));
-	else
-		NumBotsEdit.SetValue(string(class'MonsterHunt'.Default.InitialBots));
+	if (BotmatchParent.bNetworkGame) NumBotsEdit.SetValue(string(class'MonsterHunt'.Default.MinPlayers));
+	else NumBotsEdit.SetValue(string(class'MonsterHunt'.Default.InitialBots));
 }
 
-function BaseChanged()
-{
+function BaseChanged() {
 	Super.BaseChanged();
 	class<MonsterHunt>(BotmatchParent.GameClass).Default.MonsterSkill = BaseCombo.GetSelectedIndex();
 	class<MonsterHunt>(BotmatchParent.GameClass).static.StaticSaveConfig();
 }
 
-defaultproperties
-{
+defaultproperties {
      MinPlayersText="Min. Total Hunters"
      BaseText="AI Hunter Skill:"
      SkillTaunts(0)="They might know how to kill a Fly."
@@ -67,5 +53,3 @@ defaultproperties
      SkillTaunts(6)="Those poor monsters are already dead."
      SkillTaunts(7)="Rest in peace, monsters..."
 }
-
-//--]]]]----
