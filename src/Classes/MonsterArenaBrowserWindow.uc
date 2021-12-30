@@ -1,10 +1,6 @@
-//--[[[[----
-class MonsterArenaBrowserWindow expands UTBrowserServerListWindow;
+class MonsterArenaBrowserWindow extends UTBrowserServerListWindow;
 
-defaultproperties
-{
-     ServerListTitle="Monster Arena"
-     ListFactories(0)="MonsterHunt.UBrowserModFactArena,GameType=MonsterHuntArena,bCompatibleServersOnly=True,MasterServerAddress=master0.gamespy.com,MasterServerTCPPort=28900,Region=0,GameName=ut"
+defaultproperties {
+	ServerListTitle="Monster Arena"
+	ListFactories(0)="{{package}}.UBrowserModFactArena, GameType=MonsterHuntArena, bCompatibleServersOnly=True, MasterServerAddress=master0.gamespy.com, MasterServerTCPPort=28900, Region=0, GameName=ut"
 }
-
-//--]]]]----

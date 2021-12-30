@@ -1,4 +1,3 @@
-//--[[[[----
 // ============================================================
 // Origionally from OldSkool by UsAaR33.
 // Check it out at http://www.unreality.org/usaar33
@@ -9,19 +8,15 @@
 // OSSeekingRocket
 // ============================================================
 
-class OSSeekingRocket expands SeekingRocket;
-simulated function PostBeginPlay()
-  {
-    Super.PostBeginPlay();
-    if (class'MonsterHunt.uiweapons'.default.busedecals)
-    ExplosionDecal=Class'Botpack.BlastMark';
-    else
-    ExplosionDecal=None;
-    }
+class OSSeekingRocket extends SeekingRocket;
 
-
-defaultproperties
-{
+simulated function PostBeginPlay() {
+	Super.PostBeginPlay();
+	if (class'{{package}}.uiweapons'.default.busedecals)
+		ExplosionDecal=Class'Botpack.BlastMark';
+	else
+		ExplosionDecal=None;
 }
 
-//--]]]]----
+defaultproperties {
+}

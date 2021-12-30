@@ -1,0 +1,87 @@
+Monster Hunt - Source code release license
+
+  Revision 1
+  02 February 2006
+
+  http://shrimpworks.za.net/
+  shrimp@shrimpworks.za.net
+
+-----------------------------------------------------------
+
+CONTENTS
+ 1. Intorduction
+ 2. What you may do
+ 3. What you may not do
+ 4. An extra note
+
+-----------------------------------------------------------
+
+1. Introduction
+------------------------
+This file serves to outline in very simple terms what you
+may and may not do with the Monster Hunt (an
+Unreal Tournament modification developed by myself, 
+Kenneth Watson - "Shrimp") source code.
+
+Why release the source at all? Well, at this point, I have
+no intention of further developing the mod. Since there are
+still a number of people interested in both playing and
+creating modifications for it, I feel releasing the code
+would simply be the right course of action, otherwise it'll
+just sit around, going to waste, modders will become
+frustrated trying to figure out how everything works, and
+players will get bored with plain old MH :).
+
+
+
+2. What you may do
+------------------------
+The following are a few things you MAY do with this source:
+ o You may redistribute, by any means, the original .zip
+   package containing the source code, as long as you leave
+   this license intact, and leave the source unmodified.
+ o You may use the source as a reference for building your
+   own mods or mutators which will be used with MH.
+ o You may create new Monster Hunt modifications based off
+   this source, however, you must name it in the following
+   fashion: "Monster Hunt: <ModName> Edition", where
+   <ModName> would be whatever you like. You must also give
+   due credit to the original creators, as outlined in the
+   credits file packaged with the released version of MH.
+   Reasoning expanded on in the "May not" section below.
+ o You may redistribute the source of any modification
+   you create based off this source, as long as you include
+   this original source package in your source release,
+   complete with this license.
+
+
+3. What you may not do
+-----------------------------------------------------------
+The following are a few things you MAY NOT do with this
+source:
+ o You may NOT remove or alter the comment headers found
+   within the UnrealScript source. Obviously you may add
+   your own to any scripts you create.
+ o You may NOT use any of this source in modifications or
+   mutators not related to Monster Hunt.
+ o You may NOT create modifications based off this source
+   and release those modifications as something other than
+   the "Monster Hunt: <ModName> Edition" naming mentioned
+   above. This is to meant prevent you from simply
+   modifying a few things and releasing it as your own mod.
+ o You may NOT ever claim you created any of the code or
+   content within this package, unless you are already
+   mentioned in the comment headers found within the
+   UnrealScript source.
+ o You may not attempt to port this source to any other 
+   game or engine.
+
+
+
+4. An extra note
+-----------------------------------------------------------
+Just thought I should mention that Monster Hunt was my
+first ever adventure with UnrealScript, I had not created
+even so much as a simple mutator before jumping into this,
+so if some things are a bit messy, or inefficient, or
+whatever the case may be, I apologise in advance.

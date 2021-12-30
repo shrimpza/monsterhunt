@@ -1,0 +1,103 @@
+[Public]
+{{#mutators}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=Engine.Mutator,Description="{{{name}}} v{{{version}}},{{{description}}}")
+{{/mutators}}
+
+{{#gametypes}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=Botpack.TournamentGameInfo)
+Preferences=(Caption="{{{name}}} v{{{version}}}",Parent="Game Types",Class={{{package}}}.{{{class}}},Immediate=True)
+{{/gametypes}}
+
+{{#maplists}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass={{{package}}}.{{{metaclass}}},Description="{{{description}}} v{{{version}}}")
+{{/maplists}}
+
+{{#browsers}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=UTBrowser.UTBrowserServerListWindow)
+{{/browsers}}
+
+{{#menus}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=UMenu.UMenuModMenuItem,Description="{{{name}}} v{{{version}}},{{{description}}}")
+{{/menus}}
+
+
+[MonsterHunt]
+TimeOutMessage="Time up, hunt failed!"
+NoHuntersMessage="Hunting party eliminated!"
+StartUpTeamMessage="Welcome to the hunt!"
+StartUpMessage="Work with your teammates to hunt down the monsters!"
+StartMessage="The hunt has begun!"
+GameEndedMessage="Hunt Successful!"
+SingleWaitingMessage="Press Fire to begin the hunt."
+ExplodeMessage=" was blown up"
+BurnedMessage=" was incinerated"
+CorrodedMessage=" was slimed"
+HackedMessage=" was hacked"
+LeftMessage=" left the hunt."
+EnteredMessage=" has joined the hunt!"
+GameName="Monster Hunt"
+
+[MonsterBoard]
+Restart="You have been killed.  Hit [Fire] to continue the hunt!"
+Continue="Hit [Fire] to begin the next hunt!"
+Ended="The hunt has ended."
+PlayerString="Hunter"
+FragsString="Score"
+DeathsString="Lives"
+
+[MonsterHUD]
+TimeRemainingLabel="Time Remaining"
+LivesRemainLabel="Lives"
+EscapedMonstersLabel="Escaped Monsters"
+HuntersRemainLabel="Hunters"
+MonstersRemainLabel="Monsters"
+
+[MonsterHuntDefence]
+MonstersEscapedMessage="Too many monsters escaped!"
+StartUpMessage="Work with your teammates to defend your base against the monsters!"
+StartMessage="The defence has begun!"
+GameEndedMessage="Defence Successful!"
+SingleWaitingMessage="Press Fire to begin defending."
+GameName="Monster Defence"
+
+[MonsterHuntArena]
+StartUpTeamMessage="Welcome to the ultimate arena battle!"
+StartUpMessage="Work with your teammates to overcome the monsters!"
+StartMessage="The battle has begun!"
+GameEndedMessage="Arena Cleared!"
+SingleWaitingMessage="Press Fire to enter the arena."
+LeftMessage=" left the arena."
+EnteredMessage=" has entered the arena!"
+GameName="Monster Arena"
+
+[MonsterHuntRules]
+TourneyText="Force team colours"
+TourneyHelp="if enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
+FragText="Lives"
+FragHelp="Set the number of lives each hunter starts with for each round. Set it to 0 for no limit."
+
+[MonsterBotConfig]
+MinPlayersText="Min. Total Hunters"
+BaseText="AI Hunter Skill:"
+SkillTaunts[0]="They might know how to kill a Fly."
+SkillTaunts[2]="Look out monsters!"
+SkillTaunts[3]="Monsters are in for a good beating."
+SkillTaunts[4]="I wouldn't like to be in the monsters shoes..."
+SkillTaunts[5]="It's a pity the monsters can't respawn."
+SkillTaunts[6]="Those poor monsters are already dead."
+SkillTaunts[7]="Rest in peace, monsters..."
+
+[MonsterCreditsCW]
+ArtText="Testers"
+MusicSoundText="Special Thanks"
+BizText="Contact info"
+
+[MonsterCreditsWindow]
+WindowTitle="Monster Hunt Credits (v{{version}})"
+
+[HuntMessage]
+NewTeamMessage="has joined the hunt!"
+
+[MonsterMenuItem]
+MenuCaption="&Monster Hunt Credits"
+MenuHelp="All the people behind Monster Hunt!"

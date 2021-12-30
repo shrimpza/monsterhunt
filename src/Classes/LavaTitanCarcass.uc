@@ -1,19 +1,14 @@
-//--[[[[----
 // ============================================================
 // LavaTitanCarcass
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class LavaTitanCarcass expands TitanCarcass;
+class LavaTitanCarcass extends TitanCarcass;
 
-defaultproperties
-{
-     MultiSkins(0)=Texture'MonsterHunt.Skins.LavaTitan'
+defaultproperties {
+	MultiSkins(0)=Texture'{{package}}.Skins.LavaTitan'
 }
-
-//--]]]]----

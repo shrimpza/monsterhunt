@@ -1,25 +1,19 @@
-//--[[[[----
 // ============================================================
 // MonsterMenuItem
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterMenuItem expands UMenuModMenuItem;
+class MonsterMenuItem extends UMenuModMenuItem;
 
-function Execute()
-{
-	MenuItem.Owner.Root.CreateWindow(class'MonsterHunt.MonsterCreditsWindow', 100, 100, 100, 100);
+function Execute() {
+	MenuItem.Owner.Root.CreateWindow(class'{{package}}.MonsterCreditsWindow', 100, 100, 100, 100);
 }
 
-defaultproperties
-{
-     MenuCaption="&Monster Hunt Credits"
-     MenuHelp="All the people behind Monster Hunt!"
+defaultproperties {
+	MenuCaption="&Monster Hunt Credits"
+	MenuHelp="All the people behind Monster Hunt!"
 }
-
-//--]]]]----

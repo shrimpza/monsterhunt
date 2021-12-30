@@ -1,27 +1,22 @@
-//--[[[[----
 // ============================================================
 // MonsterComment
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
 // Place comments in maps for easy reference when editing
 
-class MonsterComment expands Actor;
+class MonsterComment extends Actor;
 
 #exec Texture Import File=textures\MHComment.pcx Name=MHComment Mips=Off Flags=2
 
 var() string Comment1, Comment2, Comment3, Comment4, Comment5;
 
-defaultproperties
-{
-     bHidden=True
-     Texture=Texture'MonsterHunt.MHComment'
-     DrawScale=2.000000
+defaultproperties {
+	bHidden=True
+	Texture=Texture'{{package}}.MHComment'
+	DrawScale=2.000000
 }
-
-//--]]]]----

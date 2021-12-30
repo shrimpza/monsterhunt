@@ -1,4 +1,3 @@
-//--[[[[----
 class UBrowserModFactArena extends UBrowserGSpyFact;
 
 // Config
@@ -9,8 +8,7 @@ var() config bool		bCompatibleServersOnly;
 var() config int		MinPlayers;
 var() config int		MaxPing;
 
-function Query(optional bool bBySuperset, optional bool bInitial)
-{
+function Query(optional bool bBySuperset, optional bool bInitial) {
 	Super(UBrowserServerListFactory).Query(bBySuperset, bInitial);
 
 	Link = GetPlayerOwner().GetEntryLevel().Spawn(class'UBrowserModLink');
@@ -24,9 +22,6 @@ function Query(optional bool bBySuperset, optional bool bInitial)
 	Link.Start();
 }
 
-defaultproperties
-{
-     GameType="MonsterHuntArena"
+defaultproperties {
+	GameType="MonsterHuntArena"
 }
-
-//--]]]]----

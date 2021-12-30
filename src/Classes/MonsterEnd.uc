@@ -1,94 +1,68 @@
-//--[[[[----
 // ============================================================
 // MonsterEnd
 // ============================================================
 //       		=== Monster Hunt ===
 //
-//       Copyright 2000 - 2002 Kenneth "Shrimp" Watson
-//          For more info, http://shrimpworks.za.net
-//    Not to be modified without permission from the author
+//       Copyright 2000 - 2022 Kenneth "Shrimp" Watson
+//          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterEnd expands Trigger;
+class MonsterEnd extends Trigger;
 
 #exec Texture Import File=textures\MHEnd.pcx Name=MHEnd Mips=Off Flags=2
 
-function Touch( actor Other )
-{
+function Touch(actor Other) {
 	local actor A;
-	if( IsRelevant( Other ) )
-	{
-		if ( ReTriggerDelay > 0 )
-		{
-			if ( Level.TimeSeconds - TriggerTime < ReTriggerDelay )
-				return;
+	if (IsRelevant(Other)) {
+		if (ReTriggerDelay > 0) {
+			if (Level.TimeSeconds - TriggerTime < ReTriggerDelay) return;
 			TriggerTime = Level.TimeSeconds;
 		}
 
-		if( Event != '' )
-			foreach AllActors( class 'Actor', A, Event )
-				A.Trigger( Other, Other.Instigator );
+		if (Event != '') {
+			foreach AllActors(class 'Actor', A, Event) A.Trigger(Other, Other.Instigator);
+		}
 
-		if ( Other.IsA('Pawn') && (Pawn(Other).SpecialGoal == self) )
-			Pawn(Other).SpecialGoal = None;
+		if (Other.IsA('Pawn') && (Pawn(Other).SpecialGoal == self)) Pawn(Other).SpecialGoal = None;
 				
-		if( Message != "" )
-			Other.Instigator.ClientMessage( Message );
+		if (Message != "") Other.Instigator.ClientMessage(Message);
+
+		if (bTriggerOnceOnly) SetCollision(False);
+		else if (RepeatTriggerTime > 0) SetTimer(RepeatTriggerTime, false);
 
 		TriggerObjective();
-
-		if( bTriggerOnceOnly )
-			SetCollision(False);
-		else if ( RepeatTriggerTime > 0 )
-			SetTimer(RepeatTriggerTime, false);
 	}
 }
 
-function TakeDamage( int Damage, Pawn instigatedBy, Vector hitlocation, 
-						Vector momentum, name damageType)
-{
+function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation,
+						Vector momentum, name damageType) {
 	local actor A;
 
-	if ( bInitiallyActive && (TriggerType == TT_Shoot) && (Damage >= DamageThreshold) && (instigatedBy != None) )
-	{
-		if ( ReTriggerDelay > 0 )
-		{
-			if ( Level.TimeSeconds - TriggerTime < ReTriggerDelay )
-				return;
+	if (bInitiallyActive && (TriggerType == TT_Shoot) && (Damage >= DamageThreshold) && (instigatedBy != None)) {
+		if (ReTriggerDelay > 0) {
+			if (Level.TimeSeconds - TriggerTime < ReTriggerDelay) return;
 			TriggerTime = Level.TimeSeconds;
 		}
 
-		if( Event != '' )
-			foreach AllActors( class 'Actor', A, Event )
-				A.Trigger( instigatedBy, instigatedBy );
+		if (Event != '') foreach AllActors(class 'Actor', A, Event) A.Trigger(instigatedBy, instigatedBy);
 
-		if( Message != "" )
-			instigatedBy.Instigator.ClientMessage( Message );
+		if (Message != "") instigatedBy.Instigator.ClientMessage(Message);
 
-		if( bTriggerOnceOnly )
-			SetCollision(False);
+		if (bTriggerOnceOnly) SetCollision(False);
 
 		TriggerObjective();
-	
 	}
 }
 
-function TriggerObjective()
-{
+function TriggerObjective() {
 	local	MonsterHunt	MH;
-	local	pawn		P;
 
 	MH = MonsterHunt(Level.Game);
-	if (MH != None)
-		MH.EndGame("Hunt Successfull!");
-	else
-		log("MonsterEnd - TriggerObjective - MH == None");
+	if (MH != None) MH.EndGame("Hunt Successful!");
+	else warn("MonsterEnd - TriggerObjective - MH == None");
 }
 
-defaultproperties
-{
-     bInitiallyActive=True
-     Texture=Texture'MonsterHunt.MHEnd'
+defaultproperties {
+	bInitiallyActive=True
+	Texture=Texture'{{package}}.MHEnd'
 }
-
-//--]]]]----

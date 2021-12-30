@@ -1,0 +1,371 @@
+UT ModBuild Build System Template
+=================================
+Gustavo Ramos Rehermann <rehermann6046@gmail.com>
+:homepage: https://github.com/Gustavo6046/ut-mod-build
+:toc:
+:numbered:
+
+This is a generic build system for classic Unreal Tournament projects,
+particularly mods. It lets you, the modder, spend more of your time writing
+your mod, and less of it dealing with building or releasing it.
+
+May or may not be applicable to other UE1 games, such as Deus Ex, though
+it has never been tested.
+
+== Pitch
+
+It is useful for the following reasons:
+
+  * Easily *building* your mod on Linux with a single command!
+
+  * *Versioning* your mod (see <<versioning>>)!
+
+  * Having GitHub _build_ your mod *for you*, and even _release_ it *for you*
+    if you tag it accordingly, via the _Github Actions CI workflow_
+    (which includes _checking possible compiler errors in your commits_);
+    yay for convenience!
+
+There are, however, drawbacks, which can be more insightful than the
+strengths, ~and an exercise in humility~. See:
+
+  * *Does not work natively on Windows*: you will need WSL, or Cygwin or Msys2,
+    or even a virtual machine or container. This build system is built around
+    Linux, in and out. _This does not mean you cannot use it from Windows_, but
+    if you want to build locally, it will require an environment that is
+    compatible with what you see in Linux, including Bash. Or, just use CI!
+
+  * To me it feels a bit *hacky*... though, sure, that is subjective.
+
+  * The CI workflow *only works in GitHub*. I'm not shilling Microsoft, it's
+    just the one CI I know how to work with. Adding support for Travis CI, and
+    maybe even GitLab CI, may be considered for the near future, but I wouldn't
+    hold my breathe if I were you.
+
+  * It's *difficult to update* ModBuild once you start using it. This should
+    be rectified in the near future. How? Good question.
+
+It was still a hell of a lot of fun to work on, and I sincerely really hope
+that, if you consider using this for your mod, it helps you have more fun
+working on it too :)
+
+For more info on the auto-releases, see the <<auto-releases>> section.
+
+
+== Contents
+
+This template includes:
+
+* A very tiny example mod, with a single mutator _"My Mutator"_ that spawns
+  non-aggressive Pupae whenever players take damage;
+
+* A `template.int` https://mustache.github.io[Mustache] template for the mod's
+  `.int` file demonstrating how to use Mustache, alongside a simple
+  `template-options.yml` to parametrize it, in this case demonstrating adding
+  mutators to said `.int`;
+
+* A `Makefile` that is capable of automatically setting up a v469b build
+  environment pretty much from scratch (if you have an Internet connection);
+
+* A `buildconfig.sh` for easily changing around values used in both the build
+  process and the CI script, letting you adapt the build system to your mod very
+  quickly;
+
+* A *CI workflow* that lets GitHub _check_ (for compile errors), _build_, and even
+  _release_ the mod for you, with a `latest-changes.md` file you can edit to show
+  up in the release.
+
+
+== Building
+
+See this section for building from source.
+
+If you instead intend to use this template on your project, see <<applying>>
+below!
+
+NOTE: This requires Linux or a Linux-like environment.
+
+
+=== Prerequisites
+
+If you want to build from source, make sure you have the build dependencies
+beforehand. You most likely already have `curl`, `zip`, `tar`, `gzip`, `bash`
+and `bz2`.
+
+Optionally, you may install a Go package named `mustache`, however if it's not
+found on your `$PATH` already, a pre-compiled binary will be downloaded on
+first build.
+
+For manually setting it up, you can grab it by
+https://golang.org/doc/install[installing Go], and then running:
+
+[source,console]
+----
+$ go get github.com/cbroglie/mustache/..
+----
+
+=== Build
+
+Simply run `make`. The provided Makefile should automatically take care
+of downloads, setting up a bare UT tree, and building your mod in it, all for
+you!
+
+The folder containing the bare UT tree, as well as the output subdr with builds
+of the mod, can be specified with the `BUILD_DIR` environment variable. It
+defaults to `./build`.
+
+You can then use `DESTDIR=/path/to/my/UnrealTournament make install` to install
+the mod.
+
+
+[[applying,How to Apply]]
+== How to Apply
+
+Using this template depends on whether you're adapting for an existing mod or
+making a new one.
+
+=== Existing Mod
+
+The mod should have a single `Classes` folder, within which the UnrealScript (`.uc`)
+files lie. This may require renaming an existing classes folder, such as `Sources`,
+prior to starting.
+
+ 1. To begin, checkout this template anywhere. Try to be disambiguative and
+    descriptive; for instance, `MyMod-modbuild`.
+
+ 2. Copy the mod's entire source tree (including `Sources`, and any .int files)
+    into this template.
+
+ 3. If applicable, copy the mod's existing `.int` file into `template.int`,
+    replacing any instances of package names in the latter with
+    `{{{package}}}-{{{build}}}`, just as with the example `template.int`'s
+    mutator list.
+
+ 4. Edit `PACKAGE_NAME` at the top of the `Makefile` accordingly. You'll only
+    have to do this once.
+
+ 5. Edit `template-options.yml` accordingly, if you use any custom options.
+    This template's example uses a `mutators` list, but you don't have to.
+    Most options will come from `buildconfig.sh`, see the next step;
+
+ 6. Edit the block of variables in `buildconfig.sh` to reflect your mod. This
+    should be intuitive and simple enough, but the <<build-config>> section
+    gives some explanation for completeness's sake.
+
+Keep in mind that other 
+
+
+=== New Mod
+
+If you're creating a new mod, you can simply fork this template, edit `buildconfig.sh` to
+reflect your new mod, and `template.int` to change your mod's .int file. Also edit `PACKAGE_NAME`
+at the top of the `Makefile` accordingly.
+
+Templates can take values from both `buildconfig.sh` and `template-options.yml` files, though
+the value `{{package}}` will automatically include the build number suffix
+(e.g. `MyMod-20214201`).
+
+Other folders supported by the build system include `Models`, `Textures` and `Sounds`. They're
+simply copied when building, unlike `Classes`, whose contents are formatted.
+
+For more info on template values, see <<template-values>>
+
+
+== Documentation
+
+Miscellaneous tidbits of documentation for completeness's sake.
+
+[[auto-release,Auto-Releases]]
+=== Auto-Releases
+
+For your convenience, UT ModBuild includes a CI workflow file; more precisely,
+a GitHub Actions CI workflow file, which GitHub should pick up on automatically
+whenever you push a commit to your project on a GitHub repository.
+
+NOTE: If you just created your repository and you see no CI workflow runs, nor
+an icon next to the commit name showing its CI status (yellow for pending, green
+for a pass, red for a CI failure), check the _Actions_ tab in the homepage of your
+repository.
+
+To make it clear, _every commit to the master branch will trigger a CI run._
+This is useful for checking whether it runs, and will generate a build accordingly.
+
+However, only releases that are *tagged for release* will actually be released by the
+CI, and only if they build successfully, of course.
+
+To tag a commit for release, you must Git tag it with a name with the format
+`releases/v$VERSION`, where `$VERSION` is a version string. For instance,
+`releases/v1.0.0`. This should be picked up by the CI workflow when you push
+it to GitHub.
+
+NOTE: Automatic releases will always be set as drafts. To actually publish them,
+press _Edit_, then near the bottom _Publish release_.
+
+
+[[build-config,Build Configuration]]
+=== Build Configuration
+
+Here are the options for `buildconfig.sh`:
+
+name::
+    Self-explanatory, the human-friendly name of your mod.
+
+package::
+    Self-explanatory, the name of your package internally.
+
+version::
+    Self-explanatory, the human-friendly version string of your mod.
++
+I personally recommend sticking to
+https://semver.org/[Semantic Versioning], as does MushMatch, to be able
+to actually properly express the size of an update by its version
+number.
++
+See <<versioning>> for more info and guidelines on, well, versioning.
+
+build::
+    A build number, more internal than the version number.
++
+A good build number format, which is used in Mush Match and also the
+default one here, is *YYYYWWBB*, where
++
+--
+* _YYYY_ is the year,
+
+* _WW_ is the https://en.wikipedia.org/wiki/ISO_week_date[ISO] week 
+number (e.g. Wed., October 20, 2021 will have a WW of _42_, but
+Sun., October 17, 2021 will have a WW of _41_, since ISO weeks
+start on Mondays);
+
+* _BB_ is a suffix to discern from previous builds in the same week.
+--
++
+This format is very similar, for example, to what is used in
+Minecraft's snapshot versioning format.
++
+You don't have to do it this way. Do it however you want if you'd rather!
+See <<versioning>> for more info and guidelines on it.
+
+debug::
+    Whether this is the full release, or a pre-release. See <<versioning>>
+    on why you'd want this and how to do that.
++
+Mush Match uses this in its Mustache-templated UnrealScript to
+https://github.com/Gustavo6046/MushMatch/blob/05e3d504273ce09167a44748d801d0702b7df1eb/Classes/MushMatch.uc#L982[display the build number]
+within the gametype's very name only in debug builds:
++
+[source,ini]
+GameName="Mush Match {{{version}}}{{{namesuffix}}}"
+
+
+[[versioning,Versioning]]
+=== Versioning
+
+This is more of a general guideline or rule of thumb. UT ModBuild is useful
+to help you version each package without having to edit source code files
+manually. You only need to edit the version and build numbers in one place,
+`buildconfig.sh`. See <<#build-config>> on more info how to do that.
+
+The general *procedure*, is that you edit the build number (*and*
+`latest-changes.md`) with each individual change (even if said change spans
+multiple commits), and the version number in a separate commit _after_ each
+full release.
+
+You also set `debug` to 1 after the release, then set it back to 0 on the
+commit of the release. The reason is two-fold:
+
+  * If a pre-release (debug=1) build is loaded into UT, this will set the
+    `namesuffix` template value, which you can use, e.g., to allow players
+    to see the build number next to the name, indicating that it is a
+    pre-release and that it's more of a testing version than anything.
+    +
+    See [[#template-values]] for more on those template values.
+
+  * Even if you use a release tag here, the CI workflow will automatically
+    set the new release to be a 'pre-release', and to be displayed as such,
+    if `debug` is set.
+    +
+    See [[#auto-release]] for more on auto-releases.
+
+Of course, the only real purpose of the build number is to discern from other
+builds, to avoid the classic and frustrating Package Mismatch errors you can
+get if multiple versions of a mod are floating around with the same filename.
+
+
+[[template-values,Template Values]]
+=== Template Values
+
+UT ModBuild uses the Mustache template engine to process not only `template.int`,
+but also _every single UnrealScript file you use_. This can be very powerful,
+as it allows you to change a lot of things about your mod, depending on the
+versioning and the options you pick.
+
+Options for templating are taken from both `template-options.yml` and
+`buildconfig.sh`. Only a handful of relevant variables are used from
+`buildconfig.sh`, and a few additional special variables are constructed from
+those.
+
+Here are the notable options:
+
+  * `package` is *automatically suffixed with the build number*. So instead of
+    `MyMod`, you can expect `MyMod-20214201`.
+
+  * A special `namesuffix` variable is created. If `debug` is set to 0, it's
+    empty. Otherwise, it is set to a single space, followed by the build number
+    in parentheses, like ` (20214201)`.
++
+This is useful to e.g. add in front of mutator names in the INT template,
+and gametype names in UnrealScript. The former is exemplified in this
+example `tempate.int`; the latter can be seen in any prerelease Mush Match
+build.
+
+The list of values that can be used from buildconfig.sh are `name`, `version`,
+`package` (but see above), `version` and `debug`. Most don't go through any
+processing and are simply copied verbatim.
+
+
+== Background
+
+This build system was originally created to make
+https://github.com/Gustavo6046/MushMatch[MushMatch] easier to build from
+a checkout, as well as to enable checking, building and releasing via CI.
+
+I realized that it could be truly helpful for a lot of people, plus it
+could be made a bit easier to port to other existing mods, so I decided
+to split this into its own template.
+
+Hopefully this achieves in that goal.
+
+
+== Licensing
+
+Files in the top level that pertian to the UT ModBuild build system are
+licensed under the ISC. For those, see the [LICENSE.md] file.
+
+=== Legal Copyright Disclaimer
+
+The build system does, indeed, download a bare copy of Unreal Tournament (1999), which is
+meant to have only the minimum assets required to run as a server. Due to its free availability
+online compared to other instances where said files occur (such as retail), it is presumed that
+no copyright infringement or other law infraction is inflicted by this.
+
+Additionally, this project does not host this downloaded file; it is provided by UT-Files.com.
+Therefore, the authors, maintainers, and users of this project consider themselves waived of
+any liability or responsibility with regards to that.
+
+In case any actual legal infraction is proved to be, consider forwarding legal proceedings and
+inquiries to UT-Files.com, the hosts of the file in question. In any case, it would be polite
+to notify the author of the project, at the e-mail address mailto:rehermnan6046@gmail.com[rehermann6046@gmail.com],
+so as to be made aware of this nuance and rectify the project to no longer be affected by it.
+
+In case legal contention is had specifically and explicitly with this projecti tself, please
+send any legal inquiries or takedown requests toward the e-mail address
+mailto:rehermnan6046@gmail.com[rehermann6046@gmail.com]. Response and/or action may be expected
+in up to seven days, after the which a DMCA takedown notice is more than polite, although there
+is little against otherwise other than objection.
+
+In case a DMCA takedown notice is received, it would be preferable for the repository to be
+made private so that project files can be downloaded and backed up, at least temporarily.
+
+The main author of the project, Gustavo Ramos Rehermann as of writing (October 2021), is not
+situated in the United States of America, nor under American jurisdiction. Please refer to the
+Brazilian justice system for appropriate research and proceedings.
