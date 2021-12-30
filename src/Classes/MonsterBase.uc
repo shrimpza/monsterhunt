@@ -56,7 +56,7 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant) {
 	}
 
 	Inv = Inventory(Other);
- 	if (Inv == None) {
+	if (Inv == None) {
 		bSuperRelevant = 0;
 		if (Other.IsA('TorchFlame')) Other.NetUpdateFrequency = 0.5;
 		return true;
@@ -81,7 +81,7 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant) {
 		}
 	
 		if (Other.IsA('Razorjack')) {
-			ReplaceWith(Other, "{{package}}.OLRajorjack");
+			ReplaceWith(Other, "{{package}}.OLRazorjack");
 			return false;
 		}
 
@@ -140,7 +140,7 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant) {
 }
 
 function Mutate(string MutateString, PlayerPawn Sender) {
-	if (MutateString ~= "version") Sender.ClientMessage("Monster Hunt 600", 'CriticalEvent', True);
+	if (MutateString ~= "version") Sender.ClientMessage("Monster Hunt {{version}}", 'CriticalEvent', True);
 
 	if (NextMutator != None) NextMutator.Mutate(MutateString, Sender);
 }

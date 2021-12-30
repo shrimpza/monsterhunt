@@ -10,5 +10,5 @@
 class LavaSlithCarcass expands SlithCarcass;
 
 defaultproperties {
-     MultiSkins(0)=Texture'{{package}}.Skins.LavaSlith'
+	MultiSkins(0)=Texture'{{package}}.Skins.LavaSlith'
 }

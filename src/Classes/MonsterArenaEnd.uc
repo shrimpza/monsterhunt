@@ -20,9 +20,9 @@ function TriggerObjective() {
 }
 
 defaultproperties {
-     bInitiallyActive=False
-     InitialState=OtherTriggerTurnsOn
-     Texture=Texture'{{package}}.MAEnd'
-     CollisionRadius=15000.000000
-     CollisionHeight=15000.000000
+	bInitiallyActive=False
+	InitialState=OtherTriggerTurnsOn
+	Texture=Texture'{{package}}.MAEnd'
+	CollisionRadius=15000.000000
+	CollisionHeight=15000.000000
 }

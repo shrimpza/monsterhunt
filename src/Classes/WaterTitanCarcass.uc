@@ -10,5 +10,5 @@
 class WaterTitanCarcass expands TitanCarcass;
 
 defaultproperties {
-     Style=STY_Translucent
+	Style=STY_Translucent
 }

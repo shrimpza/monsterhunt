@@ -66,11 +66,11 @@ function Touch(actor Other) {
 }
 
 defaultproperties {
-     Position=1
-     bEnabled=True
-     bStatic=False
-     Texture=Texture'{{package}}.MHMarker'
-     CollisionRadius=30.000000
-     CollisionHeight=30.000000
-     bCollideActors=True
+	Position=1
+	bEnabled=True
+	bStatic=False
+	Texture=Texture'{{package}}.MHMarker'
+	CollisionRadius=30.000000
+	CollisionHeight=30.000000
+	bCollideActors=True
 }

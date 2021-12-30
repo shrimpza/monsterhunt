@@ -23,15 +23,15 @@ function Timer() {
 }
 
 function Explode(vector HitLocation, vector HitNormal) {
- 	HurtRadius(damage * DrawScale, DrawScale * 200, 'burned', MomentumTransfer, HitLocation);
+	HurtRadius(damage * DrawScale, DrawScale * 200, 'burned', MomentumTransfer, HitLocation);
 	Destroy();
 }
 
 defaultproperties {
-     Style=STY_Translucent
-     MultiSkins(0)=Texture'UnrealShare.Skins.Jflameball1'
-     MultiSkins(1)=Texture'UnrealShare.Skins.Jflameball1'
-     LightBrightness=160
-     LightHue=21
-     LightSaturation=31
+	Style=STY_Translucent
+	MultiSkins(0)=Texture'UnrealShare.Skins.Jflameball1'
+	MultiSkins(1)=Texture'UnrealShare.Skins.Jflameball1'
+	LightBrightness=160
+	LightHue=21
+	LightSaturation=31
 }

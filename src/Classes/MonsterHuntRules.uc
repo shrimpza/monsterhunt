@@ -63,8 +63,8 @@ function WeaponsChecked() {
 }
 
 defaultproperties {
-     TourneyText="Force team colours"
-     TourneyHelp="if enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
-     FragText="Lives"
-     FragHelp="Set the number of lives each hunter starts with for each round. Set it to 0 for no limit."
+	TourneyText="Force team colours"
+	TourneyHelp="if enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
+	FragText="Lives"
+	FragHelp="Set the number of lives each hunter starts with for each round. Set it to 0 for no limit."
 }

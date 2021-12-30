@@ -11,14 +11,14 @@
 // ============================================================
 
 class OSRocket expands Rocket;
+
 simulated function PostBeginPlay() { //decals or no decals?
-    Super.PostBeginPlay();
-    if (class'{{package}}.uiweapons'.default.busedecals)
-      ExplosionDecal = Class'Botpack.BlastMark';
-    else
-      ExplosionDecal=None;
+	Super.PostBeginPlay();
+	if (class'{{package}}.uiweapons'.default.busedecals)
+		ExplosionDecal = Class'Botpack.BlastMark';
+	else
+		ExplosionDecal=None;
 }
 
 defaultproperties {
 }
-

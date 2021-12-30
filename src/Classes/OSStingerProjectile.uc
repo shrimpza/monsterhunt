@@ -15,11 +15,10 @@ class OSStingerProjectile expands StingerProjectile;
 simulated function PostBeginPlay() { //decals or no decals?
 	Super.PostBeginPlay();
 	if (class'{{package}}.uiweapons'.default.busedecals)
-    ExplosionDecal=Class'Botpack.WallCrack';
+		ExplosionDecal=Class'Botpack.WallCrack';
 	else
-    ExplosionDecal=None;
+		ExplosionDecal=None;
 }
 
 defaultproperties {
 }
-

@@ -46,8 +46,8 @@ function PostBeginPlay() {
 	mpri.bUseTeamSkins = bUseTeamSkins;
 	mpri.bUseLives = Lives > 0;
 
-  // get initial monster count
-	countMonsters();
+	// get initial monster count
+	CountMonsters();
 
 	Super.PostBeginPlay();
 }
@@ -55,7 +55,7 @@ function PostBeginPlay() {
 function SetPawnDifficulty(int Diff, ScriptedPawn S) {
 	local float DiffScale;
 
-  DiffScale = (80 + (Diff * 10)) / 100;
+	DiffScale = (80 + (Diff * 10)) / 100;
 
 	S.Health = (S.Health * DiffScale);
 	S.SightRadius = (S.SightRadius * DiffScale);
@@ -177,13 +177,13 @@ function bool SetEndCams(string Reason) {
 
 function bool isBadEnd(string reason) {
 	if ((RemainingTime == 0) && (TimeLimit >= 1)) return true;
-  return reason == "No Hunters";
+	return reason == "No Hunters";
 }
 
 function string endedMessage(string reason) {
-  if (reason == "No Hunters") return NoHuntersMessage;
-  if ((RemainingTime == 0) && (TimeLimit >= 1)) return TimeOutMessage;
-  return GameEndedMessage;
+	if (reason == "No Hunters") return NoHuntersMessage;
+	if ((RemainingTime == 0) && (TimeLimit >= 1)) return TimeOutMessage;
+	return GameEndedMessage;
 }
 
 function PlayStartUpMessage(PlayerPawn NewPlayer) {
@@ -203,7 +203,7 @@ function PlayStartUpMessage(PlayerPawn NewPlayer) {
 	if (bRequireReady && (Level.NetMode != NM_Standalone)) {
 		NewPlayer.SetProgressColor(Green, i);
 		NewPlayer.SetProgressMessage(TourneyMessage, i++);
-	 } else {
+	} else {
 		NewPlayer.SetProgressColor(Green, i);
 		NewPlayer.SetProgressMessage(StartUpMessage, i++);
 	}
@@ -284,13 +284,13 @@ function bool RestartPlayer(pawn aPlayer) {
 			if (aPlayer.PlayerReplicationInfo.Deaths < 1) {
 				aPlayer.bHidden = true;
 				aPlayer.PlayerRestartState = 'PlayerSpectating';
-			 } else {
+			} else {
 				aPlayer.SetCollision(true, true, true);
 				AddDefaultInventory(aPlayer);
 			}
 		}
 		return foundStart;
-	 } else return Super.RestartPlayer(aPlayer);
+	} else return Super.RestartPlayer(aPlayer);
 }
 
 function CheckEndGame() {
@@ -348,14 +348,14 @@ function ScoreKill(pawn Killer, pawn Other) {
 		Other.PlayerReplicationInfo.Deaths -= 1;
 	}
 
- 	if (!Other.IsA('ScriptedPawn')) return;
+	if (!Other.IsA('ScriptedPawn')) return;
 
 	if (Killer != None) BroadcastMessage(Killer.GetHumanName() @ "killed" $ Other.GetHumanName());
 
 // =========================================================================
 // Score depending on which monster type the player kills
 
-  if (Killer.bIsPlayer) {
+	if (Killer.bIsPlayer) {
 		if (Other.IsA('Titan') || Other.IsA('Queen') || Other.IsA('WarLord')) Killer.PlayerReplicationInfo.Score += 4;
 		else if (Other.IsA('GiantGasBag') || Other.IsA('GiantManta')) Killer.PlayerReplicationInfo.Score += 3;
 		else if (Other.IsA('SkaarjWarrior') || Other.IsA('MercenaryElite') || Other.IsA('Brute')) Killer.PlayerReplicationInfo.Score += 2;
@@ -367,18 +367,6 @@ function ScoreKill(pawn Killer, pawn Other) {
 		// Get 10 extra points for killing the boss!!
 		if ((Killer.bIsPlayer) && (ScriptedPawn(Other).bIsBoss)) Killer.PlayerReplicationInfo.Score += 9;
 	}
-}
-
-function NavigationPoint FindPlayerStart(Pawn Player, optional byte InTeam, optional string incomingName) {
-  if (Player.IsA('ScriptedPawn')) return None;
-
-  return Super.FindPlayerStart(Player, InTeam, incomingName);
-}
-
-function ChangeName(Pawn Other, string S, bool bNameChange) {
-  if (Other.IsA('ScriptedPawn')) return;
-
-  Super.ChangeName(Other, S, bNameChange);
 }
 
 function AddToTeam(int num, Pawn Other) {
@@ -401,7 +389,7 @@ function AddToTeam(int num, Pawn Other) {
 		while (!bSuccess) {
 			bSuccess = true;
 			for (P = Level.PawnList; P != None; P = P.nextPawn) {
-				if (P.bIsPlayer && (P != Other)
+				if (P.bIsPlayer && (P != Other) && (P.PlayerReplicationInfo != None)
 						&& (P.PlayerReplicationInfo.Team == Other.PlayerReplicationInfo.Team)
 						&& (P.PlayerReplicationInfo.TeamId == Other.PlayerReplicationInfo.TeamId)) {
 					Other.PlayerReplicationInfo.TeamID++;
@@ -472,7 +460,7 @@ function bool FindSpecialAttractionFor(Bot aBot) {
 					return false;
 				}
 			}
-		 } else if (aBot.CanSee(S) && (FRand() >= 0.35) && (S.Health >= 1)) {
+		} else if (aBot.CanSee(S) && (FRand() >= 0.35) && (S.Health >= 1)) {
 			aBot.Enemy = S;
 			aBot.GotoState('Attacking');
 			S.Enemy = aBot;
@@ -509,7 +497,7 @@ function bool FindSpecialAttractionFor(Bot aBot) {
 }
 
 function CountHunters() {
-  local Pawn P;
+	local Pawn P;
 	local int playerCount;
 
 	playerCount = 0;
@@ -522,8 +510,8 @@ function CountHunters() {
 	MonsterReplicationInfo(GameReplicationInfo).Hunters = playerCount;
 }
 
-function countMonsters() {
-  local ScriptedPawn S;
+function CountMonsters() {
+	local ScriptedPawn S;
 	local int monsterCount;
 
 	monsterCount = 0;
@@ -539,46 +527,218 @@ function countMonsters() {
 	MonsterReplicationInfo(GameReplicationInfo).Monsters = monsterCount;
 }
 
+/*
+ * Function interned here from DeathMatchPlus, to avoid Accessed None errors on
+ * accessing APlayer.NextPawn.PlayerReplicationInfo.
+ */
+function ChangeName(Pawn Other, string S, bool bNameChange) {
+	local pawn APlayer;
+
+	if (Other.IsA('ScriptedPawn')) return;
+
+	if (S == "") return;
+
+	S = left(S, 24);
+	if (Other.PlayerReplicationInfo.PlayerName ~= S) return;
+
+	APlayer = Level.PawnList;
+
+	while (APlayer != None) {
+		if (!Other.IsA('ScriptedPawn')
+				&& APlayer.bIsPlayer && APlayer.PlayerReplicationInfo != None
+				&& APlayer.PlayerReplicationInfo.PlayerName ~= S) {
+			Other.ClientMessage(S $ NoNameChange);
+			return;
+		}
+		APlayer = APlayer.NextPawn;
+	}
+
+	Other.PlayerReplicationInfo.OldName = Other.PlayerReplicationInfo.PlayerName;
+	Other.PlayerReplicationInfo.PlayerName = S;
+	if (bNameChange && !Other.IsA('Spectator')) BroadcastLocalizedMessage(DMMessageClass, 2, Other.PlayerReplicationInfo);
+
+	if (LocalLog != None) LocalLog.LogNameChange(Other);
+	if (WorldLog != None) WorldLog.LogNameChange(Other);
+}
+
+/*
+ * Function interned here from TeamGamePlus, to avoid Accessed None errors on
+ * accessing OtherPlayer.NextPawn.PlayerReplicationInfo.
+ */
+function NavigationPoint FindPlayerStart(Pawn Player, optional byte InTeam, optional string incomingName ) {
+	local PlayerStart Dest, Candidate[16], Best;
+	local float Score[16], BestScore, NextDist;
+	local pawn OtherPlayer;
+	local int i, num;
+	local Teleporter Tel;
+	local NavigationPoint N;
+	local byte Team;
+
+	if (bStartMatch && (Player != None) && Player.IsA('TournamentPlayer')
+			&& (Level.NetMode == NM_Standalone)
+			&& (TournamentPlayer(Player).StartSpot != None)) {
+		return TournamentPlayer(Player).StartSpot;
+	}
+
+	if ((Player != None) && (Player.PlayerReplicationInfo != None)) Team = Player.PlayerReplicationInfo.Team;
+	else Team = InTeam;
+
+	if (incomingName != "") {
+		foreach AllActors(class'Teleporter', Tel) if (string(Tel.Tag) ~= incomingName) return Tel;
+	}
+
+	if (Team == 255) Team = 0;
+
+	//choose candidates
+	for (N = Level.NavigationPointList; N != None; N = N.nextNavigationPoint) {
+		Dest = PlayerStart(N);
+		if ((Dest != None) && Dest.bEnabled && (!bSpawnInTeamArea || (Team == Dest.TeamNumber))) {
+			if (num < 16) Candidate[num] = Dest;
+			else if (Rand(num) < 16) Candidate[Rand(16)] = Dest;
+			num++;
+		}
+	}
+
+	if (num == 0) {
+		log("Didn't find any player starts in list for team" @ Team @ "!!!");
+		foreach AllActors(class'PlayerStart', Dest) {
+			if (num < 16) Candidate[num] = Dest;
+			else if (Rand(num) < 16) Candidate[Rand(16)] = Dest;
+			num++;
+		}
+		if ( num == 0 ) return None;
+	}
+
+	if (num > 16) num = 16;
+
+	//assess candidates
+	for (i = 0; i < num; i++) {
+		if (Candidate[i] == LastStartSpot) Score[i] = -6000.0;
+		else Score[i] = 4000 * FRand(); //randomize
+	}
+
+	for (OtherPlayer = Level.PawnList; OtherPlayer != None; OtherPlayer = OtherPlayer.NextPawn) {
+	  if (OtherPlayer.IsA('ScriptedPawn') || !OtherPlayer.bIsPlayer || OtherPlayer.PlayerReplicationInfo == None) continue;
+
+		if ((OtherPlayer.Health > 0) && !OtherPlayer.IsA('Spectator')) {
+			for (i = 0; i < num; i++) {
+				if (OtherPlayer.Region.Zone == Candidate[i].Region.Zone) {
+					Score[i] -= 1500;
+					NextDist = VSize(OtherPlayer.Location - Candidate[i].Location);
+					if (NextDist < 2 * (CollisionRadius + CollisionHeight)) {
+						Score[i] -= 1000000.0;
+					} else if ((NextDist < 2000) && (OtherPlayer.PlayerReplicationInfo.Team != Team)
+							&& FastTrace(Candidate[i].Location, OtherPlayer.Location)) {
+						Score[i] -= (10000.0 - NextDist);
+					}
+				}
+			}
+		}
+	}
+
+	BestScore = Score[0];
+	Best = Candidate[0];
+	for (i = 1; i < num; i++) {
+		if (Score[i] > BestScore) {
+			BestScore = Score[i];
+			Best = Candidate[i];
+		}
+	}
+
+	LastStartSpot = Best;
+
+	return Best;
+}
+
+/*
+ * Function interned here from TeamGamePlus, to avoid Accessed None errors on
+ * accessing P.NextPawn.PlayerReplicationInfo.
+ */
+function SetBotOrders(Bot NewBot) {
+	local Pawn P, L;
+	local int num, total;
+
+	// only follow players, if there are any
+	if ((NumSupportingPlayer == 0)
+		 	|| (NumSupportingPlayer < Teams[NewBot.PlayerReplicationInfo.Team].Size / 2 - 1)) {
+		for (P = Level.PawnList; P != None; P = P.NextPawn) {
+			if (P.IsA('PlayerPawn') && (P.PlayerReplicationInfo.Team == NewBot.PlayerReplicationInfo.Team)
+				&& !P.IsA('Spectator')) {
+				num++;
+				if ((L == None) || (FRand() < 1.0 / float(num))) L = P;
+			}
+		}
+
+		if (L != None) {
+			NumSupportingPlayer++;
+			NewBot.SetOrders('Follow', L, true);
+			return;
+		}
+	}
+
+	num = 0;
+
+	for (P = Level.PawnList; P != None; P = P.NextPawn) {
+		if (!P.IsA('ScriptedPawn')
+		    && P.bIsPlayer
+				&& P.PlayerReplicationInfo != None
+				&& (P.PlayerReplicationInfo.Team == NewBot.PlayerReplicationInfo.Team)) {
+			total++;
+			if ((P != NewBot) && P.IsA('Bot') && (Bot(P).Orders == 'FreeLance')) {
+				num++;
+				if ((L == None) || (FRand() < 1 / float(num))) L = P;
+			}
+		}
+	}
+
+	if ((L != None) && (FRand() < float(num) / float(total))) {
+		NewBot.SetOrders('Follow', L, true);
+		return;
+	}
+
+	NewBot.SetOrders('Freelance', None, true);
+}
+
 defaultproperties {
-     MonsterSkill=5
-     Lives=6
-     TimeOutMessage="Time up, hunt failed!"
-     NoHuntersMessage="Hunting party eliminated!"
-     bSpawnInTeamArea=True
-     bBalanceTeams=False
-     bPlayersBalanceTeams=False
-     MaxTeams=1
-     MaxAllowedTeams=1
-     MaxTeamSize=24
-     StartUpTeamMessage="Welcome to the hunt!"
-     MinPlayers=0
-     FragLimit=0
-     TimeLimit=30
-     bTournament=False
-     bUseTranslocator=False
-     StartUpMessage="Work with your teammates to hunt down the monsters!"
-     StartMessage="The hunt has begun!"
-     GameEndedMessage="Hunt Successful!"
-     SingleWaitingMessage="Press Fire to begin the hunt."
-     InitialBots=6
-     ExplodeMessage=" was blown up"
-     BurnedMessage=" was incinerated"
-     CorrodedMessage=" was slimed"
-     HackedMessage=" was hacked"
-     DefaultWeapon=Class'Botpack.ChainSaw'
-     ScoreBoardType=Class'{{package}}.MonsterBoard'
-     BotMenuType="{{package}}.MonsterBotConfig"
-     RulesMenuType="{{package}}.MonsterHuntRules"
-     SettingsMenuType="{{package}}.MonsterSettings"
-     HUDType=Class'{{package}}.MonsterHUD'
-     MapListType=Class'{{package}}.MonsterMapList'
-     MapPrefix="MH"
-     BeaconName="MH"
-     LeftMessage=" left the hunt."
-     EnteredMessage=" has joined the hunt!"
-     GameName="Monster Hunt"
-     DMMessageClass=Class'{{package}}.HuntMessage'
-     MutatorClass=Class'{{package}}.MonsterBase'
-     GameReplicationInfoClass=Class'{{package}}.MonsterReplicationInfo'
-     bLocalLog=True
+	MonsterSkill=5
+	Lives=6
+	TimeOutMessage="Time up, hunt failed!"
+	NoHuntersMessage="Hunting party eliminated!"
+	bSpawnInTeamArea=True
+	bBalanceTeams=False
+	bPlayersBalanceTeams=False
+	MaxTeams=1
+	MaxAllowedTeams=1
+	MaxTeamSize=24
+	StartUpTeamMessage="Welcome to the hunt!"
+	MinPlayers=0
+	FragLimit=0
+	TimeLimit=30
+	bTournament=False
+	bUseTranslocator=False
+	StartUpMessage="Work with your teammates to hunt down the monsters!"
+	StartMessage="The hunt has begun!"
+	GameEndedMessage="Hunt Successful!"
+	SingleWaitingMessage="Press Fire to begin the hunt."
+	InitialBots=6
+	ExplodeMessage=" was blown up"
+	BurnedMessage=" was incinerated"
+	CorrodedMessage=" was slimed"
+	HackedMessage=" was hacked"
+	DefaultWeapon=Class'Botpack.ChainSaw'
+	ScoreBoardType=Class'{{package}}.MonsterBoard'
+	BotMenuType="{{package}}.MonsterBotConfig"
+	RulesMenuType="{{package}}.MonsterHuntRules"
+	SettingsMenuType="{{package}}.MonsterSettings"
+	HUDType=Class'{{package}}.MonsterHUD'
+	MapListType=Class'{{package}}.MonsterMapList'
+	MapPrefix="MH"
+	BeaconName="MH"
+	LeftMessage=" left the hunt."
+	EnteredMessage=" has joined the hunt!"
+	GameName="Monster Hunt"
+	DMMessageClass=Class'{{package}}.HuntMessage'
+	MutatorClass=Class'{{package}}.MonsterBase'
+	GameReplicationInfoClass=Class'{{package}}.MonsterReplicationInfo'
+	bLocalLog=True
 }

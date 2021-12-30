@@ -46,7 +46,7 @@ simulated function Tick(float DeltaTime) {
 }
 
 defaultproperties {
-     MultiDecalLevel=3
-     Texture=Texture'Botpack.energymark'
-     DrawScale=0.500000
+	MultiDecalLevel=3
+	Texture=Texture'Botpack.energymark'
+	DrawScale=0.500000
 }

@@ -43,13 +43,13 @@ function BaseChanged() {
 }
 
 defaultproperties {
-     MinPlayersText="Min. Total Hunters"
-     BaseText="AI Hunter Skill:"
-     SkillTaunts(0)="They might know how to kill a Fly."
-     SkillTaunts(2)="Look out monsters!"
-     SkillTaunts(3)="Monsters are in for a good beating."
-     SkillTaunts(4)="I wouldn't like to be in the monsters shoes..."
-     SkillTaunts(5)="It's a pity the monsters can't respawn."
-     SkillTaunts(6)="Those poor monsters are already dead."
-     SkillTaunts(7)="Rest in peace, monsters..."
+	MinPlayersText="Min. Total Hunters"
+	BaseText="AI Hunter Skill:"
+	SkillTaunts(0)="They might know how to kill a Fly."
+	SkillTaunts(2)="Look out monsters!"
+	SkillTaunts(3)="Monsters are in for a good beating."
+	SkillTaunts(4)="I wouldn't like to be in the monsters shoes..."
+	SkillTaunts(5)="It's a pity the monsters can't respawn."
+	SkillTaunts(6)="Those poor monsters are already dead."
+	SkillTaunts(7)="Rest in peace, monsters..."
 }

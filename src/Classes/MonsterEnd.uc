@@ -63,6 +63,6 @@ function TriggerObjective() {
 }
 
 defaultproperties {
-     bInitiallyActive=True
-     Texture=Texture'{{package}}.MHEnd'
+	bInitiallyActive=True
+	Texture=Texture'{{package}}.MHEnd'
 }

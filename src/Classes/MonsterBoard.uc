@@ -75,7 +75,7 @@ function DrawTrailer(canvas Canvas) {
 			Canvas.DrawText(class'ChallengeBotInfo'.default.Skills[Level.Game.Difficulty + 4] @ TitleQuote, true);
 		}
 	}	else {
-	  Canvas.DrawText(PlayerOwner.GameReplicationInfo.GameName @ MapTitle @ Level.Title, true);
+		Canvas.DrawText(PlayerOwner.GameReplicationInfo.GameName @ MapTitle @ Level.Title, true);
 	}
 
 	Canvas.SetPos(0, Canvas.ClipY - YL);
@@ -206,7 +206,7 @@ function SortScores(int N) {
 			if (Ordered[J].Score > Ordered[Max].Score) {
 				Max = J;
 			} else if ((Ordered[J].Score == Ordered[Max].Score) && (Ordered[J].Deaths < Ordered[Max].Deaths)) {
-			 Max = J;
+				Max = J;
 			}	else if ((Ordered[J].Score == Ordered[Max].Score) && (Ordered[J].Deaths == Ordered[Max].Deaths)
 								&& (Ordered[J].PlayerID < Ordered[Max].Score)) {
 				Max = J;
@@ -277,21 +277,21 @@ function ShowScores(canvas Canvas) {
 }
 
 defaultproperties {
-     GreenColor=(G=255)
-     WhiteColor=(R=255, G=255, B=255)
-     GoldColor=(R=255, G=255)
-     BlueColor=(B=255)
-     LightCyanColor=(R=128, G=255, B=255)
-     SilverColor=(R=138, G=164, B=166)
-     BronzeColor=(R=203, G=147, B=52)
-     CyanColor=(G=128, B=255)
-     RedColor=(R=255)
-     LightGreenColor=(G=136)
-     DarkGreenColor=(G=255, B=128)
-     Restart="You have been killed.  Hit [Fire] to continue the hunt!"
-     Continue="Hit [Fire] to begin the next hunt!"
-     Ended="The hunt has ended."
-     PlayerString="Hunter"
-     FragsString="Score"
-     DeathsString="Lives"
+	GreenColor=(G=255)
+	WhiteColor=(R=255, G=255, B=255)
+	GoldColor=(R=255, G=255)
+	BlueColor=(B=255)
+	LightCyanColor=(R=128, G=255, B=255)
+	SilverColor=(R=138, G=164, B=166)
+	BronzeColor=(R=203, G=147, B=52)
+	CyanColor=(G=128, B=255)
+	RedColor=(R=255)
+	LightGreenColor=(G=136)
+	DarkGreenColor=(G=255, B=128)
+	Restart="You have been killed.  Hit [Fire] to continue the hunt!"
+	Continue="Hit [Fire] to begin the next hunt!"
+	Ended="The hunt has ended."
+	PlayerString="Hunter"
+	FragsString="Score"
+	DeathsString="Lives"
 }

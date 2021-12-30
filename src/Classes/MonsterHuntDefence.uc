@@ -7,7 +7,8 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterHuntDefence expands MonsterHunt;
+class MonsterHuntDefence expands MonsterHunt
+	config(MonsterHunt);
 
 var config int MaxEscapees;
 
@@ -49,7 +50,7 @@ function PostBeginPlay() {
 
 	foreach AllActors(class'FlagBase', flag) {
 		if (flag.team == 0) {
-		  bothFlags[0] = flag;
+			bothFlags[0] = flag;
 			flag.Tag = monsterOrderTag;
 			monsterTarget = flag;
 
@@ -67,7 +68,7 @@ function PostBeginPlay() {
 	minSpawnDistance = maxRange / 2;
 
 	for (nav = Level.NavigationPointList; nav != None; nav = nav.nextNavigationPoint) {
-	  if (nav.IsA('InventorySpot') || nav.IsA('PlayerStart')) continue;
+		if (nav.IsA('InventorySpot') || nav.IsA('PlayerStart')) continue;
 
 		range = VSize(nav.location - bothFlags[0].location);
 		if (range < maxRange && range > minSpawnDistance && monsterSpawnCount < 64) {
@@ -75,7 +76,15 @@ function PostBeginPlay() {
 			monsterSpawnCount++;
 		} else if (range > maxRange && monsterRunnerSpawnCount < 64) {
 			monsterRunnerSpawnPoints[monsterRunnerSpawnCount] = nav;
-      monsterRunnerSpawnCount++;
+			monsterRunnerSpawnCount++;
+		}
+	}
+
+	// looks like we found no suitable points to spawn monsters, so find any available navigation points
+	if (monsterSpawnCount == 0) {
+		for (nav = Level.NavigationPointList; nav != None && monsterSpawnCount < 64; nav = nav.nextNavigationPoint) {
+			monsterSpawnPoints[monsterSpawnCount] = nav;
+			monsterSpawnCount++;
 		}
 	}
 
@@ -84,47 +93,47 @@ function PostBeginPlay() {
 	// we also need monsters to be able to use things like doors and lifts
 	foreach AllActors(class'Trigger', trigger) {
 		if (trigger.Event != '' && trigger.TriggerType == TT_PlayerProximity) {
-		  foreach AllActors(class'Mover', mover, trigger.Event) {
-      	trigger.TriggerType = TT_PawnProximity;
-      }
+			foreach AllActors(class'Mover', mover, trigger.Event) {
+				trigger.TriggerType = TT_PawnProximity;
+			}
 		}
 	}
 	foreach AllActors(class'Mover', mover) {
-	  if (mover.BumpType == BT_PlayerBump) {
+		if (mover.BumpType == BT_PlayerBump) {
 			mover.BumpType = BT_PawnBump;
 		}
 	}
 
-  DiffScale = (80 + (MonsterSkill * 10)) / 100;
-  spawnInterval = 2.2 - DiffScale;
+	DiffScale = (80 + (MonsterSkill * 10)) / 100;
+	spawnInterval = 2.2 - DiffScale;
 
 	Super.PostBeginPlay();
 }
 
 function StartMatch() {
-  bGameStarted = true;
+	bGameStarted = true;
 
-  Super.StartMatch();
+	Super.StartMatch();
 }
 
 function monsterEscaped(ScriptedPawn escapee) {
-  MonsterReplicationInfo(GameReplicationInfo).Escapees++;
+	MonsterReplicationInfo(GameReplicationInfo).Escapees++;
 
-  BroadcastMessage(escapee.GetHumanName() @ "escaped!", true, 'MonsterCriticalEvent');
+	BroadcastMessage(escapee.GetHumanName() @ "escaped!", true, 'MonsterCriticalEvent');
 
-  if (MonsterReplicationInfo(GameReplicationInfo).Escapees >= MaxEscapees) EndGame("Monsters Escaped");
+	if (MonsterReplicationInfo(GameReplicationInfo).Escapees >= MaxEscapees) EndGame("Monsters Escaped");
 }
 
 function bool isBadEnd(string reason) {
-  if (reason == "Monsters Escaped") return true;
-  if ((RemainingTime == 0) && (TimeLimit >= 1)) return false;
-  else return Super.isBadEnd(reason);
+	if (reason == "Monsters Escaped") return true;
+	if ((RemainingTime == 0) && (TimeLimit >= 1)) return false;
+	else return Super.isBadEnd(reason);
 }
 
 function string endedMessage(string reason) {
-  if (reason == "Monsters Escaped") return MonstersEscapedMessage;
-  if ((RemainingTime == 0) && (TimeLimit >= 1)) return GameEndedMessage;
-  return Super.endedMessage(reason);
+	if (reason == "Monsters Escaped") return MonstersEscapedMessage;
+	if ((RemainingTime == 0) && (TimeLimit >= 1)) return GameEndedMessage;
+	return Super.endedMessage(reason);
 }
 
 function Timer() {
@@ -161,14 +170,14 @@ function forceOrders() {
 				pawn.OrderObject = None;
 				pawn.GoToState('Attacking');
 			} else if (VSize(monsterTarget.location - pawn.location) < minSpawnDistance) {
-			  // this guy's getting in close, maybe switch mode
-			  if (pawn.OrderTag != '' && FRand() > 0.5) {
+				// this guy's getting in close, maybe switch mode
+				if (pawn.OrderTag != '' && FRand() > 0.5) {
 					// stop charging and hang around, maybe there's someone to attack
 					pawn.AlarmTag = '';
 					pawn.OrderTag = '';
 					pawn.OrderObject = None;
 					pawn.GoToState('Roaming');
-			  } else if (pawn.OrderTag == '' && FRand() > 0.5) {
+				} else if (pawn.OrderTag == '' && FRand() > 0.5) {
 					// we're done hanging around, try to go back toward the target
 					pawn.AlarmTag = monsterOrderTag;
 					pawn.OrderTag = monsterOrderTag;
@@ -181,42 +190,47 @@ function forceOrders() {
 }
 
 function NavigationPoint findNearSpawn() {
-  if (monsterSpawnCount == 0) return findFarSpawn();
-  return monsterSpawnPoints[Rand(monsterSpawnCount)];
+	if (monsterSpawnCount == 0) return findFarSpawn();
+	return monsterSpawnPoints[Rand(monsterSpawnCount)];
 }
 
 function NavigationPoint findFarSpawn() {
-  return monsterRunnerSpawnPoints[Rand(monsterRunnerSpawnCount)];
+	return monsterRunnerSpawnPoints[Rand(monsterRunnerSpawnCount)];
 }
 
 function Tick(float delta) {
-  currentSpawnInterval += delta;
-  if (currentSpawnInterval >= spawnInterval) {
-    spawnMonsters();
-    currentSpawnInterval = 0;
-  }
+	currentSpawnInterval += delta;
+	if (currentSpawnInterval >= spawnInterval) {
+		spawnMonsters();
+		currentSpawnInterval = 0;
+	}
 
-  Super.Tick(delta);
+	Super.Tick(delta);
 }
 
 function spawnMonsters() {
 	if (!bGameStarted || bGameEnded) return;
 
 	// every ~8 seconds, spawn a runner
-  if (spawnCycle % 8 == 0) {
-    if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'SkaarjTrooper', 'TriggerAlarm', runnerTag);
-    else spawnMonsterAt(findFarSpawn(), class'SkaarjWarrior', 'TriggerAlarm', runnerTag);
-  }
+	if (spawnCycle % 8 == 0) {
+		if (FRand() > 0.8) spawnMonsterAt(findFarSpawn(), class'SkaarjWarrior', 'TriggerAlarm', runnerTag);
+		else if (FRand() > 0.6) spawnMonsterAt(findFarSpawn(), class'SkaarjAssassin', 'TriggerAlarm', runnerTag);
+		else if (FRand() > 0.4) spawnMonsterAt(findFarSpawn(), class'SkaarjBerserker', 'TriggerAlarm', runnerTag);
+		else if (FRand() > 0.2) spawnMonsterAt(findFarSpawn(), class'SkaarjLord', 'TriggerAlarm', runnerTag);
+		else spawnMonsterAt(findFarSpawn(), class'SkaarjScout', 'TriggerAlarm', runnerTag);
+	}
 
-  // don't spam more monsters - but allow skaarj runners to keep spawning.
-  if (MonsterReplicationInfo(GameReplicationInfo).Monsters < (maxOtherMonsters * spawnChanceScaler)) {
+	// don't spam more monsters - but allow skaarj runners to keep spawning.
+	if (MonsterReplicationInfo(GameReplicationInfo).Monsters < (maxOtherMonsters * spawnChanceScaler)) {
 		if (spawnCycle % 5 == 0 && FRand() < (0.4 * spawnChanceScaler)) {
-			if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'SkaarjTrooper', 'TriggerAlarm');
-			else spawnMonsterAt(findFarSpawn(), class'SkaarjWarrior', 'TriggerAlarm');
+			if (FRand() > 0.75) spawnMonsterAt(findFarSpawn(), class'SkaarjInfantry', 'TriggerAlarm');
+			else if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'SkaarjGunner', 'TriggerAlarm');
+			else if (FRand() > 0.25) spawnMonsterAt(findFarSpawn(), class'SkaarjOfficer', 'TriggerAlarm');
+			else spawnMonsterAt(findFarSpawn(), class'SkaarjSniper', 'TriggerAlarm');
 		}
 
 		if (spawnCycle % 3 == 0 && FRand() < (0.6 * spawnChanceScaler)) {
-		  if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'KrallElite', 'TriggerAlarm');
+			if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'KrallElite', 'TriggerAlarm');
 			else spawnMonsterAt(findFarSpawn(), class'Krall', 'TriggerAlarm');
 		}
 		if (spawnCycle % 4 == 0 && FRand() < (0.4 * spawnChanceScaler)) {
@@ -248,7 +262,7 @@ function spawnMonsters() {
 		}
 	}
 
-  spawnCycle++;
+	spawnCycle++;
 }
 
 function ScriptedPawn spawnMonsterAt(
@@ -266,7 +280,7 @@ function ScriptedPawn spawnMonsterAt(
 
 	newMonster.SetRotation(startSpot.Rotation);
 
-  // make them advance towards the objective
+	// make them advance towards the objective
 	newMonster.Orders = orders;
 	newMonster.OrderObject = monsterTarget;
 	newMonster.OrderTag = monsterOrderTag;
@@ -304,14 +318,14 @@ function SpawnEffect(Pawn other) {
 }
 
 defaultproperties {
-  MaxEscapees=20
-  spawnChanceBaseScale=1750
-  spawnInterval=1.0
-  maxOtherMonsters=80
-  monsterOrderTag="MHDAttackThis"
-  runnerTag="MHDRunner"
+	MaxEscapees=20
+	spawnChanceBaseScale=1750
+	spawnInterval=1.0
+	maxOtherMonsters=80
+	monsterOrderTag="MHDAttackThis"
+	runnerTag="MHDRunner"
 	MapPrefix="CTF"
-  MapListType=Class'Botpack.CTFMapList'
+	MapListType=Class'Botpack.CTFMapList'
 	BeaconName="MHD"
 	GameName="Monster Defence"
 	StartUpMessage="Work with your teammates to defend your base against the monsters!"

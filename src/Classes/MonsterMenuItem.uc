@@ -14,6 +14,6 @@ function Execute() {
 }
 
 defaultproperties {
-     MenuCaption="&Monster Hunt Credits"
-     MenuHelp="All the people behind Monster Hunt!"
+	MenuCaption="&Monster Hunt Credits"
+	MenuHelp="All the people behind Monster Hunt!"
 }

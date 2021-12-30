@@ -10,6 +10,6 @@
 class MonsterCreditsWindow expands UTCreditsWindow;
 
 defaultproperties {
-     ClientClass=Class'{{package}}.MonsterCreditsCW'
-     WindowTitle="Monster Hunt Credits (v6.0)"
+	ClientClass=Class'{{package}}.MonsterCreditsCW'
+	WindowTitle="Monster Hunt Credits (v{{version}})"
 }

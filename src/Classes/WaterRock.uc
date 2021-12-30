@@ -10,5 +10,5 @@
 class WaterRock expands BigRock;
 
 defaultproperties {
-     Style=STY_Translucent
+	Style=STY_Translucent
 }

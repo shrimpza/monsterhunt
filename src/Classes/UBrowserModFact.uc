@@ -23,5 +23,5 @@ function Query(optional bool bBySuperset, optional bool bInitial) {
 }
 
 defaultproperties {
-     GameType="MonsterHunt"
+	GameType="MonsterHunt"
 }

@@ -13,6 +13,7 @@ class MonsterHUD expands ChallengeTeamHUD;
 #exec TEXTURE IMPORT NAME=BlackStuff  FILE=Textures\BlackStuff.PCX GROUP="Hud" MIPS=OFF LODSET=0
 #exec TEXTURE IMPORT NAME=BlackStuff2  FILE=Textures\BlackStuff2.PCX GROUP="Hud" MIPS=OFF LODSET=0
 
+var localized string TimeRemainingLabel;
 var localized string LivesRemainLabel;
 var localized string EscapedMonstersLabel;
 var localized string HuntersRemainLabel;
@@ -27,44 +28,70 @@ simulated function PostBeginPlay() {
 simulated function DrawGameSynopsis(Canvas Canvas) {
 	local float XL, YL, YOffset;
 	local string escapesString;
-	local MonsterReplicationInfo mpri;
+	local MonsterReplicationInfo mri;
+	local int Minutes, Seconds;
 
 	if ((PawnOwner.PlayerReplicationInfo == None) || PawnOwner.PlayerReplicationInfo.bIsSpectator) return;
+
+	mri = MonsterReplicationInfo(PlayerPawn(Owner).GameReplicationInfo);
 
 	Canvas.Font = MyFonts.GetBigFont(Canvas.ClipX);
 	Canvas.DrawColor = WhiteColor;
 
 	Canvas.StrLen(RankString, XL, YL);
 	if (bHideAllWeapons) {
-		YOffset = Canvas.ClipY - YL * 4;
+		YOffset = Canvas.ClipY - YL;
 	} else if (HudScale * WeaponScale * Canvas.ClipX <= Canvas.ClipX - 256 * Scale) {
-		YOffset = Canvas.ClipY - 64 * Scale - YL * 4;
+		YOffset = Canvas.ClipY - 64 * Scale - YL;
 	} else {
-		YOffset = Canvas.ClipY - 128 * Scale - YL * 4;
+		YOffset = Canvas.ClipY - 128 * Scale - YL;
 	}
 
-	mpri = MonsterReplicationInfo(PlayerPawn(Owner).GameReplicationInfo);
-	if (mpri != None) {
-		if (mpri.bUseLives) {
-			Canvas.SetPos(0, YOffset);
-			Canvas.DrawText(" " $ LivesRemainLabel $ ": " $ int(PawnOwner.PlayerReplicationInfo.Deaths), False);
-		}
-		YOffset += YL;
+	if (mri != None) {
+		Canvas.SetPos(0, YOffset);
+		Canvas.DrawText(" " $ MonstersRemainLabel $ ": " $ string(mri.Monsters), False);
+		YOffset -= YL;
+
+		Canvas.SetPos(0, YOffset);
+		Canvas.DrawText(" " $ HuntersRemainLabel $ ": " $ string(mri.Hunters), False);
+		YOffset -= YL;
+
 		if (Level.Game.IsA('MonsterHuntDefence')) {
 			Canvas.SetPos(0, YOffset);
-			escapesString = " " $ HuntersRemainLabel $ ": " $ string(mpri.Escapees);
-			if (mpri.MaxEscapees > 0) {
-				escapesString = escapesString $ "/" $ string(mpri.MaxEscapees);
+			escapesString = " " $ EscapedMonstersLabel $ ": " $ string(mri.Escapees);
+			if (mri.MaxEscapees > 0) {
+				escapesString = escapesString $ "/" $ string(mri.MaxEscapees);
+				if (mri.MaxEscapees - mri.Escapees < 5) Canvas.DrawColor = RedColor;
+			} else {
+				Canvas.DrawColor = WhiteColor;
 			}
 			Canvas.DrawText(escapesString, False);
-			YOffset += YL;
+			YOffset -= YL;
 		}
-		Canvas.SetPos(0, YOffset);
-		Canvas.DrawText(" " $ HuntersRemainLabel $ ": " $ string(mpri.Hunters), False);
-		YOffset += YL;
-		Canvas.SetPos(0, YOffset);
-		Canvas.DrawText(" " $ MonstersRemainLabel $ ": " $ string(mpri.Monsters), False);
+
+		if (mri.bUseLives) {
+		  if (PawnOwner.PlayerReplicationInfo.Deaths < 3) Canvas.DrawColor = RedColor;
+		  else Canvas.DrawColor = WhiteColor;
+			Canvas.SetPos(0, YOffset);
+			Canvas.DrawText(" " $ LivesRemainLabel $ ": " $ int(PawnOwner.PlayerReplicationInfo.Deaths), False);
+			YOffset -= YL;
+		}
+
+		if (mri.RemainingTime > 0) {
+			if (mri.RemainingTime < 30) Canvas.DrawColor = RedColor;
+			else Canvas.DrawColor = WhiteColor;
+			Canvas.SetPos(0, YOffset);
+			Minutes = mri.RemainingTime / 60;
+			Seconds = mri.RemainingTime % 60;
+			Canvas.DrawText(" " $ TimeRemainingLabel $ ": " $ TwoDigitString(Minutes) $ ":" $ TwoDigitString(Seconds), true);
+			YOffset -= YL;
+		}
 	}
+}
+
+function string TwoDigitString(int Num) {
+	if (Num < 10) return "0" $ Num;
+	else return string(Num);
 }
 
 simulated function DrawStatus(Canvas Canvas) {
@@ -166,7 +193,7 @@ simulated function PostRender(canvas Canvas) {
 	if ((PawnOwner == None) || (PlayerOwner.PlayerReplicationInfo == None)) return;
 
 	if (MonsterReplicationInfo(PlayerPawn(Owner).GameReplicationInfo).bUseLives
-	     && (PawnOwner.PlayerReplicationInfo.Deaths < 1) && !PawnOwner.IsA('Spectator')) {
+			&& (PawnOwner.PlayerReplicationInfo.Deaths < 1) && !PawnOwner.IsA('Spectator')) {
 		DrawBlackStuff(Canvas);
 	}
 
@@ -174,8 +201,9 @@ simulated function PostRender(canvas Canvas) {
 }
 
 defaultproperties {
-  LivesRemainLabel="Lives"
-  EscapedMonstersLabel="Escaped Monsters"
-  HuntersRemainLabel="Hunters"
-  MonstersRemainLabel="Monsters"
+	TimeRemainingLabel="Time Remaining"
+	LivesRemainLabel="Lives"
+	EscapedMonstersLabel="Escaped Monsters"
+	HuntersRemainLabel="Hunters"
+	MonstersRemainLabel="Monsters"
 }

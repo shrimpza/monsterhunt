@@ -16,7 +16,7 @@ class MonsterComment expands Actor;
 var() string Comment1, Comment2, Comment3, Comment4, Comment5;
 
 defaultproperties {
-     bHidden=True
-     Texture=Texture'{{package}}.MHComment'
-     DrawScale=2.000000
+	bHidden=True
+	Texture=Texture'{{package}}.MHComment'
+	DrawScale=2.000000
 }

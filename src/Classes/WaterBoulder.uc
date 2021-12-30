@@ -25,5 +25,5 @@ function SpawnChunks(int num) {
 }
 
 defaultproperties {
-     Style=STY_Translucent
+	Style=STY_Translucent
 }

@@ -10,6 +10,6 @@
 class MonsterCriticalString expands CriticalStringPlus;
 
 defaultproperties {
-     Lifetime=10
-     DrawColor=(G=255, B=128)
+	Lifetime=10
+	DrawColor=(G=255, B=128)
 }

@@ -11,14 +11,14 @@
 // ============================================================
 
 class OSDAmmo3 expands DAmmo3;
+
 simulated function PostBeginPlay() { //decals or no decals?
-  Super.PostBeginPlay();
-  if (class'{{package}}.uiweapons'.default.busedecals)
-    ExplosionDecal=Class'Botpack.energyimpact';
-  else
-    ExplosionDecal=None;
+	Super.PostBeginPlay();
+	if (class'{{package}}.uiweapons'.default.busedecals)
+		ExplosionDecal=Class'Botpack.energyimpact';
+	else
+		ExplosionDecal=None;
 }
 
 defaultproperties {
 }
-

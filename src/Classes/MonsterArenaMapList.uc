@@ -8,10 +8,10 @@
 // ============================================================
 
 class MonsterArenaMapList expands MapList
-	Config(MonsterHunt);
+	config(MonsterHunt);
 
 defaultproperties {
-     Maps(0)="MA-Winged.unr"
-     Maps(1)="MA-Revenge.unr"
-     Maps(2)="MA-Queens.unr"
+	Maps(0)="MA-Winged.unr"
+	Maps(1)="MA-Revenge.unr"
+	Maps(2)="MA-Queens.unr"
 }

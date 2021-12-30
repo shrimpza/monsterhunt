@@ -10,7 +10,7 @@
 class ChainsawArena expands Arena;
 
 defaultproperties {
-     WeaponName=ChainSaw
-     WeaponString="Botpack.ChainSaw"
-     DefaultWeapon=Class'Botpack.ChainSaw'
+	WeaponName=ChainSaw
+	WeaponString="Botpack.ChainSaw"
+	DefaultWeapon=Class'Botpack.ChainSaw'
 }

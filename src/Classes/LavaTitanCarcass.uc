@@ -10,5 +10,5 @@
 class LavaTitanCarcass expands TitanCarcass;
 
 defaultproperties {
-     MultiSkins(0)=Texture'{{package}}.Skins.LavaTitan'
+	MultiSkins(0)=Texture'{{package}}.Skins.LavaTitan'
 }

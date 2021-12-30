@@ -18,5 +18,5 @@ function Trigger(actor Other, pawn EventInstigator) {
 }
 
 defaultproperties {
-     Texture=Texture'{{package}}.MHEvent'
+	Texture=Texture'{{package}}.MHEvent'
 }

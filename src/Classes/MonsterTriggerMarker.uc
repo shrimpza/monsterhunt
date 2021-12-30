@@ -15,7 +15,7 @@ class MonsterTriggerMarker expands NavigationPoint;
 #exec Texture Import File=textures\MHMarker.pcx Name=MHMarker Mips=Off Flags=2
 
 defaultproperties {
-     ExtraCost=800
-     bSpecialCost=True
-     Texture=Texture'{{package}}.MHMarker'
+	ExtraCost=800
+	bSpecialCost=True
+	Texture=Texture'{{package}}.MHMarker'
 }

@@ -13,6 +13,6 @@
 class MonsterStingerProjectile expands StingerProjectile;
 
 defaultproperties {
-     Damage=25.000000
-     DrawScale=2.500000
+	Damage=25.000000
+	DrawScale=2.500000
 }

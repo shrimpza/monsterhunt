@@ -11,14 +11,14 @@
 // ============================================================
 
 class OSRazorBladeAlt expands RazorBladeAlt;
+
 auto state Flying {
-  simulated function HitWall (vector HitNormal, actor Wall) {
-    super.Hitwall(hitnormal, wall);
-    if (class'{{package}}.uiweapons'.default.bUseDecals)
-      Spawn(class'WallCrack', ,, Location, rotator(HitNormal));
-  }
+	simulated function HitWall (vector HitNormal, actor Wall) {
+		super.Hitwall(hitnormal, wall);
+		if (class'{{package}}.uiweapons'.default.bUseDecals)
+			Spawn(class'WallCrack', ,, Location, rotator(HitNormal));
+	}
 }
 
 defaultproperties {
 }
-

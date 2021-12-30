@@ -11,11 +11,10 @@
 class OSRingExplosion2 expands RingExplosion2;
 
 simulated function SpawnEffects() {
-  super.SpawnEffects();
-  if (class'{{package}}.UIweapons'.default.bUseDecals)
-    Spawn(class'BigEnergyImpact', ,, ,rot(16384, 0, 0));
+	super.SpawnEffects();
+	if (class'{{package}}.UIweapons'.default.bUseDecals)
+		Spawn(class'BigEnergyImpact', ,, ,rot(16384, 0, 0));
 }
 
 defaultproperties {
 }
-

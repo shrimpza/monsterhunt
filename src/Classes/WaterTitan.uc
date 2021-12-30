@@ -38,6 +38,6 @@ function SpawnRock() {
 }
 
 defaultproperties {
-     CarcassType=Class'{{package}}.WaterTitanCarcass'
-     Style=STY_Translucent
+	CarcassType=Class'{{package}}.WaterTitanCarcass'
+	Style=STY_Translucent
 }
