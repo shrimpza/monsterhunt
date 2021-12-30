@@ -24,7 +24,7 @@ jobs:
       - name: (Get metadata)
         id: metadata
         run: |
-          source buildconfig.sh
+          source buildscript/buildconfig.sh
           echo "::set-output name=version::$version"
           echo "::set-output name=build::$build"
           echo "::set-output name=package::$package"
@@ -75,7 +75,7 @@ jobs:
       - name: (Get metadata)
         id: metadata
         run: |
-          source buildconfig.sh
+          source buildscript/buildconfig.sh
           echo "::set-output name=version::$version"
           echo "::set-output name=build::$build"
           echo "::set-output name=package::$package"
