@@ -38,6 +38,6 @@ function SpawnRock() {
 }
 
 defaultproperties {
-     CarcassType=Class'MonsterHunt.WaterTitanCarcass'
+     CarcassType=Class'{{package}}.WaterTitanCarcass'
      Style=STY_Translucent
 }

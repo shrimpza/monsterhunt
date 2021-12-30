@@ -17,6 +17,6 @@ var() string Comment1, Comment2, Comment3, Comment4, Comment5;
 
 defaultproperties {
      bHidden=True
-     Texture=Texture'MonsterHunt.MHComment'
+     Texture=Texture'{{package}}.MHComment'
      DrawScale=2.000000
 }

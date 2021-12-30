@@ -71,52 +71,52 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant) {
 		if (Other.IsA('UIWeapon')) return true;
 
 		if (Other.IsA('Stinger')) {
-			ReplaceWith(Other, "MonsterHunt.OLStinger");
+			ReplaceWith(Other, "{{package}}.OLStinger");
 			return false;
 		}
 
 		if (Other.IsA('Rifle')) {
-			ReplaceWith(Other, "MonsterHunt.OLRifle");
+			ReplaceWith(Other, "{{package}}.OLRifle");
 			return false;
 		}
 	
 		if (Other.IsA('Razorjack')) {
-			ReplaceWith(Other, "MonsterHunt.OLRajorjack");
+			ReplaceWith(Other, "{{package}}.OLRajorjack");
 			return false;
 		}
 
 		if (Other.IsA('Minigun')) {
-			ReplaceWith(Other, "MonsterHunt.OLMinigun");
+			ReplaceWith(Other, "{{package}}.OLMinigun");
 			return false;
 		}
 	
 		if (Other.IsA('AutoMag')) {
-			ReplaceWith(Other, "MonsterHunt.OLAutoMag");
+			ReplaceWith(Other, "{{package}}.OLAutoMag");
 			return false;
 		}
 
 		if (Other.IsA('Eightball')) {
-			ReplaceWith(Other, "MonsterHunt.OLEightball");
+			ReplaceWith(Other, "{{package}}.OLEightball");
 			return false;
 		}
 	
 		if (Other.IsA('FlakCannon')) {
-			ReplaceWith(Other, "MonsterHunt.OLFlakCannon");
+			ReplaceWith(Other, "{{package}}.OLFlakCannon");
 			return false;
 		}
 		
 		if (Other.IsA('ASMD')) {
-			ReplaceWith(Other, "MonsterHunt.OLASMD");
+			ReplaceWith(Other, "{{package}}.OLASMD");
 			return false;
 		}
 
 		if (Other.IsA('GesBioRifle')) {
-			ReplaceWith(Other, "MonsterHunt.OLGESBioRifle");
+			ReplaceWith(Other, "{{package}}.OLGESBioRifle");
 			return false;
 		}
 
 		if (Other.IsA('dispersionpistol')) {
-			ReplaceWith(Other, "MonsterHunt.OLDPistol");
+			ReplaceWith(Other, "{{package}}.OLDPistol");
 			return false;
 		}
 		bSuperRelevant = 0;

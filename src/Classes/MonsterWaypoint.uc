@@ -69,7 +69,7 @@ defaultproperties {
      Position=1
      bEnabled=True
      bStatic=False
-     Texture=Texture'MonsterHunt.MHMarker'
+     Texture=Texture'{{package}}.MHMarker'
      CollisionRadius=30.000000
      CollisionHeight=30.000000
      bCollideActors=True

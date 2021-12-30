@@ -18,7 +18,7 @@ defaultproperties {
      StartMessage="The battle has begun!"
      GameEndedMessage="Arena Cleared!"
      SingleWaitingMessage="Press Fire to enter the arena."
-     MapListType=Class'MonsterHunt.MonsterArenaMapList'
+     MapListType=Class'{{package}}.MonsterArenaMapList'
      MapPrefix="MA"
      BeaconName="MA"
      LeftMessage=" left the arena."

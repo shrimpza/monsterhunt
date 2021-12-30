@@ -31,7 +31,7 @@ simulated function SpawnEffects() {
   }
   if (!Level.bHighDetailMode)
     return;
-   if (class'MonsterHunt.UIweapons'.default.bUseDecals&& Level.NetMode != NM_DedicatedServer)
+   if (class'{{package}}.UIweapons'.default.bUseDecals&& Level.NetMode != NM_DedicatedServer)
 Spawn(class'Pock');
    if (Level.bDropDetail)
     return;

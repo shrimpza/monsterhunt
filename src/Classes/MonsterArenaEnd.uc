@@ -22,7 +22,7 @@ function TriggerObjective() {
 defaultproperties {
      bInitiallyActive=False
      InitialState=OtherTriggerTurnsOn
-     Texture=Texture'MonsterHunt.MAEnd'
+     Texture=Texture'{{package}}.MAEnd'
      CollisionRadius=15000.000000
      CollisionHeight=15000.000000
 }

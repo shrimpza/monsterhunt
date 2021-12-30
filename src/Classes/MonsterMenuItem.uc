@@ -10,7 +10,7 @@
 class MonsterMenuItem expands UMenuModMenuItem;
 
 function Execute() {
-	MenuItem.Owner.Root.CreateWindow(class'MonsterHunt.MonsterCreditsWindow', 100, 100, 100, 100);
+	MenuItem.Owner.Root.CreateWindow(class'{{package}}.MonsterCreditsWindow', 100, 100, 100, 100);
 }
 
 defaultproperties {

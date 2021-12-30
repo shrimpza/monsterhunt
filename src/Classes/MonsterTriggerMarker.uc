@@ -17,5 +17,5 @@ class MonsterTriggerMarker expands NavigationPoint;
 defaultproperties {
      ExtraCost=800
      bSpecialCost=True
-     Texture=Texture'MonsterHunt.MHMarker'
+     Texture=Texture'{{package}}.MHMarker'
 }

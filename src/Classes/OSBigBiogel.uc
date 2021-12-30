@@ -14,7 +14,7 @@ class OSBigBiogel expands BigBiogel;
 
 simulated function SetWall(vector HitNormal, Actor Wall) {
   Super.SetWall(HitNormal, Wall);
-  if (Level.NetMode != NM_DedicatedServer && class'MonsterHunt.uiweapons'.default.busedecals)
+  if (Level.NetMode != NM_DedicatedServer && class'{{package}}.uiweapons'.default.busedecals)
     spawn(class'BioMark', ,, Location, rotator(SurfaceNormal));
 }
 function DropDrip() {

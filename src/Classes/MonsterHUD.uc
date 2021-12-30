@@ -50,6 +50,15 @@ simulated function DrawGameSynopsis(Canvas Canvas) {
 			Canvas.DrawText(" " $ LivesRemainLabel $ ": " $ int(PawnOwner.PlayerReplicationInfo.Deaths), False);
 		}
 		YOffset += YL;
+		if (Level.Game.IsA('MonsterHuntDefence')) {
+			Canvas.SetPos(0, YOffset);
+			escapesString = " " $ HuntersRemainLabel $ ": " $ string(mpri.Escapees);
+			if (mpri.MaxEscapees > 0) {
+				escapesString = escapesString $ "/" $ string(mpri.MaxEscapees);
+			}
+			Canvas.DrawText(escapesString, False);
+			YOffset += YL;
+		}
 		Canvas.SetPos(0, YOffset);
 		Canvas.DrawText(" " $ HuntersRemainLabel $ ": " $ string(mpri.Hunters), False);
 		YOffset += YL;
@@ -73,7 +82,7 @@ simulated function DrawStatus(Canvas Canvas) {
 	}
 
 	Canvas.SetPos(X, Y);
-	Canvas.DrawTile(Texture'MonsterHunt.Hud.HudIcon', 128 * Scale, 64 * Scale, 0, 192, 128.0, 64.0);
+	Canvas.DrawTile(Texture'{{package}}.Hud.HudIcon', 128 * Scale, 64 * Scale, 0, 192, 128.0, 64.0);
 }
 
 simulated function Message(PlayerReplicationInfo PRI, coerce string Msg, name MsgType) {
@@ -145,9 +154,9 @@ simulated function DrawBlackStuff(canvas Canvas) {
 	Canvas.Style = ERenderStyle.STY_Modulated;
 
 	Canvas.SetPos(0, 0);
-	Canvas.DrawTile(Texture'MonsterHunt.Hud.BlackStuff', Canvas.ClipX, 160 * Scale, 0, 0, 16, 64);
+	Canvas.DrawTile(Texture'{{package}}.Hud.BlackStuff', Canvas.ClipX, 160 * Scale, 0, 0, 16, 64);
 	Canvas.SetPos(0, Canvas.ClipY - (160 * Scale));
-	Canvas.DrawTile(Texture'MonsterHunt.Hud.BlackStuff2', Canvas.ClipX, 160 * Scale, 0, 0, 16, 64);
+	Canvas.DrawTile(Texture'{{package}}.Hud.BlackStuff2', Canvas.ClipX, 160 * Scale, 0, 0, 16, 64);
 
 	Canvas.Style = ERenderStyle.STY_Translucent;
 }

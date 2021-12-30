@@ -64,5 +64,5 @@ function TriggerObjective() {
 
 defaultproperties {
      bInitiallyActive=True
-     Texture=Texture'MonsterHunt.MHEnd'
+     Texture=Texture'{{package}}.MHEnd'
 }

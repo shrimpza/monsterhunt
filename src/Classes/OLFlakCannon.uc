@@ -325,8 +325,8 @@ defaultproperties {
      bAltWarnTarget=True
      bSplashDamage=True
      FireOffset=(X=10.000000, Y=-12.000000, Z=-15.000000)
-     ProjectileClass=Class'MonsterHunt.OSMasterChunk'
-     AltProjectileClass=Class'MonsterHunt.OSFlakShell'
+     ProjectileClass=Class'{{package}}.OSMasterChunk'
+     AltProjectileClass=Class'{{package}}.OSFlakShell'
      shakemag=350.000000
      shaketime=0.150000
      shakevert=8.500000

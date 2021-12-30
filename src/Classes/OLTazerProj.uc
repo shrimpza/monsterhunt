@@ -21,7 +21,7 @@ function SuperExplosion() {
 }
 simulated function PostBeginPlay() { //decals or no decals?
   Super.PostBeginPlay();
-  if (class'MonsterHunt.uiweapons'.default.busedecals)
+  if (class'{{package}}.uiweapons'.default.busedecals)
     ExplosionDecal = Class'Botpack.EnergyImpact';
   else
     ExplosionDecal = None;

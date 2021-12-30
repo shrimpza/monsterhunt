@@ -16,7 +16,7 @@ simulated function Explosion(vector HitLocation) {
                                                                     //makes use of decals and speeding up dedicated servers :D
   BlowUp(HitLocation);
   if (Level.NetMode != NM_DedicatedServer) {
-    if (class'MonsterHunt.uiweapons'.default.busedecals)
+    if (class'{{package}}.uiweapons'.default.busedecals)
     spawn(class'Botpack.BlastMark', ,, ,rot(16384, 0, 0));
       s = spawn(class'SpriteBallExplosion', ,, HitLocation);
     s.RemoteRole = ROLE_None;

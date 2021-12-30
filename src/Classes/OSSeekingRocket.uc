@@ -11,7 +11,7 @@
 class OSSeekingRocket expands SeekingRocket;
 simulated function PostBeginPlay() {
   Super.PostBeginPlay();
-  if (class'MonsterHunt.uiweapons'.default.busedecals)
+  if (class'{{package}}.uiweapons'.default.busedecals)
     ExplosionDecal=Class'Botpack.BlastMark';
   else
     ExplosionDecal=None;

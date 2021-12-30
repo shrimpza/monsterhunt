@@ -13,7 +13,7 @@
 class OSFlakShell expands FlakShell;
 /*simulated function PostBeginPlay() { //decals or no decals?
     Super.PostBeginPlay();
-    if (class'MonsterHunt.ulweapons'.default.busedecals)
+    if (class'{{package}}.ulweapons'.default.busedecals)
     ExplosionDecal=Class'Botpack.BlastMark';
     else
     ExplosionDecal=None;
@@ -41,7 +41,7 @@ simulated function Timer() { //drop detail allowed to....
 simulated function Landed(vector HitNormal) {
   local DirectionalBlast D;
 
-  if ((Level.NetMode != NM_DedicatedServer)&&(class'MonsterHunt.uiweapons'.default.bUseDecals)) {
+  if ((Level.NetMode != NM_DedicatedServer)&&(class'{{package}}.uiweapons'.default.bUseDecals)) {
     D = Spawn(class'Botpack.DirectionalBlast', self);
     if (D != None)
       D.DirectionalAttach(initialDir, HitNormal);
@@ -52,7 +52,7 @@ simulated function Landed(vector HitNormal) {
 simulated function HitWall (vector HitNormal, actor Wall) {
   local DirectionalBlast D;
 
-  if ((Level.NetMode != NM_DedicatedServer)&&(class'MonsterHunt.uiweapons'.default.bUseDecals)) {
+  if ((Level.NetMode != NM_DedicatedServer)&&(class'{{package}}.uiweapons'.default.bUseDecals)) {
     D = Spawn(class'Botpack.DirectionalBlast', self);
     if (D != None)
       D.DirectionalAttach(initialDir, HitNormal);

@@ -166,7 +166,7 @@ function ProcessTraceHit(Actor Other, Vector HitLocation, Vector HitNormal, Vect
     s.Eject(((FRand() * 0.3 + 0.4) * X + (FRand() * 0.2 + 0.2) * Y + (FRand() * 0.3 + 1.0) * Z) * 160);
 	}
   if (Other == Level) {
-    Spawn(class'MonsterHunt.osWallHitEffect', ,, HitLocation + HitNormal * 9, Rotator(HitNormal));
+    Spawn(class'{{package}}.osWallHitEffect', ,, HitLocation + HitNormal * 9, Rotator(HitNormal));
   } else if ((Other != self) && (Other != Owner) && (Other != None)) {
     if (FRand() < 0.2) X *= 5;
     Other.TakeDamage(HitDamage, Pawn(Owner), HitLocation, 3000.0 * X, MyDamageType);
@@ -858,7 +858,7 @@ state Idle {
 				Gotostate('newclip');
 			}
 		}	else { //complex reload...
-			if (((Playerpawn(owner) ! =None && (bwantreload || playerpawn(owner).bextra3 != 0))
+			if (((Playerpawn(owner) != None && (bwantreload || playerpawn(owner).bextra3 != 0))
 			  	|| (Playerpawn(owner) == None&&Pawn(Owner).enemy == None))
 			  	&& (40 - (clipcount + slaveclipcount) < ammotype.ammoamount) && (clipcount != 0)) {
 				Gotostate('newclip');

@@ -401,7 +401,7 @@ defaultproperties {
      bAltWarnTarget=True
      bSplashDamage=True
      FireOffset=(X=12.000000, Y=-6.000000, Z=-7.000000)
-     AltProjectileClass=Class'MonsterHunt.OLTazerProj'
+     AltProjectileClass=Class'{{package}}.OLTazerProj'
      MyDamageType=jolted
      AIRating=0.600000
      AltRefireRate=0.700000

@@ -10,6 +10,6 @@
 class RockTentacleCarcass expands TentacleCarcass;
 
 defaultproperties {
-     MultiSkins(0)=Texture'MonsterHunt.Skins.RockTentacle'
-     MultiSkins(1)=Texture'MonsterHunt.Skins.RockTentacle'
+     MultiSkins(0)=Texture'{{package}}.Skins.RockTentacle'
+     MultiSkins(1)=Texture'{{package}}.Skins.RockTentacle'
 }

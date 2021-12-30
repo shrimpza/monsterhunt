@@ -238,8 +238,8 @@ defaultproperties {
      PickupAmmoCount=25
      bAltWarnTarget=True
      FireOffset=(X=12.000000, Y=-9.000000, Z=-16.000000)
-     ProjectileClass=Class'MonsterHunt.OSBioGel'
-     AltProjectileClass=Class'MonsterHunt.OSBigBiogel'
+     ProjectileClass=Class'{{package}}.OSBioGel'
+     AltProjectileClass=Class'{{package}}.OSBigBiogel'
      AIRating=0.600000
      RefireRate=0.900000
      AltRefireRate=0.700000

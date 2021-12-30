@@ -14,7 +14,7 @@ class OSRazorBladeAlt expands RazorBladeAlt;
 auto state Flying {
   simulated function HitWall (vector HitNormal, actor Wall) {
     super.Hitwall(hitnormal, wall);
-    if (class'MonsterHunt.uiweapons'.default.bUseDecals)
+    if (class'{{package}}.uiweapons'.default.bUseDecals)
       Spawn(class'WallCrack', ,, Location, rotator(HitNormal));
   }
 }

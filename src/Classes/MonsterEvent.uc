@@ -18,5 +18,5 @@ function Trigger(actor Other, pawn EventInstigator) {
 }
 
 defaultproperties {
-     Texture=Texture'MonsterHunt.MHEvent'
+     Texture=Texture'{{package}}.MHEvent'
 }

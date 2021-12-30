@@ -22,5 +22,5 @@ event ActorLeaving(actor Other) {
 }
 
 defaultproperties {
-     Texture=Texture'MonsterHunt.MHClimb'
+     Texture=Texture'{{package}}.MHClimb'
 }

@@ -12,7 +12,7 @@ class OSRingExplosion2 expands RingExplosion2;
 
 simulated function SpawnEffects() {
   super.SpawnEffects();
-  if (class'MonsterHunt.UIweapons'.default.bUseDecals)
+  if (class'{{package}}.UIweapons'.default.bUseDecals)
     Spawn(class'BigEnergyImpact', ,, ,rot(16384, 0, 0));
 }
 

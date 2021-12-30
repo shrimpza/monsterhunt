@@ -704,8 +704,8 @@ defaultproperties {
      bAltWarnTarget=True
      bSplashDamage=True
      bRecommendSplashDamage=True
-     ProjectileClass=Class'MonsterHunt.OSRocket'
-     AltProjectileClass=Class'MonsterHunt.OSGrenade'
+     ProjectileClass=Class'{{package}}.OSRocket'
+     AltProjectileClass=Class'{{package}}.OSGrenade'
      shakemag=350.000000
      shaketime=0.200000
      shakevert=7.500000

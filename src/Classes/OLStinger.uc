@@ -182,8 +182,8 @@ defaultproperties {
      bAltWarnTarget=True
      bSpecialIcon=False
      FireOffset=(X=12.000000, Y=-10.000000, Z=-15.000000)
-     ProjectileClass=Class'MonsterHunt.OSStingerProjectile'
-     AltProjectileClass=Class'MonsterHunt.OSStingerProjectile'
+     ProjectileClass=Class'{{package}}.OSStingerProjectile'
+     AltProjectileClass=Class'{{package}}.OSStingerProjectile'
      shakemag=120.000000
      AIRating=0.400000
      RefireRate=0.800000

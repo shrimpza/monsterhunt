@@ -13,7 +13,7 @@
 class OSDAmmo5 expands DAmmo5;
 simulated function PostBeginPlay() { //decals or no decals?
   Super.PostBeginPlay();
-  if (class'MonsterHunt.uiweapons'.default.busedecals)
+  if (class'{{package}}.uiweapons'.default.busedecals)
     ExplosionDecal=Class'Botpack.energyimpact';
   else
     ExplosionDecal=None;

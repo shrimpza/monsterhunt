@@ -183,8 +183,8 @@ defaultproperties {
      AmmoName=Class'UnrealI.RazorAmmo'
      PickupAmmoCount=15
      FireOffset=(X=16.000000, Z=-15.000000)
-     ProjectileClass=Class'MonsterHunt.OSRazorBlade'
-     AltProjectileClass=Class'MonsterHunt.OSRazorBladeAlt'
+     ProjectileClass=Class'{{package}}.OSRazorBlade'
+     AltProjectileClass=Class'{{package}}.OSRazorBladeAlt'
      shakemag=120.000000
      AIRating=0.500000
      RefireRate=0.830000

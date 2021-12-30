@@ -12,7 +12,7 @@ class LavaSlith expands Slith;
 #exec TEXTURE IMPORT NAME=LavaSlith FILE=textures\LavaSlith.PCX GROUP=Skins
 
 defaultproperties {
-     CarcassType=Class'MonsterHunt.LavaSlithCarcass'
-     RangedProjectile=Class'MonsterHunt.LavaSlithProjectile'
-     MultiSkins(0)=Texture'MonsterHunt.Skins.LavaSlith'
+     CarcassType=Class'{{package}}.LavaSlithCarcass'
+     RangedProjectile=Class'{{package}}.LavaSlithProjectile'
+     MultiSkins(0)=Texture'{{package}}.Skins.LavaSlith'
 }

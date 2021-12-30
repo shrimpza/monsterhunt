@@ -44,6 +44,6 @@ function SpawnRock() {
 }
 
 defaultproperties {
-     CarcassType=Class'MonsterHunt.LavaTitanCarcass'
-     MultiSkins(0)=Texture'MonsterHunt.Skins.LavaTitan'
+     CarcassType=Class'{{package}}.LavaTitanCarcass'
+     MultiSkins(0)=Texture'{{package}}.Skins.LavaTitan'
 }

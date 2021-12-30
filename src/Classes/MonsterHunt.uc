@@ -338,8 +338,6 @@ function Killed(pawn killer, pawn Other, name damageType) {
 }
 
 function ScoreKill(pawn Killer, pawn Other) {
-	local ScriptedPawn S;
-
 	if (Killer == None) return;
 
 	if (Killer == Other || !Other.bIsPlayer || (Killer.PlayerReplicationInfo.Team != Other.PlayerReplicationInfo.Team)) {
@@ -365,12 +363,22 @@ function ScoreKill(pawn Killer, pawn Other) {
 		else if (Other.IsA('Nali') || Other.IsA('Cow') || Other.IsA('NaliRabbit')) Killer.PlayerReplicationInfo.Score -= 6;
 		// be default, score 1 for all other kills
 		else Killer.PlayerReplicationInfo.Score += 1;
+
+		// Get 10 extra points for killing the boss!!
+		if ((Killer.bIsPlayer) && (ScriptedPawn(Other).bIsBoss)) Killer.PlayerReplicationInfo.Score += 9;
 	}
+}
 
-	// Get 10 extra points for killing the boss!!
+function NavigationPoint FindPlayerStart(Pawn Player, optional byte InTeam, optional string incomingName) {
+  if (Player.IsA('ScriptedPawn')) return None;
 
-	if (Other.IsA('ScriptedPawn')) S = ScriptedPawn(Other);
-	if ((Killer.bIsPlayer) && (S.bIsBoss)) Killer.PlayerReplicationInfo.Score += 9;
+  return Super.FindPlayerStart(Player, InTeam, incomingName);
+}
+
+function ChangeName(Pawn Other, string S, bool bNameChange) {
+  if (Other.IsA('ScriptedPawn')) return;
+
+  Super.ChangeName(Other, S, bNameChange);
 }
 
 function AddToTeam(int num, Pawn Other) {
@@ -379,7 +387,7 @@ function AddToTeam(int num, Pawn Other) {
 	local bool bSuccess;
 	local string SkinName, FaceName;
 
-	if (Other != None) {
+	if (Other != None && Other.PlayerReplicationInfo != None) {
 		aTeam = Teams[0];
 		aTeam.Size++;
 		Other.PlayerReplicationInfo.Team = 0;
@@ -558,19 +566,19 @@ defaultproperties {
      CorrodedMessage=" was slimed"
      HackedMessage=" was hacked"
      DefaultWeapon=Class'Botpack.ChainSaw'
-     ScoreBoardType=Class'MonsterHunt.MonsterBoard'
-     BotMenuType="MonsterHunt.MonsterBotConfig"
-     RulesMenuType="MonsterHunt.MonsterHuntRules"
-     SettingsMenuType="MonsterHunt.MonsterSettings"
-     HUDType=Class'MonsterHunt.MonsterHUD'
-     MapListType=Class'MonsterHunt.MonsterMapList'
+     ScoreBoardType=Class'{{package}}.MonsterBoard'
+     BotMenuType="{{package}}.MonsterBotConfig"
+     RulesMenuType="{{package}}.MonsterHuntRules"
+     SettingsMenuType="{{package}}.MonsterSettings"
+     HUDType=Class'{{package}}.MonsterHUD'
+     MapListType=Class'{{package}}.MonsterMapList'
      MapPrefix="MH"
      BeaconName="MH"
      LeftMessage=" left the hunt."
      EnteredMessage=" has joined the hunt!"
      GameName="Monster Hunt"
-     DMMessageClass=Class'MonsterHunt.HuntMessage'
-     MutatorClass=Class'MonsterHunt.MonsterBase'
-     GameReplicationInfoClass=Class'MonsterHunt.MonsterReplicationInfo'
+     DMMessageClass=Class'{{package}}.HuntMessage'
+     MutatorClass=Class'{{package}}.MonsterBase'
+     GameReplicationInfoClass=Class'{{package}}.MonsterReplicationInfo'
      bLocalLog=True
 }

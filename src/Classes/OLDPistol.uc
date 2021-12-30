@@ -143,13 +143,13 @@ function Projectile ProjectileFire(class<projectile> ProjClass, float ProjSpeed,
       AmmoType.AmmoAmount = 1;
   } else {
     if ((PowerLevel == 1) && AmmoType.UseAmmo(2))
-      da = Spawn(class'MonsterHunt.OSDAmmo2', ,, Start, AdjustedAim);
+      da = Spawn(class'{{package}}.OSDAmmo2', ,, Start, AdjustedAim);
     if ((PowerLevel == 2) && AmmoType.UseAmmo(4))
-      da = Spawn(class'MonsterHunt.OSDAmmo3', ,, Start, AdjustedAim);
+      da = Spawn(class'{{package}}.OSDAmmo3', ,, Start, AdjustedAim);
     if ((PowerLevel == 3) && AmmoType.UseAmmo(5))
-      da = Spawn(class'MonsterHunt.OSDAmmo4', ,, Start, AdjustedAim);
+      da = Spawn(class'{{package}}.OSDAmmo4', ,, Start, AdjustedAim);
     if ((PowerLevel >= 4) && AmmoType.UseAmmo(6))
-      da = Spawn(class'MonsterHunt.OSDAmmo5', ,, Start, AdjustedAim);
+      da = Spawn(class'{{package}}.OSDAmmo5', ,, Start, AdjustedAim);
   }
   if ((da != None) && (Mult > 1.0))
     da.InitSplash(Mult);
@@ -438,8 +438,8 @@ defaultproperties {
      bAltWarnTarget=True
      bSpecialIcon=False
      FireOffset=(X=12.000000, Y=-8.000000, Z=-15.000000)
-     ProjectileClass=Class'MonsterHunt.OSDispersionAmmo'
-     AltProjectileClass=Class'MonsterHunt.OSDispersionAmmo'
+     ProjectileClass=Class'{{package}}.OSDispersionAmmo'
+     AltProjectileClass=Class'{{package}}.OSDispersionAmmo'
      shakemag=200.000000
      shaketime=0.130000
      shakevert=2.000000
