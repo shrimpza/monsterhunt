@@ -10,7 +10,7 @@
 // This is the larger stinger projectile used for the boss
 // monster in MH-Canyon (Icy Canyon). May be used elsewhere.
 
-class MonsterStingerProjectile expands StingerProjectile;
+class MonsterStingerProjectile extends StingerProjectile;
 
 defaultproperties {
 	Damage=25.000000

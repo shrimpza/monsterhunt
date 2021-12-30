@@ -8,7 +8,7 @@
 // OLweapons.OLstinger: Network/decal stinger....
 // ============================================================
 
-class OLstinger expands UIweapons;
+class OLstinger extends UIweapons;
 
 var bool bAlreadyFiring, idleplaying;
 

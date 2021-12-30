@@ -8,7 +8,7 @@
 // OSSeekingRocket
 // ============================================================
 
-class OSSeekingRocket expands SeekingRocket;
+class OSSeekingRocket extends SeekingRocket;
 
 simulated function PostBeginPlay() {
 	Super.PostBeginPlay();

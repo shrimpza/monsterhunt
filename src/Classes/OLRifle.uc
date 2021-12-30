@@ -8,7 +8,7 @@
 // OLweapons.Olrifle: the rifle.....       with HUD crosshair since the rifle disappears anyway....
 // ============================================================
 
-class Olrifle expands UIweapons;
+class Olrifle extends UIweapons;
 
 var int NumFire;
 var float StillTime, StillStart;

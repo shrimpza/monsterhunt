@@ -8,7 +8,7 @@
 // OLweapons.OLDpistol: the NEW pistol... well..bot really :D
 // ============================================================
 
-class OLDpistol expands UIweapons;
+class OLDpistol extends UIweapons;
 
 var travel int PowerLevel, clientpowerlevel;
 var vector WeaponPos;

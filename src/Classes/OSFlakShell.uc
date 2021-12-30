@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSFlakShell expands FlakShell;
+class OSFlakShell extends FlakShell;
 
 /*simulated function PostBeginPlay() { //decals or no decals?
 		Super.PostBeginPlay();

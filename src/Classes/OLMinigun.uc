@@ -8,7 +8,7 @@
 // OLweapons.OLminigun: Network/decal minigun...
 // ============================================================
 
-class OLminigun expands UIweapons;
+class OLminigun extends UIweapons;
 
 var float ShotAccuracy, Count;
 var bool bOutOfAmmo, bFiredShot;

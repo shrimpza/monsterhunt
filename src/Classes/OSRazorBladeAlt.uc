@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSRazorBladeAlt expands RazorBladeAlt;
+class OSRazorBladeAlt extends RazorBladeAlt;
 
 auto state Flying {
 	simulated function HitWall (vector HitNormal, actor Wall) {

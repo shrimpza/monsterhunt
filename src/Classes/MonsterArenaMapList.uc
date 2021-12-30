@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterArenaMapList expands MapList
+class MonsterArenaMapList extends MapList
 	config(MonsterHunt);
 
 defaultproperties {

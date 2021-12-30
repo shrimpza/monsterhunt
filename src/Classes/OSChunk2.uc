@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSChunk2 expands Chunk2;
+class OSChunk2 extends Chunk2;
 
 simulated function HitWall(vector HitNormal, actor Wall) {
 	if (!bDelayTime) {

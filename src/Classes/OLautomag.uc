@@ -9,7 +9,7 @@
 // can be akimbo'd to (uses bane's code..... only one controls firing....other purely for animation)
 // ============================================================
 
-class OLautomag expands UIweapons;
+class OLautomag extends UIweapons;
 
 var() int hitdamage;
 var  float AltAccuracy;

@@ -9,7 +9,7 @@
 
 // Place comments in maps for easy reference when editing
 
-class MonsterComment expands Actor;
+class MonsterComment extends Actor;
 
 #exec Texture Import File=textures\MHComment.pcx Name=MHComment Mips=Off Flags=2
 

@@ -8,7 +8,7 @@
 // SPbindings.OLGESBioRifle: decal/network GES biorifle...
 // ============================================================
 
-class OLGESBioRifle expands UIweapons;
+class OLGESBioRifle extends UIweapons;
 
 var float ChargeSize, Count;
 var bool bBurst;

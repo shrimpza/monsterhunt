@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterArenaDefaultMaps expands MapList;
+class MonsterArenaDefaultMaps extends MapList;
 
 defaultproperties {
 	Maps(0)="MA-Winged.unr"

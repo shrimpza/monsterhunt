@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class LavaTitanCarcass expands TitanCarcass;
+class LavaTitanCarcass extends TitanCarcass;
 
 defaultproperties {
 	MultiSkins(0)=Texture'{{package}}.Skins.LavaTitan'

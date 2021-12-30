@@ -8,7 +8,7 @@
 // OLweapons.OSRingExplosion2: spawns the decals......
 // ============================================================
 
-class OSRingExplosion2 expands RingExplosion2;
+class OSRingExplosion2 extends RingExplosion2;
 
 simulated function SpawnEffects() {
 	super.SpawnEffects();

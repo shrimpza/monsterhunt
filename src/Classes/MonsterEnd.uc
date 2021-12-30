@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterEnd expands Trigger;
+class MonsterEnd extends Trigger;
 
 #exec Texture Import File=textures\MHEnd.pcx Name=MHEnd Mips=Off Flags=2
 
@@ -59,7 +59,7 @@ function TriggerObjective() {
 
 	MH = MonsterHunt(Level.Game);
 	if (MH != None) MH.EndGame("Hunt Successful!");
-	else log("MonsterEnd - TriggerObjective - MH == None");
+	else warn("MonsterEnd - TriggerObjective - MH == None");
 }
 
 defaultproperties {

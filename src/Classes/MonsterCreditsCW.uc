@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterCreditsCW expands UTCreditsCW;
+class MonsterCreditsCW extends UTCreditsCW;
 
 #exec TEXTURE IMPORT NAME=MHCreditsBG FILE=Textures\MHCreditsBG.PCX GROUP=Rules LODSET=0
 
@@ -42,7 +42,6 @@ defaultproperties {
 	BizText="Contact info"
 	BizNames(0)="A ShrimpWorks production"
 	BizNames(1)=" "
-	BizNames(2)="Email - support@shrimpworks.za.net"
 	BizNames(3)="Web - https://shrimpworks.za.net/"
 	MaxBiz=4
 }

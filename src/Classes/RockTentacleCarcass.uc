@@ -7,7 +7,7 @@
 //           For more info, https://shrimpworks.za.net
 // ============================================================
 
-class RockTentacleCarcass expands TentacleCarcass;
+class RockTentacleCarcass extends TentacleCarcass;
 
 defaultproperties {
 	MultiSkins(0)=Texture'{{package}}.Skins.RockTentacle'

@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class LavaSlithProjectile expands SlithProjectile;
+class LavaSlithProjectile extends SlithProjectile;
 
 function Timer() {
 	local BlackSmoke gsp;

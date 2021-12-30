@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterCriticalString expands CriticalStringPlus;
+class MonsterCriticalString extends CriticalStringPlus;
 
 defaultproperties {
 	Lifetime=10

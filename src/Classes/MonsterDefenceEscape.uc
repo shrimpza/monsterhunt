@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterDefenceEscape expands Trigger;
+class MonsterDefenceEscape extends Trigger;
 
 var Texture TeleportEffectTexture;
 var Sound EscapeSound;

@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterHuntDefence expands MonsterHunt
+class MonsterHuntDefence extends MonsterHunt
 	config(MonsterHunt);
 
 var config int MaxEscapees;
@@ -15,7 +15,7 @@ var config int MaxEscapees;
 var localized string MonstersEscapedMessage;
 
 // pre-set tags we use internally
-var Name monsterOrderTag, runnerTag;
+var Name monsterOrderTag, runnerTag, defaultRunnerState, defaultOtherState;
 
 // the flag base (red flag) we want monsters to charge towards
 var FlagBase monsterTarget;
@@ -213,52 +213,53 @@ function spawnMonsters() {
 
 	// every ~8 seconds, spawn a runner
 	if (spawnCycle % 8 == 0) {
-		if (FRand() > 0.8) spawnMonsterAt(findFarSpawn(), class'SkaarjWarrior', 'TriggerAlarm', runnerTag);
-		else if (FRand() > 0.6) spawnMonsterAt(findFarSpawn(), class'SkaarjAssassin', 'TriggerAlarm', runnerTag);
-		else if (FRand() > 0.4) spawnMonsterAt(findFarSpawn(), class'SkaarjBerserker', 'TriggerAlarm', runnerTag);
-		else if (FRand() > 0.2) spawnMonsterAt(findFarSpawn(), class'SkaarjLord', 'TriggerAlarm', runnerTag);
-		else spawnMonsterAt(findFarSpawn(), class'SkaarjScout', 'TriggerAlarm', runnerTag);
+		if (FRand() > 0.8) spawnMonsterAt(findFarSpawn(), class'SkaarjWarrior', defaultRunnerState, runnerTag);
+		else if (FRand() > 0.6) spawnMonsterAt(findFarSpawn(), class'SkaarjAssassin', defaultRunnerState, runnerTag);
+		else if (FRand() > 0.4) spawnMonsterAt(findFarSpawn(), class'SkaarjBerserker', defaultRunnerState, runnerTag);
+		else if (FRand() > 0.2) spawnMonsterAt(findFarSpawn(), class'SkaarjLord', defaultRunnerState, runnerTag);
+		else spawnMonsterAt(findFarSpawn(), class'SkaarjScout', defaultRunnerState, runnerTag);
 	}
 
 	// don't spam more monsters - but allow skaarj runners to keep spawning.
 	if (MonsterReplicationInfo(GameReplicationInfo).Monsters < (maxOtherMonsters * spawnChanceScaler)) {
 		if (spawnCycle % 5 == 0 && FRand() < (0.4 * spawnChanceScaler)) {
-			if (FRand() > 0.75) spawnMonsterAt(findFarSpawn(), class'SkaarjInfantry', 'TriggerAlarm');
-			else if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'SkaarjGunner', 'TriggerAlarm');
-			else if (FRand() > 0.25) spawnMonsterAt(findFarSpawn(), class'SkaarjOfficer', 'TriggerAlarm');
-			else spawnMonsterAt(findFarSpawn(), class'SkaarjSniper', 'TriggerAlarm');
+			if (FRand() > 0.75) spawnMonsterAt(findFarSpawn(), class'SkaarjInfantry', defaultRunnerState);
+			else if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'SkaarjGunner', defaultRunnerState);
+			else if (FRand() > 0.25) spawnMonsterAt(findFarSpawn(), class'SkaarjOfficer', defaultRunnerState);
+			else spawnMonsterAt(findFarSpawn(), class'SkaarjSniper', defaultRunnerState);
 		}
 
 		if (spawnCycle % 3 == 0 && FRand() < (0.6 * spawnChanceScaler)) {
-			if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'KrallElite', 'TriggerAlarm');
-			else spawnMonsterAt(findFarSpawn(), class'Krall', 'TriggerAlarm');
+			if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'KrallElite', defaultOtherState);
+			else spawnMonsterAt(findFarSpawn(), class'Krall', defaultOtherState);
 		}
 		if (spawnCycle % 4 == 0 && FRand() < (0.4 * spawnChanceScaler)) {
-			if (FRand() > 0.7) spawnMonsterAt(findFarSpawn(), class'LavaSlith', 'TriggerAlarm');
-			else spawnMonsterAt(findFarSpawn(), class'Slith', 'TriggerAlarm');
+			if (FRand() > 0.7) spawnMonsterAt(findFarSpawn(), class'LavaSlith', defaultOtherState);
+			else spawnMonsterAt(findFarSpawn(), class'Slith', defaultOtherState);
 		}
 		if (spawnCycle % 5 == 0 && FRand() < (0.4 * spawnChanceScaler)) {
-			if (FRand() > 0.5) spawnMonsterAt(findNearSpawn(), class'MercenaryElite', 'TriggerAlarm');
-			else spawnMonsterAt(findNearSpawn(), class'Mercenary', 'TriggerAlarm');
+			if (FRand() > 0.5) spawnMonsterAt(findNearSpawn(), class'MercenaryElite', defaultOtherState);
+			else spawnMonsterAt(findNearSpawn(), class'Mercenary', defaultOtherState);
 		}
 
 		if (spawnCycle % 5 == 0 && FRand() < (0.2 * spawnChanceScaler)) {
-			if (FRand() > 0.7) spawnMonsterAt(findNearSpawn(), class'Behemoth', 'TriggerAlarm');
-			else spawnMonsterAt(findNearSpawn(), class'Brute', 'TriggerAlarm');
+			if (FRand() > 0.7) spawnMonsterAt(findNearSpawn(), class'Behemoth', defaultOtherState);
+			else spawnMonsterAt(findNearSpawn(), class'Brute', defaultOtherState);
 		}
 
-		if (spawnCycle % 5 == 0 && FRand() < (0.2 * spawnChanceScaler)) spawnMonsterAt(findNearSpawn(), class'GasBag', 'TriggerAlarm');
+		if (spawnCycle % 5 == 0 && FRand() < (0.2 * spawnChanceScaler)) spawnMonsterAt(findNearSpawn(), class'GasBag', defaultOtherState);
 
 		if (FRand() < (0.3 * spawnChanceScaler)) {
-			if (FRand() > 0.4) spawnMonsterAt(findNearSpawn(), class'Pupae', 'TriggerAlarm');
-			else spawnMonsterAt(findNearSpawn(), class'Fly', 'TriggerAlarm');
+			if (FRand() > 0.6) spawnMonsterAt(findNearSpawn(), class'Pupae', defaultOtherState);
+			else if (FRand() > 0.3) spawnMonsterAt(findNearSpawn(), class'Fly', defaultOtherState);
+			else spawnMonsterAt(findNearSpawn(), class'Manta', defaultOtherState);
 		}
 
 		// small chance of spawning a large monster
 		if (spawnCycle % 18 == 0 && FRand() > 0.75) {
-			if (FRand() > 0.33) spawnMonsterAt(findNearSpawn(), class'Warlord', 'TriggerAlarm');
-			else if (FRand() > 0.33) spawnMonsterAt(findNearSpawn(), class'Titan', 'TriggerAlarm');
-			else spawnMonsterAt(findNearSpawn(), class'Queen', 'TriggerAlarm');
+			if (FRand() > 0.33) spawnMonsterAt(findNearSpawn(), class'Warlord', defaultOtherState);
+			else if (FRand() > 0.33) spawnMonsterAt(findNearSpawn(), class'Titan', defaultOtherState);
+			else spawnMonsterAt(findNearSpawn(), class'Queen', defaultOtherState);
 		}
 	}
 
@@ -324,6 +325,8 @@ defaultproperties {
 	maxOtherMonsters=80
 	monsterOrderTag="MHDAttackThis"
 	runnerTag="MHDRunner"
+	defaultRunnerState='TriggerAlarm'
+	defaultOtherState='TriggerAlarm'
 	MapPrefix="CTF"
 	MapListType=Class'Botpack.CTFMapList'
 	BeaconName="MHD"

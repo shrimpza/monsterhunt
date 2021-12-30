@@ -8,7 +8,7 @@
 // OLweapons.OSRazorBlade: makes use of decals and nothing more....
 // ============================================================
 
-class OSRazorBlade expands RazorBlade;
+class OSRazorBlade extends RazorBlade;
 
 auto state Flying {
 	simulated function HitWall (vector HitNormal, actor Wall) {

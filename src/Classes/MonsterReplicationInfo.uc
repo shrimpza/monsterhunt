@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterReplicationInfo expands TournamentGameReplicationInfo;
+class MonsterReplicationInfo extends TournamentGameReplicationInfo;
 
 var bool bUseLives;
 var bool bUseTeamSkins;

@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class HuntMessage expands DeathMatchMessage;
+class HuntMessage extends DeathMatchMessage;
 
 defaultproperties {
 	NewTeamMessage="has joined the hunt!"

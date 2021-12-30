@@ -1,4 +1,4 @@
-class MonsterArenaBrowserWindow expands UTBrowserServerListWindow;
+class MonsterArenaBrowserWindow extends UTBrowserServerListWindow;
 
 defaultproperties {
 	ServerListTitle="Monster Arena"

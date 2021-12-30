@@ -9,7 +9,7 @@
 // mostly from original ASMD... Epic has seemed to bring it up to UT already (an example being the bot part of altfire).   Simple anims meant few changes required... Some bot and net code taken from shock rifle...
 // ============================================================
 
-class OLASMD expands UIweapons;
+class OLASMD extends UIweapons;
 
 var() int HitDamage;
 var Pickup Amp;

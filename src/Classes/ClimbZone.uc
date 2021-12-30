@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class ClimbZone expands ZoneInfo;
+class ClimbZone extends ZoneInfo;
 
 #exec Texture Import File=textures\MHClimb.pcx Name=MHClimb Mips=Off Flags=2
 

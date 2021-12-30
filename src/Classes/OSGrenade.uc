@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSGrenade expands Grenade;
+class OSGrenade extends Grenade;
 
 simulated function Explosion(vector HitLocation) {
 	local SpriteBallExplosion s;

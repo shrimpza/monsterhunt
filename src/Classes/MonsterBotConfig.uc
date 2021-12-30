@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterBotConfig expands UTBotConfigClient
+class MonsterBotConfig extends UTBotConfigClient
 	config(MonsterHunt);
 
 #exec TEXTURE IMPORT NAME=MHBotsBG FILE=Textures\MHBotsBG.PCX GROUP=Rules LODSET=0

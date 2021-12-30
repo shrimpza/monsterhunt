@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class RockTentacle expands Tentacle;
+class RockTentacle extends Tentacle;
 
 #exec TEXTURE IMPORT NAME=RockTentacle FILE=textures\RockTentacle.PCX GROUP=Skins
 

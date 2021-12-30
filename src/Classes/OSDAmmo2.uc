@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSDAmmo2 expands DAmmo2;
+class OSDAmmo2 extends DAmmo2;
 
 simulated function PostBeginPlay() { //decals or no decals?
 	Super.PostBeginPlay();

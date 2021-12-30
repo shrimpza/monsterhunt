@@ -8,7 +8,7 @@
 // OLweapons.OLTazerProj: Decals, decals.....
 // ============================================================
 
-class OLTazerProj expands TazerProj;
+class OLTazerProj extends TazerProj;
 
 //allows decals...
 function SuperExplosion() {

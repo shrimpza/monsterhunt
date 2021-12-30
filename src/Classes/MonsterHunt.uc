@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterHunt expands TeamGamePlus
+class MonsterHunt extends TeamGamePlus
 	config(MonsterHunt);
 
 var config bool bUseTeamSkins;
@@ -128,9 +128,6 @@ event InitGame(string Options, out string Error) {
 	if (Level.NetMode == NM_StandAlone) {
 		bRequireReady = true;
 		CheckReady();
-	}
-	if (Level.NetMode == NM_StandAlone) {
-		bRequireReady = true;
 		CountDown = 1;
 	}
 	if (!bRequireReady && (Level.NetMode != NM_Standalone)) {
@@ -200,11 +197,10 @@ function PlayStartUpMessage(PlayerPawn NewPlayer) {
 	NewPlayer.SetProgressColor(Green, i);
 
 	NewPlayer.SetProgressMessage(GameName, i++);
+
 	if (bRequireReady && (Level.NetMode != NM_Standalone)) {
-		NewPlayer.SetProgressColor(Green, i);
 		NewPlayer.SetProgressMessage(TourneyMessage, i++);
 	} else {
-		NewPlayer.SetProgressColor(Green, i);
 		NewPlayer.SetProgressMessage(StartUpMessage, i++);
 	}
 

@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class LavaSlith expands Slith;
+class LavaSlith extends Slith;
 
 #exec TEXTURE IMPORT NAME=LavaSlith FILE=textures\LavaSlith.PCX GROUP=Skins
 

@@ -10,7 +10,7 @@
 // I couldn't use the eightball code (jacked up like hell)...
 // ============================================================
 
-class OLeightball expands UIweapons;
+class OLeightball extends UIweapons;
 
 var int RocketsLoaded, ClientRocketsLoaded;
 var bool bFireLoad, bTightWad, bInstantRocket, bAlwaysInstant, bClientDone, bRotated, bPendingLock;

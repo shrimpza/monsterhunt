@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterPlayerReplicationInfo expands PlayerReplicationInfo;
+class MonsterPlayerReplicationInfo extends PlayerReplicationInfo;
 
 var int Lives;
 

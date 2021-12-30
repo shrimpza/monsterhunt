@@ -8,7 +8,7 @@
 // OLweapons.OSHeavyWallHitEffect: LOL exact same as the light one....... of course the super calls differently :D
 // ============================================================
 
-class OSHeavyWallHitEffect expands HeavyWallHitEffect;
+class OSHeavyWallHitEffect extends HeavyWallHitEffect;
 
 simulated function SpawnEffects() {
 	local Actor A;

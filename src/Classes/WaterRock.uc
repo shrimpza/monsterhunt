@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class WaterRock expands BigRock;
+class WaterRock extends BigRock;
 
 defaultproperties {
 	Style=STY_Translucent

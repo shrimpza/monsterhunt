@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class WaterTitan expands Titan;
+class WaterTitan extends Titan;
 
 function SpawnRock() {
 	local Projectile Proj;

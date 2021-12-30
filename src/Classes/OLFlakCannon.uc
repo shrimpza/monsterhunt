@@ -8,7 +8,7 @@
 // OLweapons.OLFlakCannon: the network/decal flak cannon.......
 // ============================================================
 
-class OLFlakCannon expands UIweapons;
+class OLFlakCannon extends UIweapons;
 
 var bool bejected; //for handling better animations on client.....
 

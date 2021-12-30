@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSBiodrop expands Biodrop;
+class OSBiodrop extends Biodrop;
 
 simulated function SetWall(vector HitNormal, Actor Wall) {
 	Super.SetWall(HitNormal, Wall);

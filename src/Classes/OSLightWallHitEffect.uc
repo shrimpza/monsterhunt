@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSLightWallHitEffect expands LightWallHitEffect;
+class OSLightWallHitEffect extends LightWallHitEffect;
 
 simulated function SpawnEffects() {
 	local Actor A;

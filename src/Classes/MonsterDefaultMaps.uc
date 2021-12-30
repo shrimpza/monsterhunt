@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterDefaultMaps expands MapList;
+class MonsterDefaultMaps extends MapList;
 
 defaultproperties {
 	Maps(0)="MH-Forbidden.unr"

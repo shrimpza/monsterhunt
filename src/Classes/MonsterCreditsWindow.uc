@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterCreditsWindow expands UTCreditsWindow;
+class MonsterCreditsWindow extends UTCreditsWindow;
 
 defaultproperties {
 	ClientClass=Class'{{package}}.MonsterCreditsCW'

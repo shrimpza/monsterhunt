@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterBoard expands TournamentScoreBoard;
+class MonsterBoard extends TournamentScoreBoard;
 
 var color LightGreenColor, DarkGreenColor;
 

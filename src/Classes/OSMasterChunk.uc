@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSMasterChunk expands MasterChunk;
+class OSMasterChunk extends MasterChunk;
 
 simulated function HitWall(vector HitNormal, actor Wall) {
 	if (!bDelayTime) {

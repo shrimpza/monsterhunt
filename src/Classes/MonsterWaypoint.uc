@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterWaypoint expands Keypoint;
+class MonsterWaypoint extends Keypoint;
 
 var(Waypoint) int Position;
 var(Waypoint) Actor TriggerItem;

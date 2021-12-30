@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterSettings expands UTSettingsCWindow
+class MonsterSettings extends UTSettingsCWindow
 	config(MonsterHunt);
 
 #exec TEXTURE IMPORT NAME=MHSettingsBG FILE=Textures\MHSettingsBG.PCX GROUP=Rules LODSET=0

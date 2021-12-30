@@ -10,7 +10,7 @@
 // Doesn't really work, don't use it...
 // MonsterWaypoint does what this should have
 
-class MonsterTriggerMarker expands NavigationPoint;
+class MonsterTriggerMarker extends NavigationPoint;
 
 #exec Texture Import File=textures\MHMarker.pcx Name=MHMarker Mips=Off Flags=2
 

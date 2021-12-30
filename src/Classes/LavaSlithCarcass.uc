@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class LavaSlithCarcass expands SlithCarcass;
+class LavaSlithCarcass extends SlithCarcass;
 
 defaultproperties {
 	MultiSkins(0)=Texture'{{package}}.Skins.LavaSlith'

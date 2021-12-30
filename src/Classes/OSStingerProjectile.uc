@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSStingerProjectile expands StingerProjectile;
+class OSStingerProjectile extends StingerProjectile;
 
 simulated function PostBeginPlay() { //decals or no decals?
 	Super.PostBeginPlay();

@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterShadow expands Decal;
+class MonsterShadow extends Decal;
 
 var vector OldOwnerLocation;
 var vector offset;

@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSDispersionAmmo expands DispersionAmmo;
+class OSDispersionAmmo extends DispersionAmmo;
 
 simulated function PostBeginPlay() { //decals or no decals?
 	Super.PostBeginPlay();

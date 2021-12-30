@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class WaterBoulder expands Boulder1;
+class WaterBoulder extends Boulder1;
 
 function SpawnChunks(int num) {
 	local int NumChunks, i;

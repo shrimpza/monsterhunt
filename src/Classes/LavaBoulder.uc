@@ -9,7 +9,7 @@
 
 // LavaTitan's throwing rock
 
-class LavaBoulder expands Boulder1;
+class LavaBoulder extends Boulder1;
 
 function SpawnChunks(int num) {
 	local int NumChunks, i;

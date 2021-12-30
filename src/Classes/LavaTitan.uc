@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class LavaTitan expands Titan;
+class LavaTitan extends Titan;
 
 #exec TEXTURE IMPORT NAME=LavaTitan FILE=textures\LavaTitan.PCX GROUP=Skins
 

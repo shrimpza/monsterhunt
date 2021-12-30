@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterHuntRules expands UTRulesCWindow
+class MonsterHuntRules extends UTRulesCWindow
 	config(MonsterHunt);
 
 #exec TEXTURE IMPORT NAME=MHRulesBG FILE=Textures\MHRulesBG.PCX GROUP=Rules LODSET=0
@@ -22,16 +22,19 @@ function LoadCurrentValues() {
 	Super.LoadCurrentValues();
 	TimeEdit.SetValue(string(Class<MonsterHunt>(BotmatchParent.GameClass).Default.TimeLimit));
 
-	if (MaxPlayersEdit != None)
+	if (MaxPlayersEdit != None){
 		MaxPlayersEdit.SetValue(string(Class<MonsterHunt>(BotmatchParent.GameClass).Default.MaxPlayers));
+	}
 
-	if (MaxSpectatorsEdit != None)
+	if (MaxSpectatorsEdit != None){
 		MaxSpectatorsEdit.SetValue(string(Class<MonsterHunt>(BotmatchParent.GameClass).Default.MaxSpectators));
+	}
 
-	if (BotmatchParent.bNetworkGame)
+	if (BotmatchParent.bNetworkGame) {
 		WeaponsCheck.bChecked = Class<MonsterHunt>(BotmatchParent.GameClass).Default.bMultiWeaponStay;
-	else
+	} else {
 		WeaponsCheck.bChecked = Class<MonsterHunt>(BotmatchParent.GameClass).Default.bCoopWeaponMode;
+	}
 
 	FragEdit.SetValue(string(Class<MonsterHunt>(BotmatchParent.GameClass).Default.Lives));
 	TourneyCheck.bChecked = Class<MonsterHunt>(BotmatchParent.GameClass).Default.bUseTeamSkins;

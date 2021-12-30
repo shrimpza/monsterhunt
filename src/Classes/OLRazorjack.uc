@@ -8,7 +8,7 @@
 // OLweapons.OLrazorjack: network/decal razorjack...
 // ============================================================
 
-class OLRazorjack expands UIweapons;
+class OLRazorjack extends UIweapons;
 
 var bool clientanidone, bfirstfire;
 

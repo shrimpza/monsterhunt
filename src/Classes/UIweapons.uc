@@ -8,7 +8,7 @@
 // OLweapons.UIweapons: really a dummy class... defines 1 var (decals) but mainly helps the mutator
 // ============================================================
 
-class UIweapons expands TournamentWeapon
+class UIweapons extends TournamentWeapon
 	config(MonsterHunt)
 	abstract;
 

@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class ChainsawArena expands Arena;
+class ChainsawArena extends Arena;
 
 defaultproperties {
 	WeaponName=ChainSaw

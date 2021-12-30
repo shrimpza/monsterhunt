@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSRocket expands Rocket;
+class OSRocket extends Rocket;
 
 simulated function PostBeginPlay() { //decals or no decals?
 	Super.PostBeginPlay();

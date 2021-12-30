@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterHuntArena expands MonsterHunt
+class MonsterHuntArena extends MonsterHunt
 	config(MonsterHunt);
 
 defaultproperties {

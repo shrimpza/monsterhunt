@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterMenuItem expands UMenuModMenuItem;
+class MonsterMenuItem extends UMenuModMenuItem;
 
 function Execute() {
 	MenuItem.Owner.Root.CreateWindow(class'{{package}}.MonsterCreditsWindow', 100, 100, 100, 100);

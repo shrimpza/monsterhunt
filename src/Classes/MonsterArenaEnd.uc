@@ -9,7 +9,7 @@
 
 #exec Texture Import File=textures\MAEnd.pcx Name=MAEnd Mips=Off Flags=2
 
-class MonsterArenaEnd expands MonsterEnd;
+class MonsterArenaEnd extends MonsterEnd;
 
 function TriggerObjective() {
 	local MonsterHuntArena MH;

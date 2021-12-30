@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class WaterTitanCarcass expands TitanCarcass;
+class WaterTitanCarcass extends TitanCarcass;
 
 defaultproperties {
 	Style=STY_Translucent

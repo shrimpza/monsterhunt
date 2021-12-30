@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterEvent expands Triggers;
+class MonsterEvent extends Triggers;
 
 #exec Texture Import File=textures\MHEvent.pcx Name=MHEvent Mips=Off Flags=2
 

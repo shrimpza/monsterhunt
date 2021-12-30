@@ -10,7 +10,7 @@
 // I had to re-create a custom version or DMMutator because
 // it was just causing too much trouble.
 
-class MonsterBase expands Mutator;
+class MonsterBase extends Mutator;
 
 var DeathMatchPlus MyGame;
 
@@ -29,8 +29,9 @@ function PostBeginPlay() {
 
 function bool AlwaysKeep(Actor Other) {
 	if (Other.IsA('ScriptedPawn')) {
-		if (ScriptedPawn(Other).Shadow == None)
+		if (ScriptedPawn(Other).Shadow == None) {
 			MonsterHunt(Level.Game).SetPawnDifficulty(MonsterHunt(Level.Game).MonsterSkill, ScriptedPawn(Other));
+		}
 		return true;
 	}
 
@@ -62,8 +63,9 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant) {
 		return true;
 	}
 
-	if (MyGame.bNoviceMode && MyGame.bRatedGame && (Level.NetMode == NM_Standalone))
+	if (MyGame.bNoviceMode && MyGame.bRatedGame && (Level.NetMode == NM_Standalone)) {
 		Inv.RespawnTime *= (0.5 + 0.1 * MyGame.Difficulty);
+	}
 
 	if (Other.IsA('Weapon')) {
 		if (Other.IsA('TournamentWeapon')) return true;
@@ -131,8 +133,8 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant) {
 	if (Other.IsA('TournamentHealth')) return true;
 
 	if (Level.Game.IsA('MonsterHuntArena')) {
-		if (Other.IsA('Weapon')) { Weapon(Other).RespawnTime = 3;
-		} else if (Other.IsA('Ammo')) Ammo(Other).RespawnTime = 3;
+		if (Other.IsA('Weapon')) Weapon(Other).RespawnTime = 3;
+		else if (Other.IsA('Ammo')) Ammo(Other).RespawnTime = 3;
 	}
 
 	bSuperRelevant = 0;

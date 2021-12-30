@@ -10,7 +10,7 @@
 // Created by UClasses - (C) 2000 by meltdown@thirdtower.com
 // ============================================================
 
-class OSBigBiogel expands BigBiogel;
+class OSBigBiogel extends BigBiogel;
 
 simulated function SetWall(vector HitNormal, Actor Wall) {
 	Super.SetWall(HitNormal, Wall);

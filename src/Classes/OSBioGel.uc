@@ -8,7 +8,7 @@
 // Olweapons.OSBioGel:decals...
 // ============================================================
 
-class OSBioGel expands BioGel;
+class OSBioGel extends BioGel;
 
 simulated function SetWall(vector HitNormal, Actor Wall) {
 	Super.SetWall(HitNormal, Wall);

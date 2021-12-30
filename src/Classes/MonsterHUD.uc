@@ -7,7 +7,7 @@
 //          For more info, https://shrimpworks.za.net
 // ============================================================
 
-class MonsterHUD expands ChallengeTeamHUD;
+class MonsterHUD extends ChallengeTeamHUD;
 
 #exec TEXTURE IMPORT NAME=HudIcon  FILE=Textures\hudicon.PCX GROUP="Hud" MIPS=OFF LODSET=0
 #exec TEXTURE IMPORT NAME=BlackStuff  FILE=Textures\BlackStuff.PCX GROUP="Hud" MIPS=OFF LODSET=0
