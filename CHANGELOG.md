@@ -8,6 +8,7 @@
    - Players win by successfully holding off the monster advance until the time limit
  - Fix numerous "Accessed None" errors in logs related to various assumptions about `bIsPlayer` and `PlayerReplicationInfo` in UT classes
  - Fix bug with RazorJack not being replaced by `OLRazorjack`
+ - Fix Monster Arena using the wrong GameReplicationInfo class
  - Improve updates of remaining monsters counter
  - Made many strings localised
  - Various improvements and optimisations where possible

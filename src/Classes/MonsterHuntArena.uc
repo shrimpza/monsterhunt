@@ -24,5 +24,4 @@ defaultproperties {
 	LeftMessage=" left the arena."
 	EnteredMessage=" has entered the arena!"
 	GameName="Monster Arena"
-	GameReplicationInfoClass=Class'Botpack.TournamentGameReplicationInfo'
 }
