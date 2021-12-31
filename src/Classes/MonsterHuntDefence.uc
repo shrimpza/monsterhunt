@@ -336,6 +336,7 @@ defaultproperties {
 	GameEndedMessage="Defence Successful!"
 	SingleWaitingMessage="Press Fire to begin defending."
 	MonstersEscapedMessage="Too many monsters escaped!"
+	DefaultBotOrders='Defend'
 
 	TeleportEffectTexture=Texture'Botpack.Skins.MuzzyPulse'
 }
