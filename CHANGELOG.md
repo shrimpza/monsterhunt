@@ -1,6 +1,6 @@
 # Changelog 
 
-## 503 to 600:
+## 503 to 601:
  - Implement new game type: Monster Defence
    - Played on CTF maps, players must prevent attacking monsters from escaping via the portal that has opened in their base
    - Will only work on CTF maps with reasonable pathing
@@ -10,6 +10,7 @@
  - Fix bug with RazorJack not being replaced by `OLRazorjack`
  - Fix Monster Arena using the wrong GameReplicationInfo class
  - Improve updates of remaining monsters counter
+ - Update HUD info with remaining time, add defence escapees, critical things go red when needed
  - Made many strings localised
  - Various improvements and optimisations where possible
  - Clean up all compiler warnings, remove unused classes

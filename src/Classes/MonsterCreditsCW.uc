@@ -20,7 +20,7 @@ defaultproperties {
 	ProgrammerNames(0)="Kenneth 'Shrimp' Watson"
 	MaxProgs=1
 	DesignerNames(0)="Shrimp"
-	DesignerNames(1)="Ecstaticus"
+	DesignerNames(1)="Ecstaticus (MA-Crimson)"
 	MaxDesigners=2
 	ArtText="Testers"
 	ArtNames(0)="BikerBob"

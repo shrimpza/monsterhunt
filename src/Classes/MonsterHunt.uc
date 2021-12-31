@@ -27,6 +27,8 @@ var int PlainPpl;
 var int LastPoint;
 var int NumPoints;
 
+var name DefaultBotOrders;
+
 function PostBeginPlay() {
 	local ScriptedPawn S;
 	local MonsterWaypoint WP;
@@ -320,6 +322,8 @@ function Killed(pawn killer, pawn Other, name damageType) {
 	Super.Killed(Killer, Other, damageType);
 
 	if (killer == None || Other == None) return;
+
+	if (Other.PlayerReplicationInfo == None) return;
 
 	if (Killer == Other) Other.PlayerReplicationInfo.Score -= 4;
 
@@ -680,7 +684,7 @@ function SetBotOrders(Bot NewBot) {
 				&& P.PlayerReplicationInfo != None
 				&& (P.PlayerReplicationInfo.Team == NewBot.PlayerReplicationInfo.Team)) {
 			total++;
-			if ((P != NewBot) && P.IsA('Bot') && (Bot(P).Orders == 'FreeLance')) {
+			if ((P != NewBot) && P.IsA('Bot') && (Bot(P).Orders == DefaultBotOrders)) {
 				num++;
 				if ((L == None) || (FRand() < 1 / float(num))) L = P;
 			}
@@ -692,7 +696,7 @@ function SetBotOrders(Bot NewBot) {
 		return;
 	}
 
-	NewBot.SetOrders('Freelance', None, true);
+	NewBot.SetOrders(DefaultBotOrders, None, true);
 }
 
 defaultproperties {
@@ -737,4 +741,5 @@ defaultproperties {
 	MutatorClass=Class'{{package}}.MonsterBase'
 	GameReplicationInfoClass=Class'{{package}}.MonsterReplicationInfo'
 	bLocalLog=True
+	DefaultBotOrders='Attack'
 }

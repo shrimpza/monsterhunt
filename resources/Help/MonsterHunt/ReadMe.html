@@ -1,0 +1,450 @@
+<html lang="en">
+<head>
+	<title>Monster Hunt</title>
+	<style>
+		body {
+			background-color: black;
+			color: #CCFF00;
+			font-family: sans-serif;
+			max-width: 900px;
+			margin: 20px auto 50px auto;
+		}
+
+		header {
+			text-align: center;
+		}
+
+		h2 {
+			background-color: #CC7A00;
+			color: black;
+		}
+
+		section {
+			margin-bottom: 50px;
+		}
+
+		a {
+			color: #FF9900;
+			text-decoration: none
+		}
+
+		a:hover {
+			color: #FFCC66;
+			font-style: italic
+		}
+
+		a:visited {
+			color: #FF9900;
+			text-decoration: none
+		}
+	</style>
+</head>
+
+<body>
+<header>
+	<img src="header.jpg" alt="Header image"/>
+</header>
+
+<nav>
+	<ul>
+		<li><a href="#intro">Introduction</a></li>
+		<li><a href="#requirements">Requirements</a></li>
+		<li><a href="#gameplay">Gameplay Changes</a></li>
+		<li><a href="#mapping">Mapping for Monster Hunt</a></li>
+		<li><a href="#credits">Credits</a></li>
+		<li><a href="#history">Release History</a></li>
+		<li><a href="#license">License</a></li>
+	</ul>
+</nav>
+
+<section>
+	<h2 id="intro">Introduction</h2>
+	<p>
+		Welcome to Monster Hunt!! Monster Hunt (MH from
+		now on) is a modification for Unreal Tournament (UT from now on) that allows
+		you and your team of hunters to fight your way through hoards of monsters attempting
+		to prevent you from escaping. MH is played in specially designed maps (see
+		"<a href="#mapping">Mapping for Monster Hunt</a>") full of monsters that appeared in
+		the original Unreal (and hopefully many new ones in the future), and at the end of
+		each map, you'll be faced with a Boss monster (or a few :-) that must be defeated to
+		continue.
+	</p>
+	<p>
+		You can also try out Monster Arena, you and your
+		team must enter an arena with the biggest, badest, most powerful monsters you're
+		likely to face anywhere and beat the hell out of them to survive!
+	</p>
+</section>
+
+<section>
+	<h2 id="requirements">Requirements</h2>
+	<p>
+		MH requires that you have UT patch 436 or higher installed to run, though OldUnreal
+		patch 469 could be preferred.
+	</p>
+	<p>
+		You can get the latest patches from one of the following sites:
+	</p>
+	<ul>
+		<li><a href="https://unrealarchive.org/patches-updates/unreal-tournament/patches/index.html">Unreal Archive</a></li>
+		<li><a href="https://github.com/OldUnreal/UnrealTournamentPatches/releases">GitHub (OldUnreal 469+)</a></li>
+		<li><a href="http://ut-files.com/index.php?dir=Patches/">UT-Files</a></li>
+	</ul>
+</section>
+
+<section>
+	<h2 id="gameplay">Gameplay Changes</h2>
+	<p>
+	<h3>Monster Hunt</h3>
+	</p>
+	<p>
+		Teamplay has a strong role in successfully completing
+		a Hunt, if players don't work as a team to accomplish objectives, they'll no
+		doubt all end up dead pretty soon, those monsters don't fool around! Sharing
+		pickups also becomes important, if one player grabs everything, the rest are
+		left with nothing and will end up dead.
+	</p>
+	<p>
+		Because of the nature of MH, players may be faced
+		with the occasional puzzle to solve, but they won't be as in-depth as a single
+		player game might have - the emphasis is on action, not brainstorming.
+	</p>
+	<p>
+		The Translocator has been disabled in MH games,
+		as it could spoil certain scenarios. The Chainsaw replaces the Impact Hammer
+		as the default weapon for all that hack and slash goodness it provides :-)
+	</p>
+	<p>
+	<h3>Monster Arena</h3>
+	</p>
+	<p>
+		Much like a traditional DeathMatch, but you're
+		not playing against other players, you and your team are battling it out to
+		the death against giant bloodthirsty monsters.
+	</p>
+	<p>
+		Players all start in an area protected from the
+		monsters. Here, they have a chance to grab the weapons they'll be needing in
+		the battle to come - there are no other weapons other than those provided at
+		the start, you will however, be able to find ammo in the arena itself. Once
+		the monster(s) are killed, you will automatically be taken to the next arena.
+	</p>
+	<p>
+	<h3>Monster Defence</h3>
+	</p>
+	<p>
+		Monster Defence is played on regular CTF maps. Players must protect their flag
+		base from invading hoards of monsters, and prevent them from escaping through
+		the portal they have managed to open.
+	</p>
+	<p>
+		To win the round, players must hold out until the time limit is reached - the
+		monsters are endless and cannot be stopped! The round will be lost if enough
+		monsters escape through the portal, or all players lives have been exhausted.
+	</p>
+</section>
+
+<section>
+	<h2 id="mapping">Mapping</h2>
+
+	<p>
+	<h3>Monster Hunt</h3>
+	</p>
+	<ul>
+		<li>Before you start on a map, open the MonsterHunt.u package in the class-browser so you have access to all the Monster Hunt-specific
+			stuff.
+		</li>
+		<li>Maps should be more of a single player style,
+			but make sure there are enough pickups for all the players and that there's
+			enough space for a group of players to move around in.
+		</li>
+		<li>Boss monsters should be in large spacious areas,
+			the players must be able to concentrate on defeating the monsters and not have
+			to worry about the surrounding architecture.
+		</li>
+		<li>Make an escape route for the players to run
+			through and place a MonsterEnd trigger (found in the classe-browser: Triggers
+			-> Trigger -> MonsterEnd) where the players will run to end the level.
+		</li>
+		<li>If you want to add bot support to your map (very highly recommended), you can use the MonsterWaypoint actor (found in the
+			classe-browser: Keypoint
+			-> MonsterWaypoint). Just put the MonsterWaypoint actors wherever you want a bot waypoint to be, like near a button or a lever, or
+			just along the path through the level. Set it's Position property to tell the bots in which order the waypoints must be visited. Set
+			the first one at 1, the next at 2, then 3, and so on. You can also enter the Event tag of a particular actor so when the bot gets to
+			the waypoint, something can be triggered to happen.
+		</li>
+		<li>Be sure to add lots of PlayerStarts at the beginning
+			of the level to make sure the players don't telefrag each other when the round
+			starts - about 12-18 will be enough for a normal size map.
+		</li>
+		<li>You can implement simple puzzles for the players
+			to solve along the way, but don't use too many as players will probably get
+			frustrated.
+		</li>
+		<li>Feel free to use as many special effects as
+			you like, in this style of game, the players will really take note an think
+			"How'd they do that???" :-)
+		</li>
+		<li>Remember that there is no Translocator, so don't
+			make any situations where it's needed to progress.
+		</li>
+		<li>The difficulty of the map is important, start
+			with relatively weak monsters and as players progress through the level, use
+			stronger and stronger enemies.
+		</li>
+		<li>Make sure your Boss monster is pretty strong,
+			players will be disappointed it only takes a few shots to kill it.
+		</li>
+		<li>Don't put any monsters near to where the players
+			will start, they'll all be slaughtered as soon as they spawn.
+		</li>
+		<li>Environmental hazzards (slime, lava, huge drops,
+			etc.) are great, but make sure the boss monster(s) can't fall in, or it'll spoil
+			the fun of defeating them.
+		</li>
+		<li>Don't give the players the best guns at the
+			beginning, or they'll mow through the monsters too easily.
+		</li>
+		<li>Use the MonsterEvent (under Triggers &gt; SpecialEvent)
+			to display messages for the players, everything has already been pre-configured,
+			just type the message and connect it to a trigger.
+		</li>
+		<li>Set the boss monster's bIsBoss to True so the player can get extra points for killing him.</li>
+	</ul>
+
+	<p>
+	<h3>Monster Arena</h3>
+	</p>
+	<ul>
+		<li>The same rules that apply to Monster Hunt maps
+			apply to Monster Arena maps as well, but there are a few more things to keep
+			in mind:
+		</li>
+		<li>Make sure you create a small protected area somewhere
+			in the map that the players can safely spawn in, you can even seal it off by
+			using a door.
+		</li>
+		<li>You should provide the players with some guns
+			in the protected area but don't give them too many and make sure the weapons
+			suit the arena and the monster to be killed.
+		</li>
+		<li>Place as much health and ammo around the arena as you like.</li>
+		<li>Give the players lots of place to move in, and
+			make sure the boss can't get stuck anywhere.
+		</li>
+		<li>Place a MonsterArenaEnd trigger in the map (found
+			in the classes browser: Triggers -> Trigger -> MonsterEnd -> MonsterArenaEnd)
+			and set an Event for the boss and set the Tag of the MonsterArenaEnd to correspond
+			with the boss' Event. (<I>IMPORTANT! - Make sure you add the trigger in the
+				centre of the map using the Top View</I>)
+		</li>
+	</ul>
+</section>
+
+<section>
+	<h2 id="credits">Credits</h2>
+	<p>
+		You can also see the Honster Hunt credits in UT by looking in the Mod menu.
+	</p>
+	<ul>
+		<li>Programming, graphics, website &amp; help files:
+			<ul>
+				<li>Kenneth "Shrimp" Watson</li>
+			</ul>
+		</li>
+
+		<li>Maps:
+			<ul>
+				<li>Shrimp</li>
+				<li>Ecstaticus (MA-Crimson)</li>
+			</ul>
+		</li>
+
+		<li>Playtesters:
+			<ul>
+				<li>BikerBob</li>
+				<li>Wipeout</li>
+				<li>DuckMan</li>
+				<li>_Tuke</li>
+			</ul>
+		</li>
+
+		<li>Special thanks:
+			<ul>
+				<li>Valkyrie</li>
+				<li>The <a href="https://ut99.org/" target="_blank">UT99.org</a> community for keeping UT alive and exciting</li>
+				<li>Albert Reed (Also worked on the HeadHunters mod)</li>
+				<li>Beppo (lead coder for <a href="http://www.planetunreal.com/infiltration/" target="_blank">Infiltration</a>)</li>
+				<li>JohnMcL (lead coder for <a href="http://www.theplace.nu/warbots/" target="_blank">Warbots</a>)</li>
+				<li>UsAaR33 (creator of <a href="http://www.unreality.org/ussar33/" target="_blank">OldSkool</a>)</li>
+				<li>Epic MegaGames</li>
+				<li>and everyone at <a href="https://www.unreal.co.za/" target="_blank">UnrealZA</a></li>
+			</ul>
+		</li>
+	</ul>
+</section>
+
+<section>
+	<h2 id="history">Release History</h2>
+
+	<h3>Release 7 (601)</h3>
+	<ul>
+		<li>Implement new game type: Monster Defence
+			<ul>
+				<li>Played on CTF maps, players must prevent attacking monsters from escaping via the portal that has opened in their base
+				<li>Will only work on CTF maps with reasonable pathing
+				<li>Players lose when the maximum number of allowed monsters has escaped, or all lives have been lost
+				<li>Players win by successfully holding off the monster advance until the time limit
+			</ul>
+		<li>Fix numerous "Accessed None" errors in logs related to various assumptions about `bIsPlayer` and `PlayerReplicationInfo` in UT
+			classes
+		<li>Fix bug with RazorJack not being replaced by `OLRazorjack`
+		<li>Fix Monster Arena using the wrong GameReplicationInfo class
+		<li>Improve updates of remaining monsters counter
+		<li>Update HUD info with remaining time, add defence escapees, critical things go red when needed
+		<li>Made many strings localised
+		<li>Various improvements and optimisations where possible
+		<li>Clean up all compiler warnings, remove unused classes
+		<li>Reformat code to conform to cleaner style
+	</ul>
+
+	<h3>Release 6</h3>
+	<ul>
+		<li>Bots can now follow waypoints (if supported by
+			the map) and complete complex objectives and end the level by themselves.
+		</li>
+		<li>Bots now fight monsters and monsters fight bots.</li>
+		<li>Monster difficulty is influenced by bot difficulty
+			settings, eg. if you set the bot skill to Novice, monsters will be easy to beat,
+			set the bot skill to Godlike and monsters are much harder to beat.
+		</li>
+		<li>A life limit can be set, when players (and bots)
+			run out of lives, they are sent into spectator mode. When all players and bots
+			are dead, the game ends.
+		</li>
+		<li>Tournament mode can no longer be set, it will
+			always be off in multiplayer games and always on in single player.
+		</li>
+		<li>Fixed &quot;You are the winner&quot; announcer
+			message from playing when you actually lost (ran out of time or team has no
+			lives left).
+		</li>
+		<li>Team skins are now optional (set when starting
+			a game), no need to use red all the time.
+		</li>
+		<li>5 Points are lost for being killed when there
+			is no life limit, this should help prevent &quot;kamakazi&quot; style gameplay.
+		</li>
+		<li>Revised all Hunt maps and fixed a lot of bugs in them.</li>
+		<li>Added new map, HM-NaliVillage][.</li>
+		<li>Lots of other minor bugs have been fixed up along the way.</li>
+	</ul>
+
+	<h3>Release 5</h3>
+	<ul>
+		<li>Fixed Unreal weapons not working in multiplayer, also added decals to their projectiles - Thanks to UsAaR for help.</li>
+		<li>Added a scoring system so you score points depending on which type of monster you kill. Scores are as follows: Titan, Queen and
+			WarLord = 5 points. Giant GasBag and Giant Manta = 4 points. SkaarjWarrior, MercenaryElete and Brute = 3 points. Krall, Mercenary,
+			SkaarjTrooper, Slith and GasBag = 2 points. Everything else = 1 point. You also loose 5 points for killing innocent creatures and
+			yourself. 10 extra points are awarded for killing a boss.
+		</li>
+		<li>Fixed bug where monsters would attack spectators before a round begins.</li>
+		<li>Fixed bug where where if no time limit was set, but you finished the level, it would say &quot;Time up, hunt failed!&quot;.</li>
+	</ul>
+
+	<h3>Release 4 (First public release)</h3>
+	<ul>
+		<li>Added maps: MH-Trials, MA-RocketArena and MA-Crimson</li>
+		<li>Added death messages when a monster is killed</li>
+		<li>Added server browser for Monster Arena</li>
+		<li>Server browsers actually work now :-)</li>
+		<li>Fixed &quot;Hunt Successful!&quot; message even
+			if time ran out, will now read &quot;Time up, hunt failed!&quot; when time runs out
+		</li>
+		<li>Fixed problem where monsters wouldn't work on some people's systems for real this time</li>
+		<li>Fixed problems with Monster Arena map lists</li>
+		<li>Created 3 new monster classes: LavaTitan, LavaSlith and RockTentacle</li>
+		<li>Added the Monster Hunt credits to the Mod menu</li>
+		<li>Revised all maps and fixed lots of bugs</li>
+		<li>New background images for the Rules, Settings and Bots config screens when starting a game.</li>
+		<li>Created the MonsterEvent class, allows messages
+			to be displayed. Can be used to inform players of progress or things that have happned.
+		</li>
+		<li>Weapons and ammo respawn faster in Monster Arena</li>
+		<li>Monster Hunt now uses it's own .ini file &quot;MonsterHunt.ini&quot; for storing it's information</li>
+	</ul>
+
+	<h3>Release 3 (Internal)</h3>
+	<ul>
+		<li>Added new game type - Monster Arena!</li>
+		<li>Included three Monster Arena maps, MA-Winged, MA-Queens and MA-Revenge.</li>
+		<li>Included new Monster Hunt map, MH-Canyon.</li>
+		<li>Created icons for MonsterEnd triggers to make it less confusing when making MH and MA maps.</li>
+		<li>Fixed &quot;*Player* is now on&quot; message that was displayed when a player joined a game, now reads &quot;*Player* has
+			joined the hunt!&quot;
+		</li>
+		<li>Fixed some death messages eg. &quot;Shrimp was slimed. by a Slith&quot;. Note the full stop after &quot;was slimed.&quot; all
+			those have been fixed.
+		</li>
+		<li>Improved bot intelligence, they should now be able to complete the map.</li>
+		<li>Added support for Unreal 1 weapons, giving you a potential total of 21 weapons.</li>
+		<li>May have fixed bug where the monsters weren't showing up on some people's systems. (experimental)</li>
+		<li>Added a small Monster Hunt logo under the health and armour readings on the HUD.</li>
+		<li>Changed the difficulty descriptions in the bot config window to suit Monster Hunt.</li>
+		<li>Added support for up to 32 players, I don't recommend you use that many though, but the option is there if you want it.</li>
+		<li>Added Monster Hunt server browser for finding online games.</li>
+		<li>Removed ammo from maps when using the Chainsaw Arena mutator.</li>
+		<li>Fixed lots of bugs in MH-Forbidden.</li>
+		<li>Created this HTML help file, looks a lot nicer than NotePad don't you think?</li>
+		<li>Thought up little slogan, "Don't think, shoot!!"
+			(you may recoginse this from the best PlayStation game ever made, Metal Gear Solid!).
+		</li>
+	</ul>
+
+	<h3>Release 2 (Internal)</h3>
+	<ul>
+		<li>Fixed lots of tiny bugs</li>
+		<li>Added subtle little things you probably won't notice</li>
+		<li>Removed 'Deaths' listing from the scoreboard</li>
+		<li>Fixed some spelling errors :-)</li>
+		<li>Greatly expanded the ReadMe file</li>
+	</ul>
+
+	<h3>Release 1 (Internal)</h3>
+	<ul>
+		<li>Initial release</li>
+	</ul>
+</section>
+
+<section id="license">
+	<h2>License</h2>
+	<p>
+		This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons
+		Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+	</p>
+	<p>
+		Please refer to the LICENSE file for full license text.
+	</p>
+	<p>
+		You are free to:
+	<ul>
+		<li><b>Share</b> - copy and redistribute the material in any medium or format
+		<li><b>Adapt</b> - remix, transform, and build upon the material
+	</ul>
+	Under the following terms:
+	<ul>
+		<li><b>Attribution</b> - You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do
+			so in
+			any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+		<li><b>NonCommercial</b> - You may not use the material for commercial purposes.
+		<li><b>ShareAlike</b> - If you remix, transform, or build upon the material, you must distribute your contributions under the same
+			license as
+			the original.
+		<li><b>No additional restrictions</b> - You may not apply legal terms or technological measures that legally restrict others from doing
+			anything the license permits.
+	</ul>
+	</p>
+</section>
+
+</body>
+</html>
