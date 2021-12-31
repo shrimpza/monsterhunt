@@ -14,4 +14,5 @@ defaultproperties {
 	Maps(0)="MA-Winged.unr"
 	Maps(1)="MA-Revenge.unr"
 	Maps(2)="MA-Queens.unr"
+	Maps(3)="MA-RocketArena.unr"
 }

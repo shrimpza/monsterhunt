@@ -6,6 +6,7 @@ source "$SCRIPTS_DIR/buildconfig.sh"
 
 MUSTACHE="${MUSTACHE?-mustache}"
 PACKAGE_SRC_DIR=${PACKAGE_SRC_DIR?-$package}
+PACKAGE_RES_DIR=${PACKAGE_RES_DIR?-"$package/resources"}
 
 TMP_YML="$(mktemp)"
 TMP_INI="$(mktemp)"
@@ -83,14 +84,30 @@ cleanup() {
         echo "Formatting: System/$packagefull.int"
         "$MUSTACHE" "$PACKAGE_SRC_DIR/template.int" < "$TMP_YML" > "System/$packagefull.int"
 
-        # Package up
-#        cp -f "$package/README.adoc" "Help/$package.adoc"
-        tar czf "$packagefull.tar" "System/$packagefull.int" "System/$packagefull.u"
+        # Create the final package template directory
+        PACKAGED="$packagefull"/packaged
+        mkdir -p "$PACKAGED"/System
 
-        zip -9r "$packagefull.zip" "System/$packagefull.int" "System/$packagefull.u" >/dev/null
-        gzip --best -k "$packagefull.tar"
+				# Move over system files
+        mv -v "System/$packagefull.int" "System/$packagefull.u" "$PACKAGED"/System
 
-        rm "$packagefull.tar"
+				# Overlay additional resources if present
+				echo $PACKAGE_RES_DIR
+        if [[ -d $PACKAGE_RES_DIR ]]; then
+        	for res in "$PACKAGE_RES_DIR"/**; do
+        		res="$(basename "$res")"
+        		cp -rvf "$PACKAGE_RES_DIR/$res" "$PACKAGED/$res"
+					done
+				fi
+
+				(
+					cd $PACKAGED
+
+					zip -9r "../../$packagefull.zip" ./* >/dev/null
+					tar cf "../../$packagefull.tar" ./*
+					gzip --best -k "../../$packagefull.tar"
+        	rm "../../$packagefull.tar"
+        )
 
         # Move to dist
         echo Packaging up...
