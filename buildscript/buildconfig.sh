@@ -10,6 +10,7 @@ export package=MonsterHunt
 export build=601
 export version=601
 export packagefull=$package
+export packagedist=$package$version
 export debug=1
 
 # It is most likely unnecessary to edit the below defaults. The scripts

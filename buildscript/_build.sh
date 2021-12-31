@@ -103,16 +103,16 @@ cleanup() {
 				(
 					cd $PACKAGED
 
-					zip -9r "../../$packagefull.zip" ./* >/dev/null
-					tar cf "../../$packagefull.tar" ./*
-					gzip --best -k "../../$packagefull.tar"
-					rm "../../$packagefull.tar"
+					zip -9r "../../$packagedist.zip" ./* >/dev/null
+					tar cf "../../$packagedist.tar" ./*
+					gzip --best -k "../../$packagedist.tar"
+					rm "../../$packagedist.tar"
 				)
 
 				# Move to dist
 				echo Packaging up...
 				mkdir -p "$dist/$package/$build"
-				mv "$packagefull."{tar.*,zip} "$dist/$package/$build"
+				mv "$packagedist."{tar.*,zip} "$dist/$package/$build"
 
 				# Update dist/latest
 				echo Organizing dist directory...
