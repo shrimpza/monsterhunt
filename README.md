@@ -35,5 +35,5 @@ Hold them off for as long as you can!
 
 ---
 
-See [The ReadMe](resources/Help/index.html) for more game details and 
+See [The ReadMe](resources/Help/MonsterHunt/ReadMe.html) for more game details and 
 information.
