@@ -32,3 +32,8 @@ Skaarj will stop at nothing to send their invasion force through the portal, so
 it is your job to prevent them escaping.
 
 Hold them off for as long as you can!
+
+---
+
+See [The ReadMe](resources/Help/index.html) for more game details and 
+information.

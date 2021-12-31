@@ -10,6 +10,7 @@
  - Fix bug with RazorJack not being replaced by `OLRazorjack`
  - Fix Monster Arena using the wrong GameReplicationInfo class
  - Improve updates of remaining monsters counter
+ - Update HUD info with remaining time, add defence escapees, critical things go red when needed
  - Made many strings localised
  - Various improvements and optimisations where possible
  - Clean up all compiler warnings, remove unused classes
