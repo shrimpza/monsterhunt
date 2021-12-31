@@ -96,6 +96,5 @@ jobs:
           files: /tmp/distrib/*
           tag_name: releases/v${{ steps.metadata.outputs.version }}
           name: ${{ steps.metadata.outputs.name }} v${{ steps.metadata.outputs.version }}
-          body_path: latest-changes.md
           draft: true
           prerelease: ${{ steps.metadata.outputs.debug }}

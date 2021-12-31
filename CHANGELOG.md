@@ -1,6 +1,6 @@
 # Changelog 
 
-## 503 to 600:
+## 503 to 601:
  - Implement new game type: Monster Defence
    - Played on CTF maps, players must prevent attacking monsters from escaping via the portal that has opened in their base
    - Will only work on CTF maps with reasonable pathing
