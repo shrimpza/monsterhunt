@@ -287,6 +287,22 @@
 <section>
 	<h2 id="history">Release History</h2>
 
+	<h3>Release 8 (602)</h3>
+	<ul>
+		<li>Fix incorrect `UIWeapon` reference in MonsterBase.CheckReplacement
+		<li>Remove NaliRabit from ScriptedPawn checks
+		<li>Do not spawn monster shadows on dedicated servers
+		<li>Implement better difficulty call using GameInfo.IsRelevant, rather than being called from various other places
+		<li>MonsterEnd should only ever trigger once
+		<li>Defence: Better application of orders on monsters, yielding better attack behaviour
+		<li>Defence: Disable Mercenary invulnerability shield
+		<li>Defence: Monsters do not block eachother, so they can navigate across the map better
+		<li>Defence: Monsters which don't move from their starting positions can be killed and recycled
+		<li>Defence: Optimisations to mid-game monster order coercion
+		<li>Defence: Tweaks to several monster spawn probabilities
+		<li>Defence: Localise "... escaped!" message
+	</ul>
+
 	<h3>Release 7 (601)</h3>
 	<ul>
 		<li>Implement new game type: Monster Defence
