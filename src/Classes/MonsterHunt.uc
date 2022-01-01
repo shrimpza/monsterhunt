@@ -531,7 +531,7 @@ function CountMonsters() {
 	local int monsterCount;
 
 	monsterCount = 0;
-	foreach AllActors(class'ScriptedPawn', S) if (S.Health >= 1) monsterCount ++
+	foreach AllActors(class'ScriptedPawn', S) if (S.Health >= 1) monsterCount ++;
 
 	MonsterReplicationInfo(GameReplicationInfo).Monsters = monsterCount;
 }

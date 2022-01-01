@@ -42,5 +42,5 @@ defaultproperties {
 	bCollideActors=True
 	CollisionRadius=80
 	CollisionHeight=50
-	DrawType=DT_None
+	bHidden=True
 }

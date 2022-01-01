@@ -5,6 +5,7 @@
  - Remove NaliRabit from ScriptedPawn checks
  - Do not spawn monster shadows on dedicated servers
  - Implement better difficulty call using GameInfo.IsRelevant, rather than being called from various other places
+ - MonsterEnd should only ever trigger once
  - Defence: Better application of orders on monsters, yielding better attack behaviour
  - Defence: Disable Mercenary invulnerability shield
  - Defence: Monsters do not block eachother, so they can navigate across the map better
