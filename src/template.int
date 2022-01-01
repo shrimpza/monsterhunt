@@ -54,6 +54,7 @@ MonstersRemainLabel="Monsters"
 
 [MonsterHuntDefence]
 MonstersEscapedMessage="Too many monsters escaped!"
+EscapedMessage="escaped!"
 StartUpMessage="Work with your teammates to defend your base against the monsters!"
 StartMessage="The defence has begun!"
 GameEndedMessage="Defence Successful!"

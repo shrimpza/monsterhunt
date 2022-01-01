@@ -28,15 +28,8 @@ function PostBeginPlay() {
 // --------------------------------------------------------------
 
 function bool AlwaysKeep(Actor Other) {
-	if (Other.IsA('ScriptedPawn')) {
-		if (ScriptedPawn(Other).Shadow == None) {
-			MonsterHunt(Level.Game).SetPawnDifficulty(MonsterHunt(Level.Game).MonsterSkill, ScriptedPawn(Other));
-		}
-		return true;
-	}
-
+	if (Other.IsA('ScriptedPawn')) return true;
 	if (Other.IsA('ThingFactory')) return true;
-
 	if (Other.IsA('SpawnPoint')) return true;
 
 	if (NextMutator != None) return (NextMutator.AlwaysKeep(Other));
@@ -70,7 +63,7 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant) {
 	if (Other.IsA('Weapon')) {
 		if (Other.IsA('TournamentWeapon')) return true;
 
-		if (Other.IsA('UIWeapon')) return true;
+		if (Other.IsA('UIWeapons')) return true;
 
 		if (Other.IsA('Stinger')) {
 			ReplaceWith(Other, "{{package}}.OLStinger");

@@ -12,10 +12,10 @@ class MonsterHuntDefence extends MonsterHunt
 
 var config int MaxEscapees;
 
-var localized string MonstersEscapedMessage;
+var localized string MonstersEscapedMessage, EscapedMessage;
 
 // pre-set tags we use internally
-var Name monsterOrderTag, runnerTag, defaultRunnerState, defaultOtherState;
+var Name monsterOrderTag, runnerTag;
 
 // the flag base (red flag) we want monsters to charge towards
 var FlagBase monsterTarget;
@@ -116,10 +116,19 @@ function StartMatch() {
 	Super.StartMatch();
 }
 
+function bool IsRelevant(Actor Other) {
+	// Disable invulnerability shields on Mercenaries, since its unfair on approach to escape
+	local Mercenary merc;
+	merc = Mercenary(Other);
+	if (merc != None) merc.bHasInvulnerableShield = false;
+
+	return Super.IsRelevant(Other);
+}
+
 function monsterEscaped(ScriptedPawn escapee) {
 	MonsterReplicationInfo(GameReplicationInfo).Escapees++;
 
-	BroadcastMessage(escapee.GetHumanName() @ "escaped!", true, 'MonsterCriticalEvent');
+	BroadcastMessage(escapee.GetHumanName() @ EscapedMessage, true, 'MonsterCriticalEvent');
 
 	if (MonsterReplicationInfo(GameReplicationInfo).Escapees >= MaxEscapees) EndGame("Monsters Escaped");
 }
@@ -137,35 +146,47 @@ function string endedMessage(string reason) {
 }
 
 function Timer() {
-	forceOrders();
+	CoerceOrders();
 
 	Super.Timer();
 }
 
-function forceOrders() {
+/*
+ * Try to force monsters to behave in specific ways.
+ */
+function CoerceOrders() {
 	local ScriptedPawn pawn;
 	local Pawn P;
 	local Pawn maybeEnemyPlayers[32];
-	local int playerCount;
+	local ScriptedPawn scriptedPawns[256];
+	local int playerCount, scriptedPawnCount, i;
 
 	if (bGameEnded) return;
 
 	playerCount = 0;
+	scriptedPawnCount = 0;
 	for (P = Level.PawnList; P != None; P = P.nextPawn) {
 		if (P.bIsPlayer) {
 			if ((P.PlayerReplicationInfo == None) || P.PlayerReplicationInfo.bIsSpectator) continue;
 			maybeEnemyPlayers[playerCount] = P;
 			playerCount++;
 		}
+
+		if (P.IsA('ScriptedPawn')) {
+			scriptedPawns[scriptedPawnCount] = ScriptedPawn(P);
+			scriptedPawnCount++;
+		}
 	}
 
-	foreach AllActors(class'ScriptedPawn', pawn) {
-		if (pawn.Enemy == None && pawn.tag != runnerTag) {
+	for (i = 0; i < scriptedPawnCount; i++) {
+	  pawn = scriptedPawns[i];
+	  if (pawn == None) continue;
+
+	  if (pawn.Enemy == None && pawn.tag != runnerTag) {
 			// only evaluating against one random player per pawn, since CanSee might be expensive to run over all players for every pawn
 			P = maybeEnemyPlayers[Rand(playerCount)];
 			if (pawn.CanSee(P)) {
 				pawn.SetEnemy(P);
-				pawn.AlarmTag = '';
 				pawn.OrderTag = '';
 				pawn.OrderObject = None;
 				pawn.GoToState('Attacking');
@@ -177,8 +198,8 @@ function forceOrders() {
 					pawn.OrderTag = '';
 					pawn.OrderObject = None;
 					pawn.GoToState('Roaming');
-				} else if (pawn.OrderTag == '' && FRand() > 0.5) {
-					// we're done hanging around, try to go back toward the target
+				} else if (pawn.AlarmTag == '' && FRand() > 0.5) {
+					// we're done hanging around, charge for the target
 					pawn.AlarmTag = monsterOrderTag;
 					pawn.OrderTag = monsterOrderTag;
 					pawn.OrderObject = monsterTarget;
@@ -199,10 +220,12 @@ function NavigationPoint findFarSpawn() {
 }
 
 function Tick(float delta) {
-	currentSpawnInterval += delta;
-	if (currentSpawnInterval >= spawnInterval) {
-		spawnMonsters();
-		currentSpawnInterval = 0;
+	if (bGameStarted) {
+		currentSpawnInterval += delta;
+		if (currentSpawnInterval >= spawnInterval) {
+			spawnMonsters();
+			currentSpawnInterval = 0;
+		}
 	}
 
 	Super.Tick(delta);
@@ -213,53 +236,53 @@ function spawnMonsters() {
 
 	// every ~8 seconds, spawn a runner
 	if (spawnCycle % 8 == 0) {
-		if (FRand() > 0.8) spawnMonsterAt(findFarSpawn(), class'SkaarjWarrior', defaultRunnerState, runnerTag);
-		else if (FRand() > 0.6) spawnMonsterAt(findFarSpawn(), class'SkaarjAssassin', defaultRunnerState, runnerTag);
-		else if (FRand() > 0.4) spawnMonsterAt(findFarSpawn(), class'SkaarjBerserker', defaultRunnerState, runnerTag);
-		else if (FRand() > 0.2) spawnMonsterAt(findFarSpawn(), class'SkaarjLord', defaultRunnerState, runnerTag);
-		else spawnMonsterAt(findFarSpawn(), class'SkaarjScout', defaultRunnerState, runnerTag);
+		if (FRand() > 0.8) spawnMonsterAt(findFarSpawn(), class'SkaarjWarrior', runnerTag);
+		else if (FRand() > 0.6) spawnMonsterAt(findFarSpawn(), class'SkaarjAssassin', runnerTag);
+		else if (FRand() > 0.4) spawnMonsterAt(findFarSpawn(), class'SkaarjBerserker', runnerTag);
+		else if (FRand() > 0.2) spawnMonsterAt(findFarSpawn(), class'SkaarjLord', runnerTag);
+		else spawnMonsterAt(findFarSpawn(), class'SkaarjScout', runnerTag);
 	}
 
 	// don't spam more monsters - but allow skaarj runners to keep spawning.
 	if (MonsterReplicationInfo(GameReplicationInfo).Monsters < (maxOtherMonsters * spawnChanceScaler)) {
 		if (spawnCycle % 5 == 0 && FRand() < (0.4 * spawnChanceScaler)) {
-			if (FRand() > 0.75) spawnMonsterAt(findFarSpawn(), class'SkaarjInfantry', defaultRunnerState);
-			else if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'SkaarjGunner', defaultRunnerState);
-			else if (FRand() > 0.25) spawnMonsterAt(findFarSpawn(), class'SkaarjOfficer', defaultRunnerState);
-			else spawnMonsterAt(findFarSpawn(), class'SkaarjSniper', defaultRunnerState);
+			if (FRand() > 0.75) spawnMonsterAt(findFarSpawn(), class'SkaarjInfantry');
+			else if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'SkaarjGunner');
+			else if (FRand() > 0.25) spawnMonsterAt(findFarSpawn(), class'SkaarjOfficer');
+			else spawnMonsterAt(findFarSpawn(), class'SkaarjSniper');
 		}
 
 		if (spawnCycle % 3 == 0 && FRand() < (0.6 * spawnChanceScaler)) {
-			if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'KrallElite', defaultOtherState);
-			else spawnMonsterAt(findFarSpawn(), class'Krall', defaultOtherState);
+			if (FRand() > 0.5) spawnMonsterAt(findFarSpawn(), class'KrallElite');
+			else spawnMonsterAt(findFarSpawn(), class'Krall');
 		}
 		if (spawnCycle % 4 == 0 && FRand() < (0.4 * spawnChanceScaler)) {
-			if (FRand() > 0.7) spawnMonsterAt(findFarSpawn(), class'LavaSlith', defaultOtherState);
-			else spawnMonsterAt(findFarSpawn(), class'Slith', defaultOtherState);
+			if (FRand() > 0.7) spawnMonsterAt(findFarSpawn(), class'LavaSlith');
+			else spawnMonsterAt(findFarSpawn(), class'Slith');
 		}
 		if (spawnCycle % 5 == 0 && FRand() < (0.4 * spawnChanceScaler)) {
-			if (FRand() > 0.5) spawnMonsterAt(findNearSpawn(), class'MercenaryElite', defaultOtherState);
-			else spawnMonsterAt(findNearSpawn(), class'Mercenary', defaultOtherState);
+			if (FRand() > 0.5) spawnMonsterAt(findNearSpawn(), class'MercenaryElite');
+			else spawnMonsterAt(findNearSpawn(), class'Mercenary');
 		}
 
 		if (spawnCycle % 5 == 0 && FRand() < (0.2 * spawnChanceScaler)) {
-			if (FRand() > 0.7) spawnMonsterAt(findNearSpawn(), class'Behemoth', defaultOtherState);
-			else spawnMonsterAt(findNearSpawn(), class'Brute', defaultOtherState);
+			if (FRand() > 0.6) spawnMonsterAt(findNearSpawn(), class'Behemoth');
+			else spawnMonsterAt(findNearSpawn(), class'Brute');
 		}
 
-		if (spawnCycle % 5 == 0 && FRand() < (0.2 * spawnChanceScaler)) spawnMonsterAt(findNearSpawn(), class'GasBag', defaultOtherState);
+		if (spawnCycle % 5 == 0 && FRand() < (0.2 * spawnChanceScaler)) spawnMonsterAt(findNearSpawn(), class'GasBag');
 
-		if (FRand() < (0.3 * spawnChanceScaler)) {
-			if (FRand() > 0.6) spawnMonsterAt(findNearSpawn(), class'Pupae', defaultOtherState);
-			else if (FRand() > 0.3) spawnMonsterAt(findNearSpawn(), class'Fly', defaultOtherState);
-			else spawnMonsterAt(findNearSpawn(), class'Manta', defaultOtherState);
+		if (FRand() < (0.25 * spawnChanceScaler)) {
+			if (FRand() > 0.6) spawnMonsterAt(findNearSpawn(), class'Pupae');
+			else if (FRand() > 0.3) spawnMonsterAt(findNearSpawn(), class'Fly');
+			else spawnMonsterAt(findNearSpawn(), class'Manta');
 		}
 
 		// small chance of spawning a large monster
-		if (spawnCycle % 18 == 0 && FRand() > 0.75) {
-			if (FRand() > 0.33) spawnMonsterAt(findNearSpawn(), class'Warlord', defaultOtherState);
-			else if (FRand() > 0.33) spawnMonsterAt(findNearSpawn(), class'Titan', defaultOtherState);
-			else spawnMonsterAt(findNearSpawn(), class'Queen', defaultOtherState);
+		if (spawnCycle % 18 == 0 && FRand() > 0.8) {
+			if (FRand() > 0.33) spawnMonsterAt(findNearSpawn(), class'Warlord');
+			else if (FRand() > 0.33) spawnMonsterAt(findNearSpawn(), class'Titan');
+			else spawnMonsterAt(findNearSpawn(), class'Queen');
 		}
 	}
 
@@ -269,7 +292,6 @@ function spawnMonsters() {
 function ScriptedPawn spawnMonsterAt(
 	NavigationPoint startSpot,
 	class<ScriptedPawn> monsterClass,
-	Name orders,
 	optional Name tag
 ) {
 	local ScriptedPawn newMonster;
@@ -279,34 +301,43 @@ function ScriptedPawn spawnMonsterAt(
 	newMonster = startSpot.Spawn(monsterClass);
 	if (newMonster == None) return None;
 
-	newMonster.SetRotation(startSpot.Rotation);
-
-	// make them advance towards the objective
-	newMonster.Orders = orders;
-	newMonster.OrderObject = monsterTarget;
-	newMonster.OrderTag = monsterOrderTag;
-	if (startSpot.IsA('PlayerStart'))	newMonster.AlarmTag = monsterOrderTag;
-	else if (FRand() > 0.3) newMonster.AlarmTag = monsterOrderTag;
 	if (tag != '') newMonster.tag = tag;
+
+	newMonster.SetRotation(startSpot.Rotation);
 
 	// make them less dumb
 	newMonster.Intelligence = BRAINS_HUMAN;
-	newMonster.SightRadius = minSpawnDistance * 4; // be able to see right across the map
+	newMonster.SightRadius = Max(minSpawnDistance * 4, newMonster.SightRadius); // be able to see right across the map
 	newMonster.bIgnoreFriends = True;
+
+	// special condition to allow monsters to pass through each other, so they don't block the objective
+	newMonster.bBlockActors = false;
+
+	SetSpawnOrders(newMonster, tag != '');
 
 	newMonster.SetMovementPhysics();
 	if (newMonster.Physics == PHYS_Walking) newMonster.SetPhysics(PHYS_Falling);
 
 	SpawnEffect(newMonster);
+	SpawnUnsticker(newMonster);
 
 	return newMonster;
 }
 
-function ScriptedPawn spawnMonster(class<ScriptedPawn> monsterClass, Name orders, optional Name tag) {
-	return spawnMonsterAt(FindPlayerStart(None, 1), monsterClass, orders, tag);
+function SetSpawnOrders(ScriptedPawn pawn, bool isRunner) {
+	// make them advance towards the objective
+	pawn.OrderObject = monsterTarget;
+	pawn.OrderTag = monsterOrderTag;
+
+	if (isRunner || FRand() > 0.7) {
+		pawn.AlarmTag = monsterOrderTag;
+		pawn.Orders = 'TriggerAlarm';
+	} else {
+		pawn.Orders = 'Roaming';
+	}
 }
 
-function SpawnEffect(Pawn other) {
+function SpawnEffect(ScriptedPawn other) {
 	local actor e;
 
 	e = Spawn(class'TranslocOutEffect', ,, other.location, other.rotation);
@@ -318,6 +349,12 @@ function SpawnEffect(Pawn other) {
 	e.PlaySound(sound'Resp2A', , 10.0);
 }
 
+function SpawnUnsticker(ScriptedPawn other) {
+	local actor un;
+
+	un = Spawn(class'MonsterDefenceUnsticker', other,, other.location);
+}
+
 defaultproperties {
 	MaxEscapees=20
 	spawnChanceBaseScale=1750
@@ -325,8 +362,6 @@ defaultproperties {
 	maxOtherMonsters=80
 	monsterOrderTag="MHDAttackThis"
 	runnerTag="MHDRunner"
-	defaultRunnerState='TriggerAlarm'
-	defaultOtherState='TriggerAlarm'
 	MapPrefix="CTF"
 	MapListType=Class'Botpack.CTFMapList'
 	BeaconName="MHD"
@@ -336,6 +371,7 @@ defaultproperties {
 	GameEndedMessage="Defence Successful!"
 	SingleWaitingMessage="Press Fire to begin defending."
 	MonstersEscapedMessage="Too many monsters escaped!"
+	EscapedMessage="escaped!"
 	DefaultBotOrders='Defend'
 
 	TeleportEffectTexture=Texture'Botpack.Skins.MuzzyPulse'
