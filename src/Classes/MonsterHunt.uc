@@ -30,18 +30,12 @@ var int NumPoints;
 var name DefaultBotOrders;
 
 function PostBeginPlay() {
-//	local ScriptedPawn S;
 	local MonsterWaypoint WP;
 	local MonsterReplicationInfo mpri;
 
 	LastPoint = 0;
 
 	foreach AllActors(class'MonsterWaypoint', WP) NumPoints ++;
-
-//	foreach AllActors(class'ScriptedPawn', S) {
-//		if (!S.IsA('Nali') && !S.IsA('Cow') S.AttitudeToPlayer = ATTITUDE_Ignore;
-//		if (S.Shadow == None) SetPawnDifficulty(MonsterSkill, S);
-//	}
 
 	mpri = MonsterReplicationInfo(GameReplicationInfo);
 	mpri.Lives = Lives;
@@ -537,14 +531,7 @@ function CountMonsters() {
 	local int monsterCount;
 
 	monsterCount = 0;
-	foreach AllActors(class'ScriptedPawn', S) {
-		if (S.Health >= 1) {
-			monsterCount ++;
-
-			// silly piggy-back which we use to detect whether a monster has had its difficulty scaled yet
-//			if (S.Shadow == None)	SetPawnDifficulty(MonsterSkill, S);
-		}
-	}
+	foreach AllActors(class'ScriptedPawn', S) if (S.Health >= 1) monsterCount ++
 
 	MonsterReplicationInfo(GameReplicationInfo).Monsters = monsterCount;
 }
