@@ -30,18 +30,12 @@ var int NumPoints;
 var name DefaultBotOrders;
 
 function PostBeginPlay() {
-	local ScriptedPawn S;
 	local MonsterWaypoint WP;
 	local MonsterReplicationInfo mpri;
 
 	LastPoint = 0;
 
 	foreach AllActors(class'MonsterWaypoint', WP) NumPoints ++;
-
-	foreach AllActors(class'ScriptedPawn', S) {
-		if (!S.IsA('Nali') && !S.IsA('Cow') && !S.IsA('NaliRabbit')) S.AttitudeToPlayer = ATTITUDE_Ignore;
-		if (S.Shadow == None) SetPawnDifficulty(MonsterSkill, S);
-	}
 
 	mpri = MonsterReplicationInfo(GameReplicationInfo);
 	mpri.Lives = Lives;
@@ -54,8 +48,29 @@ function PostBeginPlay() {
 	Super.PostBeginPlay();
 }
 
+function bool IsRelevant(Actor Other) {
+	local ScriptedPawn pawn;
+
+	pawn = ScriptedPawn(Other);
+	if (pawn != None) {
+		if (!pawn.IsA('Nali') && !pawn.IsA('Cow')) pawn.AttitudeToPlayer = ATTITUDE_Ignore;
+
+		SetPawnDifficulty(MonsterSkill, pawn);
+
+		if (Level.NetMode != NM_DedicatedServer) {
+			if (pawn.Shadow == None) pawn.Shadow = Spawn(class'MonsterShadow', pawn);
+		}
+	}
+
+	if (Other.IsA('MonsterShadow') && Level.NetMode == NM_DedicatedServer) return false;
+
+	return Super.IsRelevant(Other);
+}
+
 function SetPawnDifficulty(int Diff, ScriptedPawn S) {
 	local float DiffScale;
+
+	if (S == None) return;
 
 	DiffScale = (80 + (Diff * 10)) / 100;
 
@@ -81,7 +96,8 @@ function SetPawnDifficulty(int Diff, ScriptedPawn S) {
 	if (S.IsA('Slith')) Slith(S).ClawDamage = (Slith(S).ClawDamage * DiffScale);
 	if (S.IsA('Warlord')) Warlord(S).StrikeDamage = (Warlord(S).StrikeDamage * DiffScale);
 
-	if (S.Shadow == None) S.Shadow = Spawn(class'MonsterShadow', S);
+	S.TeamTag = 'MHMonsterTeam';
+	S.Team = 128;
 }
 
 function AddDefaultInventory(pawn PlayerPawn) {
@@ -300,7 +316,7 @@ function CheckEndGame() {
 	LivePpl = 0;
 	PlainPpl = 0;
 	for (PawnLink = Level.PawnList; PawnLink != None; PawnLink = PawnLink.nextPawn)
-		if (PawnLink.bIsPlayer) {
+		if (PawnLink.bIsPlayer && PawnLink.PlayerReplicationInfo != None) {
 			if ((PawnLink.PlayerReplicationInfo.Deaths >= 1) && !PawnLink.PlayerReplicationInfo.bIsSpectator) {
 				LivePpl ++;
 			}
@@ -420,7 +436,7 @@ function StartMatch() {
 	CountHunters();
 
 	foreach AllActors(class'ScriptedPawn', S) {
-		if (!S.IsA('Nali') && !S.IsA('Cow') && !S.IsA('NaliRabbit')) S.AttitudeToPlayer = ATTITUDE_Hate;
+		if (!S.IsA('Nali') && !S.IsA('Cow')) S.AttitudeToPlayer = ATTITUDE_Hate;
 	}
 
 	super.StartMatch();
@@ -515,14 +531,7 @@ function CountMonsters() {
 	local int monsterCount;
 
 	monsterCount = 0;
-	foreach AllActors(class'ScriptedPawn', S) {
-		if (S.Health >= 1) {
-			monsterCount ++;
-
-			// silly piggy-back which we use to detect whether a monster has had its difficulty scaled yet
-			if (S.Shadow == None)	SetPawnDifficulty(MonsterSkill, S);
-		}
-	}
+	foreach AllActors(class'ScriptedPawn', S) if (S.Health >= 1) monsterCount ++;
 
 	MonsterReplicationInfo(GameReplicationInfo).Monsters = monsterCount;
 }

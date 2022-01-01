@@ -1,5 +1,19 @@
 # Changelog 
 
+## 601 to 602:
+ - Fix incorrect `UIWeapon` reference in MonsterBase.CheckReplacement
+ - Remove NaliRabit from ScriptedPawn checks
+ - Do not spawn monster shadows on dedicated servers
+ - Implement better difficulty call using GameInfo.IsRelevant, rather than being called from various other places
+ - MonsterEnd should only ever trigger once
+ - Defence: Better application of orders on monsters, yielding better attack behaviour
+ - Defence: Disable Mercenary invulnerability shield
+ - Defence: Monsters do not block eachother, so they can navigate across the map better
+ - Defence: Monsters which don't move from their starting positions can be killed and recycled
+ - Defence: Optimisations to mid-game monster order coercion
+ - Defence: Tweaks to several monster spawn probabilities
+ - Defence: Localise "... escaped!" message
+
 ## 503 to 601:
  - Implement new game type: Monster Defence
    - Played on CTF maps, players must prevent attacking monsters from escaping via the portal that has opened in their base

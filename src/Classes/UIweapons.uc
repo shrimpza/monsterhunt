@@ -48,12 +48,13 @@ function SetSwitchPriority(pawn Other) { //allow weapon to register in first 20.
 		}
 	}
 }
+
 //client to server reloading functions...
 exec function reload() { //call the exec function (var failed to replicate to server continuously.......
-	if (pawn(owner)!=none&&pawn(owner).weapon == self) bwantreload = true;
+	if (pawn(owner) != None && pawn(owner).weapon == self) bwantreload = true;
 }
 exec function stopreload() {
-	if (pawn(owner)!=none&&pawn(owner).weapon == self) bwantreload = false;
+	if (pawn(owner) != None && pawn(owner).weapon == self) bwantreload = false;
 }
 
 defaultproperties {
