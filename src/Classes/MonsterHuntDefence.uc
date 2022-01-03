@@ -112,7 +112,7 @@ function PostBeginPlay() {
 function InitGameReplicationInfo() {
 	local MonsterReplicationInfo mri;
 
-  Super.InitGameReplicationInfo();
+	Super.InitGameReplicationInfo();
 
 	mri = MonsterReplicationInfo(GameReplicationInfo);
 	if (mri != None) {
@@ -189,10 +189,10 @@ function CoerceOrders() {
 	}
 
 	for (i = 0; i < scriptedPawnCount; i++) {
-	  pawn = scriptedPawns[i];
-	  if (pawn == None) continue;
+		pawn = scriptedPawns[i];
+		if (pawn == None) continue;
 
-	  if (pawn.Enemy == None && pawn.tag != runnerTag) {
+		if (pawn.Enemy == None && pawn.tag != runnerTag) {
 			// only evaluating against one random player per pawn, since CanSee might be expensive to run over all players for every pawn
 			P = maybeEnemyPlayers[Rand(playerCount)];
 			if (pawn.CanSee(P)) {

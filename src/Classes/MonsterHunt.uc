@@ -76,7 +76,7 @@ function FindWaypoints() {
 function InitGameReplicationInfo() {
 	local MonsterReplicationInfo mri;
 
-  Super.InitGameReplicationInfo();
+	Super.InitGameReplicationInfo();
 
 	mri = MonsterReplicationInfo(GameReplicationInfo);
 	if (mri != None) {
@@ -686,7 +686,7 @@ function NavigationPoint FindPlayerStart(Pawn Player, optional byte InTeam, opti
 	}
 
 	for (OtherPlayer = Level.PawnList; OtherPlayer != None; OtherPlayer = OtherPlayer.NextPawn) {
-	  if (OtherPlayer.IsA('ScriptedPawn') || !OtherPlayer.bIsPlayer || OtherPlayer.PlayerReplicationInfo == None) continue;
+		if (OtherPlayer.IsA('ScriptedPawn') || !OtherPlayer.bIsPlayer || OtherPlayer.PlayerReplicationInfo == None) continue;
 
 		if ((OtherPlayer.Health > 0) && !OtherPlayer.IsA('Spectator')) {
 			for (i = 0; i < num; i++) {
@@ -728,7 +728,7 @@ function SetBotOrders(Bot NewBot) {
 
 	// only follow players, if there are any
 	if ((NumSupportingPlayer == 0)
-		 	|| (NumSupportingPlayer < Teams[NewBot.PlayerReplicationInfo.Team].Size / 2 - 1)) {
+			|| (NumSupportingPlayer < Teams[NewBot.PlayerReplicationInfo.Team].Size / 2 - 1)) {
 		for (P = Level.PawnList; P != None; P = P.NextPawn) {
 			if (P.IsA('PlayerPawn') && (P.PlayerReplicationInfo.Team == NewBot.PlayerReplicationInfo.Team)
 				&& !P.IsA('Spectator')) {
@@ -748,7 +748,7 @@ function SetBotOrders(Bot NewBot) {
 
 	for (P = Level.PawnList; P != None; P = P.NextPawn) {
 		if (!P.IsA('ScriptedPawn')
-		    && P.bIsPlayer
+				&& P.bIsPlayer
 				&& P.PlayerReplicationInfo != None
 				&& (P.PlayerReplicationInfo.Team == NewBot.PlayerReplicationInfo.Team)) {
 			total++;
