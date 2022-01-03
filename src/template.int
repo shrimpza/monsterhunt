@@ -24,6 +24,7 @@ Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=UMenu.UMenuModMenuI
 [MonsterHunt]
 TimeOutMessage="Time up, hunt failed!"
 NoHuntersMessage="Hunting party eliminated!"
+NoLivesLeftMessage=" has been lost!"
 StartUpTeamMessage="Welcome to the hunt!"
 StartUpMessage="Work with your teammates to hunt down the monsters!"
 StartMessage="The hunt has begun!"
@@ -55,6 +56,7 @@ MonstersRemainLabel="Monsters"
 [MonsterHuntDefence]
 MonstersEscapedMessage="Too many monsters escaped!"
 EscapedMessage="escaped!"
+WarmupMessage="seconds until the monsters arrive!"
 StartUpMessage="Work with your teammates to defend your base against the monsters!"
 StartMessage="The defence has begun!"
 GameEndedMessage="Defence Successful!"
@@ -76,6 +78,22 @@ TourneyText="Force team colours"
 TourneyHelp="if enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
 FragText="Lives"
 FragHelp="Set the number of lives each hunter starts with for each round. Set it to 0 for no limit."
+DifficultyText="Monster Difficulty:"
+DifficultyHelp="The difficulty skill level of Monsters."
+Skills[0]="Easy"
+Skills[1]="Medium"
+Skills[2]="Hard"
+Skills[3]="Unreal"
+SkillTaunts[0]="Tourist mode."
+SkillTaunts[1]="Ready for some action!"
+SkillTaunts[2]="Not for the faint of heart."
+SkillTaunts[3]="Death wish."
+
+[MonsterHuntDefenceRules]
+EscapeesText="Max Escapees"
+EscapeesHelp="The maximum number of Monsters which are allowed to escape, before the round is lost."
+WarmupText="Warmup Time"
+WarmupHelp="Number of seconds to wait before monsters start attacking, set to 0 for no warmup."
 
 [MonsterBotConfig]
 MinPlayersText="Min. Total Hunters"

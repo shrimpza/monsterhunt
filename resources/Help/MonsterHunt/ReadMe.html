@@ -287,6 +287,20 @@
 <section>
 	<h2 id="history">Release History</h2>
 
+	<h3>Release 9 (603)</h3>
+	<ul>
+		<li>Decoupled monster difficulty from bot skill - difficulty is its own option on the Rules tab
+		<li>Add configurable Warmup time to Defence, before monsters start spawning
+		<li>Make Defence max escapees configurable in Rules tab
+		<li>Monster attitude to player set in difficulty, rather than when the match starts
+		<li>Better re-trigger prevention for MonsterEnd (thanks sector2111)
+		<li>Removed `MonsterHunt` type-check on `MonsterEnd` triggers, so other gametypes can use them (thanks sector2111)
+		<li>Improved and optimised bot waypoint finding to better support missed waypoints and no waypoints (thanks sector2111)
+		<li>Moved `MonsterReplicationInfo` setup into `InitGameReplicationInfo()` where it should be
+		<li>New higher resolution graphics for settings tabs
+		<li>Fix missing localisation for player lives ran out message
+	</ul>
+
 	<h3>Release 8 (602)</h3>
 	<ul>
 		<li>Fix incorrect `UIWeapon` reference in MonsterBase.CheckReplacement

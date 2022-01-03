@@ -12,11 +12,8 @@
 class MonsterArenaEnd extends MonsterEnd;
 
 function TriggerObjective() {
-	local MonsterHuntArena MH;
-
-	MH = MonsterHuntArena(Level.Game);
-	if (MH != None) MH.EndGame("Arena Cleared!");
-	else warn("MonsterArenaEnd - TriggerObjective - MH == None");
+	SetCollision(False, False, False);
+	Level.Game.EndGame("Arena Cleared!");
 }
 
 defaultproperties {

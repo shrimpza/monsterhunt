@@ -19,28 +19,26 @@ var bool bUseLives;
 
 var localized string TimeOutMessage;
 var localized string NoHuntersMessage;
+var localized string NoLivesLeftMessage;
 var localized string HuntCompleteMessage;
 
 var int LivePpl;
 var int PlainPpl;
 
-var int LastPoint;
-var int NumPoints;
-
 var name DefaultBotOrders;
 
-function PostBeginPlay() {
-	local MonsterWaypoint WP;
-	local MonsterReplicationInfo mpri;
+var int LastPoint;
+var int NumPoints;
+var MonsterWaypoint waypoints[128];
+var MonsterEnd endPoints[8];
+var int NumEndPoints;
 
+var bool bGameStarted;
+
+function PostBeginPlay() {
 	LastPoint = 0;
 
-	foreach AllActors(class'MonsterWaypoint', WP) NumPoints ++;
-
-	mpri = MonsterReplicationInfo(GameReplicationInfo);
-	mpri.Lives = Lives;
-	mpri.bUseTeamSkins = bUseTeamSkins;
-	mpri.bUseLives = Lives > 0;
+	FindWaypoints();
 
 	// get initial monster count
 	CountMonsters();
@@ -48,13 +46,53 @@ function PostBeginPlay() {
 	Super.PostBeginPlay();
 }
 
+function FindWaypoints() {
+	local int i, j;
+	local MonsterWaypoint WP;
+	local MonsterEnd EP;
+
+	// we're storing these in local arrays, since they don't change during gameplay, we can save some AllActors iterations later
+	foreach AllActors(class'MonsterWaypoint', WP) {
+		if (NumPoints > 127) break;
+		waypoints[NumPoints] = WP;
+		NumPoints ++;
+	}
+	foreach AllActors(class'MonsterEnd', EP) {
+		if (NumEndPoints > 7) break;
+		endPoints[NumEndPoints] = EP;
+		NumEndPoints ++;
+	}
+
+	// sort waypoints by position
+	for (i = 0; i < NumPoints - 1; i++) {
+		for (j = i + 1; j < NumPoints - i - 1; j++) {
+			if (waypoints[i].Position > waypoints[j].Position) {
+				WP = waypoints[j];
+				waypoints[j] = waypoints[i];
+				waypoints[j+1] = WP;
+			}
+		}
+	}
+}
+
+function InitGameReplicationInfo() {
+	local MonsterReplicationInfo mri;
+
+	Super.InitGameReplicationInfo();
+
+	mri = MonsterReplicationInfo(GameReplicationInfo);
+	if (mri != None) {
+		mri.Lives = Lives;
+		mri.bUseTeamSkins = bUseTeamSkins;
+		mri.bUseLives = Lives > 0;
+	}
+}
+
 function bool IsRelevant(Actor Other) {
 	local ScriptedPawn pawn;
 
 	pawn = ScriptedPawn(Other);
 	if (pawn != None) {
-		if (!pawn.IsA('Nali') && !pawn.IsA('Cow')) pawn.AttitudeToPlayer = ATTITUDE_Ignore;
-
 		SetPawnDifficulty(MonsterSkill, pawn);
 
 		if (Level.NetMode != NM_DedicatedServer) {
@@ -67,12 +105,12 @@ function bool IsRelevant(Actor Other) {
 	return Super.IsRelevant(Other);
 }
 
-function SetPawnDifficulty(int Diff, ScriptedPawn S) {
+function SetPawnDifficulty(int MonsterSkill, ScriptedPawn S) {
 	local float DiffScale;
 
 	if (S == None) return;
 
-	DiffScale = (80 + (Diff * 10)) / 100;
+	DiffScale = (80 + (MonsterSkill * 10)) / 100;
 
 	S.Health = (S.Health * DiffScale);
 	S.SightRadius = (S.SightRadius * DiffScale);
@@ -95,6 +133,11 @@ function SetPawnDifficulty(int Diff, ScriptedPawn S) {
 	if (S.IsA('Queen')) Queen(S).ClawDamage = (Queen(S).ClawDamage * DiffScale);
 	if (S.IsA('Slith')) Slith(S).ClawDamage = (Slith(S).ClawDamage * DiffScale);
 	if (S.IsA('Warlord')) Warlord(S).StrikeDamage = (Warlord(S).StrikeDamage * DiffScale);
+
+	if (!S.IsA('Nali') && !S.IsA('Cow')) {
+		if (bGameStarted) S.AttitudeToPlayer = ATTITUDE_Hate;
+		else S.AttitudeToPlayer = ATTITUDE_Ignore;
+	}
 
 	S.TeamTag = 'MHMonsterTeam';
 	S.Team = 128;
@@ -190,11 +233,21 @@ function bool SetEndCams(string Reason) {
 	return true;
 }
 
+/*
+ * Based on Reason, decide whether or not this was a "bad" result.
+ * Determines whether the "You have [won|lost] the match" VO plays.
+ *
+ * Returns true if the player team lost.
+ */
 function bool isBadEnd(string reason) {
 	if ((RemainingTime == 0) && (TimeLimit >= 1)) return true;
 	return reason == "No Hunters";
 }
 
+/*
+ * Based on Reason, return a localised/descriptive message for the
+ * game outcome.
+ */
 function string endedMessage(string reason) {
 	if (reason == "No Hunters") return NoHuntersMessage;
 	if ((RemainingTime == 0) && (TimeLimit >= 1)) return TimeOutMessage;
@@ -229,7 +282,7 @@ function playerpawn Login(
 	string Portal,
 	string Options,
 	out string Error,
-	class < playerpawn> SpawnClass
+	class<PlayerPawn> SpawnClass
 ) {
 	local PlayerPawn newPlayer;
 	local NavigationPoint StartSpot;
@@ -269,7 +322,7 @@ function bool RestartPlayer(pawn aPlayer) {
 		}
 
 		if (aPlayer.PlayerReplicationInfo.Deaths < 1) {
-			BroadcastMessage(aPlayer.PlayerReplicationInfo.PlayerName @ "has been lost!", true, 'MonsterCriticalEvent');
+			BroadcastMessage(aPlayer.PlayerReplicationInfo.PlayerName @ NoLivesLeftMessage, true, 'MonsterCriticalEvent');
 			for (P = Level.PawnList; P != None; P = P.NextPawn) {
 				if (P.bIsPlayer && (P.PlayerReplicationInfo.Deaths >= 1)) P.PlayerReplicationInfo.Deaths += 0.00001;
 			}
@@ -439,20 +492,19 @@ function StartMatch() {
 		if (!S.IsA('Nali') && !S.IsA('Cow')) S.AttitudeToPlayer = ATTITUDE_Hate;
 	}
 
+	bGameStarted = true;
+
 	super.StartMatch();
 }
 
 function Timer() {
 	CountHunters();
-	countMonsters();
+	CountMonsters();
 
 	Super.Timer();
 }
 
 function bool FindSpecialAttractionFor(Bot aBot) {
-	local MonsterWaypoint W;
-	local MonsterEnd E;
-	local MonsterWaypoint NextPoint;
 	local ScriptedPawn S;
 
 	if (aBot == None) return false;
@@ -487,28 +539,42 @@ function bool FindSpecialAttractionFor(Bot aBot) {
 
 	aBot.LastAttractCheck = Level.TimeSeconds;
 
+	return FindNextWaypoint(aBot);
+}
+
+function bool FindNextWaypoint(Bot aBot) {
+	local int i;
+
 	if ((aBot.Orders == 'Attack') || ((aBot.Orders == 'Freelance') && (FRand() > 0.2))) {
-		foreach AllActors(class'MonsterWaypoint', W) {
-			if (!W.bVisited && (W.Position == LastPoint + 1)) {
-				NextPoint = W;
-				if (aBot.ActorReachable(NextPoint)) aBot.MoveTarget = NextPoint;
-				else aBot.MoveTarget = aBot.FindPathToward(NextPoint);
-				NumPoints --;
-				SetAttractionStateFor(aBot);
-				return true;
-			}
+		for (i = 0; i < NumPoints; i++) {
+				if (!waypoints[i].bVisited) {
+					if (aBot.ActorReachable(waypoints[i])) aBot.MoveTarget = waypoints[i];
+					else aBot.MoveTarget = aBot.FindPathToward(waypoints[i]);
+
+					// there's no path to the next waypoint in line, so try to go to the next one
+					if (aBot.MoveTarget == None) continue;
+
+					SetAttractionStateFor(aBot);
+					return true;
+				}
 		}
 
-		if (NumPoints <= 0) {
-			foreach AllActors(class'MonsterEnd', E) {
-				if (aBot.ActorReachable(E)) aBot.MoveTarget = E;
-				else aBot.MoveTarget = aBot.FindPathToward(E);
+		// there are no waypoints left, or we can't reach any, so head for an end if possible
+		if (i >= NumPoints) {
+			for (i = 0; i < NumEndPoints; i++) {
+				if (aBot.ActorReachable(endPoints[i])) aBot.MoveTarget = endPoints[i];
+				else aBot.MoveTarget = aBot.FindPathToward(endPoints[i]);
+
+				// we can't reach this endpoint, try the next one
+				if (aBot.MoveTarget == None) continue;
+
 				SetAttractionStateFor(aBot);
 				return true;
 			}
 		}
 	}
 
+	// no waypoints available, no change in bot orders
 	return false;
 }
 
@@ -627,7 +693,7 @@ function NavigationPoint FindPlayerStart(Pawn Player, optional byte InTeam, opti
 	}
 
 	for (OtherPlayer = Level.PawnList; OtherPlayer != None; OtherPlayer = OtherPlayer.NextPawn) {
-	  if (OtherPlayer.IsA('ScriptedPawn') || !OtherPlayer.bIsPlayer || OtherPlayer.PlayerReplicationInfo == None) continue;
+		if (OtherPlayer.IsA('ScriptedPawn') || !OtherPlayer.bIsPlayer || OtherPlayer.PlayerReplicationInfo == None) continue;
 
 		if ((OtherPlayer.Health > 0) && !OtherPlayer.IsA('Spectator')) {
 			for (i = 0; i < num; i++) {
@@ -669,7 +735,7 @@ function SetBotOrders(Bot NewBot) {
 
 	// only follow players, if there are any
 	if ((NumSupportingPlayer == 0)
-		 	|| (NumSupportingPlayer < Teams[NewBot.PlayerReplicationInfo.Team].Size / 2 - 1)) {
+			|| (NumSupportingPlayer < Teams[NewBot.PlayerReplicationInfo.Team].Size / 2 - 1)) {
 		for (P = Level.PawnList; P != None; P = P.NextPawn) {
 			if (P.IsA('PlayerPawn') && (P.PlayerReplicationInfo.Team == NewBot.PlayerReplicationInfo.Team)
 				&& !P.IsA('Spectator')) {
@@ -689,7 +755,7 @@ function SetBotOrders(Bot NewBot) {
 
 	for (P = Level.PawnList; P != None; P = P.NextPawn) {
 		if (!P.IsA('ScriptedPawn')
-		    && P.bIsPlayer
+				&& P.bIsPlayer
 				&& P.PlayerReplicationInfo != None
 				&& (P.PlayerReplicationInfo.Team == NewBot.PlayerReplicationInfo.Team)) {
 			total++;
@@ -713,6 +779,7 @@ defaultproperties {
 	Lives=6
 	TimeOutMessage="Time up, hunt failed!"
 	NoHuntersMessage="Hunting party eliminated!"
+	NoLivesLeftMessage=" has been lost!"
 	bSpawnInTeamArea=True
 	bBalanceTeams=False
 	bPlayersBalanceTeams=False

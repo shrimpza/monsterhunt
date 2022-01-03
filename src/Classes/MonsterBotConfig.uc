@@ -10,7 +10,7 @@
 class MonsterBotConfig extends UTBotConfigClient
 	config(MonsterHunt);
 
-#exec TEXTURE IMPORT NAME=MHBotsBG FILE=Textures\MHBotsBG.PCX GROUP=Rules LODSET=0
+#exec TEXTURE IMPORT NAME=MHBotsBG FILE=Textures\MHBotsBG.png GROUP=Rules LODSET=0
 
 function Created() {
 	Super.Created();
@@ -34,12 +34,6 @@ function LoadCurrentValues() {
 	Super.LoadCurrentValues();
 	if (BotmatchParent.bNetworkGame) NumBotsEdit.SetValue(string(class'MonsterHunt'.Default.MinPlayers));
 	else NumBotsEdit.SetValue(string(class'MonsterHunt'.Default.InitialBots));
-}
-
-function BaseChanged() {
-	Super.BaseChanged();
-	class<MonsterHunt>(BotmatchParent.GameClass).Default.MonsterSkill = BaseCombo.GetSelectedIndex();
-	class<MonsterHunt>(BotmatchParent.GameClass).static.StaticSaveConfig();
 }
 
 defaultproperties {

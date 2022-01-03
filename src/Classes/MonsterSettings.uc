@@ -10,7 +10,7 @@
 class MonsterSettings extends UTSettingsCWindow
 	config(MonsterHunt);
 
-#exec TEXTURE IMPORT NAME=MHSettingsBG FILE=Textures\MHSettingsBG.PCX GROUP=Rules LODSET=0
+#exec TEXTURE IMPORT NAME=MHSettingsBG FILE=Textures\MHSettingsBG.png GROUP=Rules LODSET=0
 
 function Created() {
 	Super.Created();
