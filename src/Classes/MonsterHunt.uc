@@ -488,6 +488,10 @@ function StartMatch() {
 
 	bGameStarted = true;
 
+	foreach AllActors(class'ScriptedPawn', S) {
+		if (!S.IsA('Nali') && !S.IsA('Cow')) S.AttitudeToPlayer = ATTITUDE_Hate;
+	}
+
 	super.StartMatch();
 }
 
