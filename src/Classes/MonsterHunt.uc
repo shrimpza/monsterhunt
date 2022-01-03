@@ -19,6 +19,7 @@ var bool bUseLives;
 
 var localized string TimeOutMessage;
 var localized string NoHuntersMessage;
+var localized string NoLivesLeftMessage;
 var localized string HuntCompleteMessage;
 
 var int LivePpl;
@@ -32,6 +33,7 @@ var MonsterWaypoint waypoints[128];
 var MonsterEnd endPoints[8];
 var int NumEndPoints;
 
+var bool bGameStarted;
 
 function PostBeginPlay() {
 	LastPoint = 0;
@@ -91,8 +93,6 @@ function bool IsRelevant(Actor Other) {
 
 	pawn = ScriptedPawn(Other);
 	if (pawn != None) {
-		if (!pawn.IsA('Nali') && !pawn.IsA('Cow')) pawn.AttitudeToPlayer = ATTITUDE_Ignore;
-
 		SetPawnDifficulty(MonsterSkill, pawn);
 
 		if (Level.NetMode != NM_DedicatedServer) {
@@ -133,6 +133,11 @@ function SetPawnDifficulty(int MonsterSkill, ScriptedPawn S) {
 	if (S.IsA('Queen')) Queen(S).ClawDamage = (Queen(S).ClawDamage * DiffScale);
 	if (S.IsA('Slith')) Slith(S).ClawDamage = (Slith(S).ClawDamage * DiffScale);
 	if (S.IsA('Warlord')) Warlord(S).StrikeDamage = (Warlord(S).StrikeDamage * DiffScale);
+
+	if (!S.IsA('Nali') && !S.IsA('Cow')) {
+		if (bGameStarted) S.AttitudeToPlayer = ATTITUDE_Hate;
+		else S.AttitudeToPlayer = ATTITUDE_Ignore;
+	}
 
 	S.TeamTag = 'MHMonsterTeam';
 	S.Team = 128;
@@ -317,7 +322,7 @@ function bool RestartPlayer(pawn aPlayer) {
 		}
 
 		if (aPlayer.PlayerReplicationInfo.Deaths < 1) {
-			BroadcastMessage(aPlayer.PlayerReplicationInfo.PlayerName @ "has been lost!", true, 'MonsterCriticalEvent');
+			BroadcastMessage(aPlayer.PlayerReplicationInfo.PlayerName @ NoLivesLeftMessage, true, 'MonsterCriticalEvent');
 			for (P = Level.PawnList; P != None; P = P.NextPawn) {
 				if (P.bIsPlayer && (P.PlayerReplicationInfo.Deaths >= 1)) P.PlayerReplicationInfo.Deaths += 0.00001;
 			}
@@ -479,13 +484,9 @@ function bool IsOnTeam(Pawn Other, int TeamNum) {
 }
 
 function StartMatch() {
-	local ScriptedPawn S;
-
 	CountHunters();
 
-	foreach AllActors(class'ScriptedPawn', S) {
-		if (!S.IsA('Nali') && !S.IsA('Cow')) S.AttitudeToPlayer = ATTITUDE_Hate;
-	}
+	bGameStarted = true;
 
 	super.StartMatch();
 }
@@ -772,6 +773,7 @@ defaultproperties {
 	Lives=6
 	TimeOutMessage="Time up, hunt failed!"
 	NoHuntersMessage="Hunting party eliminated!"
+	NoLivesLeftMessage=" has been lost!"
 	bSpawnInTeamArea=True
 	bBalanceTeams=False
 	bPlayersBalanceTeams=False

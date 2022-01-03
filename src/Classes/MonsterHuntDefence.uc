@@ -11,8 +11,9 @@ class MonsterHuntDefence extends MonsterHunt
 	config(MonsterHunt);
 
 var config int MaxEscapees;
+var config int WarmupTime;
 
-var localized string MonstersEscapedMessage, EscapedMessage;
+var localized string MonstersEscapedMessage, EscapedMessage, WarmupMessage;
 
 // pre-set tags we use internally
 var Name monsterOrderTag, runnerTag;
@@ -31,7 +32,7 @@ var int minSpawnDistance;
 // monster spawn interval/cycle management
 var float spawnInterval, currentSpawnInterval;
 
-var bool bGameStarted;
+var bool bInWarmup;
 
 var Texture TeleportEffectTexture;
 
@@ -121,7 +122,10 @@ function InitGameReplicationInfo() {
 }
 
 function StartMatch() {
-	bGameStarted = true;
+	if (WarmupTime > 0) {
+		bInWarmup = true;
+		BroadcastMessage(WarmupTime @ WarmupMessage, true, 'CriticalEvent');
+	}
 
 	Super.StartMatch();
 }
@@ -138,7 +142,7 @@ function bool IsRelevant(Actor Other) {
 function monsterEscaped(ScriptedPawn escapee) {
 	MonsterReplicationInfo(GameReplicationInfo).Escapees++;
 
-	BroadcastMessage(escapee.GetHumanName() @ EscapedMessage, true, 'MonsterCriticalEvent');
+	BroadcastMessage(escapee.GetHumanName() @ EscapedMessage, false, 'MonsterCriticalEvent');
 
 	if (MonsterReplicationInfo(GameReplicationInfo).Escapees >= MaxEscapees) EndGame("Monsters Escaped");
 }
@@ -156,9 +160,24 @@ function string endedMessage(string reason) {
 }
 
 function Timer() {
-	CoerceOrders();
+	local Pawn P;
 
 	Super.Timer();
+
+	CoerceOrders();
+
+	if (bGameStarted && bInWarmup && WarmupTime > 0) {
+		if (WarmupTime < 6) {
+			for (P = Level.PawnList; P != None; P = P.nextPawn) {
+				if (P.IsA('TournamentPlayer')) TournamentPlayer(P).TimeMessage(WarmupTime);
+			}
+		} else if (WarmupTime % 10 == 0) {
+			BroadcastMessage(WarmupTime @ WarmupMessage, true, 'CriticalEvent');
+		}
+
+		WarmupTime --;
+	}
+	bInWarmup = WarmupTime > 0;
 }
 
 /*
@@ -171,7 +190,7 @@ function CoerceOrders() {
 	local ScriptedPawn scriptedPawns[256];
 	local int playerCount, scriptedPawnCount, i;
 
-	if (bGameEnded) return;
+	if (bGameEnded || bInWarmup) return;
 
 	playerCount = 0;
 	scriptedPawnCount = 0;
@@ -242,7 +261,7 @@ function Tick(float delta) {
 }
 
 function spawnMonsters() {
-	if (!bGameStarted || bGameEnded) return;
+	if (!bGameStarted || bInWarmup || bGameEnded) return;
 
 	// every ~8 seconds, spawn a runner
 	if (spawnCycle % 8 == 0) {
@@ -366,6 +385,7 @@ function SpawnUnsticker(ScriptedPawn other) {
 }
 
 defaultproperties {
+  WarmupTime=30
 	MaxEscapees=20
 	spawnChanceBaseScale=1750
 	spawnInterval=1.0
@@ -381,6 +401,7 @@ defaultproperties {
 	GameEndedMessage="Defence Successful!"
 	SingleWaitingMessage="Press Fire to begin defending."
 	MonstersEscapedMessage="Too many monsters escaped!"
+	WarmupMessage="seconds until the monsters arrive!"
 	EscapedMessage="escaped!"
 	DefaultBotOrders='Defend'
 	RulesMenuType="{{package}}.MonsterHuntDefenceRules"

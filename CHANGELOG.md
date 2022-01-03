@@ -3,11 +3,13 @@
 ## 602 to 603:
  - Decoupled monster difficulty from bot skill - difficulty is its own option on the Rules tab
  - Make Defence max escapees configurable in Rules tab 
+ - Monster attitude to player set in difficulty, rather than when the match starts
  - Better re-trigger prevention for MonsterEnd (thanks sector2111)
- - Removed MonsterHunt type-check on MonsterEnd triggers, so other gametypes can use them (thanks sector2111)
+ - Removed `MonsterHunt` type-check on `MonsterEnd` triggers, so other gametypes can use them (thanks sector2111)
  - Improved and optimised bot waypoint finding to better support missed waypoints and no waypoints (thanks sector2111)
  - Moved `MonsterReplicationInfo` setup into `InitGameReplicationInfo()` where it should be 
- - New higher resolution graphics for settings windows
+ - New higher resolution graphics for settings tabs
+ - Fix missing localisation for player lives ran out message
 
 ## 601 to 602:
  - Fix incorrect `UIWeapon` reference in MonsterBase.CheckReplacement
