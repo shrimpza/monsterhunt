@@ -13,7 +13,7 @@ class MonsterArenaEnd extends MonsterEnd;
 
 function TriggerObjective() {
 	SetCollision(False, False, False);
-	Level.Game.EndGame("Hunt Successful!");
+	Level.Game.EndGame("Arena Cleared!");
 }
 
 defaultproperties {
