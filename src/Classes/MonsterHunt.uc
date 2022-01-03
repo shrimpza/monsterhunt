@@ -473,7 +473,12 @@ function AddToTeam(int num, Pawn Other) {
 
 		if (MonsterReplicationInfo(GameReplicationInfo).bUseTeamSkins) {
 			Other.static.GetMultiSkin(Other, SkinName, FaceName);
-			Other.static.SetMultiSkin(Other, SkinName, FaceName, 0);
+			if (SkinName ~= "None")
+				SkinName = string(Other.Skin);
+			if (SkinName ~= "None")
+				SkinName = string(Other.MultiSkins[1]);
+			if (!(SkinName ~= "None"))
+				Other.static.SetMultiSkin(Other, SkinName, FaceName, 0);
 		}
 	}
 }
