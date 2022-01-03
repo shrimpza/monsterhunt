@@ -429,7 +429,7 @@ function ScoreKill(pawn Killer, pawn Other) {
 		else if (Other.IsA('GiantGasBag') || Other.IsA('GiantManta')) Killer.PlayerReplicationInfo.Score += 3;
 		else if (Other.IsA('SkaarjWarrior') || Other.IsA('MercenaryElite') || Other.IsA('Brute')) Killer.PlayerReplicationInfo.Score += 2;
 		// Lose points for killing innocent creatures. Shame ;-)
-		else if (Other.IsA('Nali') || Other.IsA('Cow') || Other.IsA('NaliRabbit')) Killer.PlayerReplicationInfo.Score -= 6;
+		else if (Other.IsA('Nali') || Other.IsA('Cow')) Killer.PlayerReplicationInfo.Score -= 6;
 		// be default, score 1 for all other kills
 		else Killer.PlayerReplicationInfo.Score += 1;
 
