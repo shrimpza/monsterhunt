@@ -818,4 +818,5 @@ defaultproperties {
 	GameReplicationInfoClass=Class'{{package}}.MonsterReplicationInfo'
 	bLocalLog=True
 	DefaultBotOrders='Attack'
+	bScoreTeamKills=False
 }
