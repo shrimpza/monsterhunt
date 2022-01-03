@@ -385,7 +385,7 @@ function SpawnUnsticker(ScriptedPawn other) {
 }
 
 defaultproperties {
-  WarmupTime=30
+	WarmupTime=30
 	MaxEscapees=20
 	spawnChanceBaseScale=1750
 	spawnInterval=1.0
