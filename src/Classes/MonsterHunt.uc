@@ -774,6 +774,42 @@ function SetBotOrders(Bot NewBot) {
 	NewBot.SetOrders(DefaultBotOrders, None, true);
 }
 
+/*
+AssessBotAttitude returns a value that translates to an attitude
+		0 = ATTITUDE_Fear;
+		1 = return ATTITUDE_Hate;
+		2 = return ATTITUDE_Ignore;
+		3 = return ATTITUDE_Friendly;
+*/	
+function byte AssessBotAttitude(Bot aBot, Pawn Other)
+{
+	local vector HitLocation, HitNormal;
+
+	if ( Other.isA('Titan') && Other.GetStateName() == 'Sitting' )
+		return 2; // ATTITUDE_Ignore
+	// prevent attack through Movers (if engine support)
+//	if ( Trace(HitLocation, HitNormal, Other.Location, aBot.Location, False) != None )
+	if (!aBot.LineOfSightTo(Other))
+		return 2; // ATTITUDE_Ignore
+	if ( Other.IsA('Nali') || Other.IsA('Cow') )
+		return 3; // ATTITUDE_Friendly
+	if ( Other.bIsPlayer && Other.PlayerReplicationInfo != None && Other.PlayerReplicationInfo.Team == aBot.PlayerReplicationInfo.Team )
+		return 3; // ATTITUDE_Friendly
+	if ( Other.IsA('TeamCannon') )
+	{
+		if (TeamCannon(Other).SameTeamAs(0) )
+			return 3; // ATTITUDE_Friendly
+		if (Other.GetStateName() != 'ActiveCannon')
+			return 2; // ATTITUDE_Ignore
+	}
+	if ( !(Other.bIsPlayer && Other.PlayerReplicationInfo != None) && Other.CollisionHeight < 75 )
+		return 1; // ATTITUDE_Hate
+	if ( !(Other.bIsPlayer && Other.PlayerReplicationInfo != None) && Other.CollisionHeight >= 75 )
+		return 0; // ATTITUDE_Fear
+		
+	return super(DeathMatchPlus).AssessBotAttitude(aBot, Other);
+}
+
 defaultproperties {
 	MonsterSkill=5
 	Lives=6
