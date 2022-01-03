@@ -24,28 +24,66 @@ var localized string HuntCompleteMessage;
 var int LivePpl;
 var int PlainPpl;
 
-var int LastPoint;
-var int NumPoints;
-
 var name DefaultBotOrders;
 
-function PostBeginPlay() {
-	local MonsterWaypoint WP;
-	local MonsterReplicationInfo mpri;
+var int LastPoint;
+var int NumPoints;
+var MonsterWaypoint waypoints[128];
+var MonsterEnd endPoints[8];
+var int NumEndPoints;
 
+
+function PostBeginPlay() {
 	LastPoint = 0;
 
-	foreach AllActors(class'MonsterWaypoint', WP) NumPoints ++;
-
-	mpri = MonsterReplicationInfo(GameReplicationInfo);
-	mpri.Lives = Lives;
-	mpri.bUseTeamSkins = bUseTeamSkins;
-	mpri.bUseLives = Lives > 0;
+	FindWaypoints();
 
 	// get initial monster count
 	CountMonsters();
 
 	Super.PostBeginPlay();
+}
+
+function FindWaypoints() {
+	local int i, j;
+	local MonsterWaypoint WP;
+	local MonsterEnd EP;
+
+	// we're storing these in local arrays, since they don't change during gameplay, we can save some AllActors iterations later
+	foreach AllActors(class'MonsterWaypoint', WP) {
+		if (NumPoints > 127) break;
+		waypoints[NumPoints] = WP;
+		NumPoints ++;
+	}
+	foreach AllActors(class'MonsterEnd', EP) {
+		if (NumEndPoints > 7) break;
+		endPoints[NumEndPoints] = EP;
+		NumEndPoints ++;
+	}
+
+	// sort waypoints by position
+	for (i = 0; i < NumPoints - 1; i++) {
+		for (j = i + 1; j < NumPoints - i - 1; j++) {
+			if (waypoints[i].Position > waypoints[j].Position) {
+				WP = waypoints[j];
+				waypoints[j] = waypoints[i];
+				waypoints[j+1] = WP;
+			}
+		}
+	}
+}
+
+function InitGameReplicationInfo() {
+	local MonsterReplicationInfo mri;
+
+  Super.InitGameReplicationInfo();
+
+	mri = MonsterReplicationInfo(GameReplicationInfo);
+	if (mri != None) {
+		mri.Lives = Lives;
+		mri.bUseTeamSkins = bUseTeamSkins;
+		mri.bUseLives = Lives > 0;
+	}
 }
 
 function bool IsRelevant(Actor Other) {
@@ -67,12 +105,12 @@ function bool IsRelevant(Actor Other) {
 	return Super.IsRelevant(Other);
 }
 
-function SetPawnDifficulty(int Diff, ScriptedPawn S) {
+function SetPawnDifficulty(int MonsterSkill, ScriptedPawn S) {
 	local float DiffScale;
 
 	if (S == None) return;
 
-	DiffScale = (80 + (Diff * 10)) / 100;
+	DiffScale = (80 + (MonsterSkill * 10)) / 100;
 
 	S.Health = (S.Health * DiffScale);
 	S.SightRadius = (S.SightRadius * DiffScale);
@@ -190,11 +228,21 @@ function bool SetEndCams(string Reason) {
 	return true;
 }
 
+/*
+ * Based on Reason, decide whether or not this was a "bad" result.
+ * Determines whether the "You have [won|lost] the match" VO plays.
+ *
+ * Returns true if the player team lost.
+ */
 function bool isBadEnd(string reason) {
 	if ((RemainingTime == 0) && (TimeLimit >= 1)) return true;
 	return reason == "No Hunters";
 }
 
+/*
+ * Based on Reason, return a localised/descriptive message for the
+ * game outcome.
+ */
 function string endedMessage(string reason) {
 	if (reason == "No Hunters") return NoHuntersMessage;
 	if ((RemainingTime == 0) && (TimeLimit >= 1)) return TimeOutMessage;
@@ -229,7 +277,7 @@ function playerpawn Login(
 	string Portal,
 	string Options,
 	out string Error,
-	class < playerpawn> SpawnClass
+	class<PlayerPawn> SpawnClass
 ) {
 	local PlayerPawn newPlayer;
 	local NavigationPoint StartSpot;
@@ -450,9 +498,6 @@ function Timer() {
 }
 
 function bool FindSpecialAttractionFor(Bot aBot) {
-	local MonsterWaypoint W;
-	local MonsterEnd E;
-	local MonsterWaypoint NextPoint;
 	local ScriptedPawn S;
 
 	if (aBot == None) return false;
@@ -487,28 +532,42 @@ function bool FindSpecialAttractionFor(Bot aBot) {
 
 	aBot.LastAttractCheck = Level.TimeSeconds;
 
+	return FindNextWaypoint(aBot);
+}
+
+function bool FindNextWaypoint(Bot aBot) {
+	local int i;
+
 	if ((aBot.Orders == 'Attack') || ((aBot.Orders == 'Freelance') && (FRand() > 0.2))) {
-		foreach AllActors(class'MonsterWaypoint', W) {
-			if (!W.bVisited && (W.Position == LastPoint + 1)) {
-				NextPoint = W;
-				if (aBot.ActorReachable(NextPoint)) aBot.MoveTarget = NextPoint;
-				else aBot.MoveTarget = aBot.FindPathToward(NextPoint);
-				NumPoints --;
-				SetAttractionStateFor(aBot);
-				return true;
-			}
+		for (i = 0; i < NumPoints; i++) {
+				if (!waypoints[i].bVisited) {
+					if (aBot.ActorReachable(waypoints[i])) aBot.MoveTarget = waypoints[i];
+					else aBot.MoveTarget = aBot.FindPathToward(waypoints[i]);
+
+					// there's no path to the next waypoint in line, so try to go to the next one
+					if (aBot.MoveTarget == None) continue;
+
+					SetAttractionStateFor(aBot);
+					return true;
+				}
 		}
 
-		if (NumPoints <= 0) {
-			foreach AllActors(class'MonsterEnd', E) {
-				if (aBot.ActorReachable(E)) aBot.MoveTarget = E;
-				else aBot.MoveTarget = aBot.FindPathToward(E);
+		// there are no waypoints left, or we can't reach any, so head for an end if possible
+		if (i >= NumPoints) {
+			for (i = 0; i < NumEndPoints; i++) {
+				if (aBot.ActorReachable(endPoints[i])) aBot.MoveTarget = endPoints[i];
+				else aBot.MoveTarget = aBot.FindPathToward(endPoints[i]);
+
+				// we can't reach this endpoint, try the next one
+				if (aBot.MoveTarget == None) continue;
+
 				SetAttractionStateFor(aBot);
 				return true;
 			}
 		}
 	}
 
+	// no waypoints available, no change in bot orders
 	return false;
 }
 

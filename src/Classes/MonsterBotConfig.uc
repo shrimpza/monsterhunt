@@ -10,7 +10,7 @@
 class MonsterBotConfig extends UTBotConfigClient
 	config(MonsterHunt);
 
-#exec TEXTURE IMPORT NAME=MHBotsBG FILE=Textures\MHBotsBG.PCX GROUP=Rules LODSET=0
+#exec TEXTURE IMPORT NAME=MHBotsBG FILE=Textures\MHBotsBG.png GROUP=Rules LODSET=0
 
 function Created() {
 	Super.Created();

@@ -10,7 +10,7 @@
 class MonsterHuntRules extends UTRulesCWindow
 	config(MonsterHunt);
 
-#exec TEXTURE IMPORT NAME=MHRulesBG FILE=Textures\MHRulesBG.PCX GROUP=Rules LODSET=0
+#exec TEXTURE IMPORT NAME=MHRulesBG FILE=Textures\MHRulesBG.png GROUP=Rules LODSET=0
 
 function Created() {
 	Super.Created();

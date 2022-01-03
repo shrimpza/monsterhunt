@@ -15,6 +15,7 @@ var(Waypoint) Name TriggerEvent1;
 var(Waypoint) Name TriggerEvent2;
 var(Waypoint) Name TriggerEvent3;
 var(Waypoint) Name TriggerEvent4;
+
 var actor TriggerActor1;
 var actor TriggerActor2;
 var actor TriggerActor3;
@@ -29,7 +30,7 @@ function PostBeginPlay() {
 	TriggerActor2 = None;
 	TriggerActor3 = None;
 	TriggerActor4 = None;
-	ForEach AllActors(class 'Actor', A) {
+	foreach AllActors(class 'Actor', A) {
 		if (A.Event == TriggerEvent1 && TriggerActor1 == None) TriggerActor1 = A;
 		if (A.Event == TriggerEvent2 && TriggerActor2 == None) TriggerActor2 = A;
 		if (A.Event == TriggerEvent3 && TriggerActor3 == None) TriggerActor3 = A;

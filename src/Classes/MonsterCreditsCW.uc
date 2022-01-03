@@ -9,7 +9,7 @@
 
 class MonsterCreditsCW extends UTCreditsCW;
 
-#exec TEXTURE IMPORT NAME=MHCreditsBG FILE=Textures\MHCreditsBG.PCX GROUP=Rules LODSET=0
+#exec TEXTURE IMPORT NAME=MHCreditsBG FILE=Textures\MHCreditsBG.png GROUP=Rules LODSET=0
 
 function Paint(Canvas C, float X, float Y) {
 	Super.Paint(C, X, Y);
@@ -35,6 +35,8 @@ defaultproperties {
 	MusicNames(3)="UsAaR33"
 	MusicNames(4)=" "
 	MusicNames(5)="All at UnrealZA"
+	MusicNames(4)=" "
+	MusicNames(5)="All at UT99.org"
 	MusicNames(6)=" "
 	MusicNames(7)="And most of all"
 	MusicNames(8)="EPIC GAMES"

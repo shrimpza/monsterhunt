@@ -14,6 +14,8 @@ class MonsterEnd extends Trigger;
 function Touch(actor Other) {
 	local actor A;
 
+	if (Level.Game.bGameEnded) return;
+
 	if (IsRelevant(Other)) {
 		if (Event != '') foreach AllActors(class 'Actor', A, Event) A.Trigger(Other, Other.Instigator);
 
@@ -26,6 +28,8 @@ function Touch(actor Other) {
 function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector momentum, name damageType) {
 	local actor A;
 
+	if (Level.Game.bGameEnded) return;
+
 	if (bInitiallyActive && (TriggerType == TT_Shoot) && (Damage >= DamageThreshold) && (instigatedBy != None)) {
 		if (Event != '') foreach AllActors(class 'Actor', A, Event) A.Trigger(instigatedBy, instigatedBy);
 
@@ -36,13 +40,9 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 }
 
 function TriggerObjective() {
-	local	MonsterHunt	MH;
+	SetCollision(False, False, False);
 
-	SetCollision(False);
-
-	MH = MonsterHunt(Level.Game);
-	if (MH != None) MH.EndGame("Hunt Successful!");
-	else warn("MonsterEnd - TriggerObjective - MH == None");
+	Level.Game.EndGame("Hunt Successful!");
 }
 
 defaultproperties {

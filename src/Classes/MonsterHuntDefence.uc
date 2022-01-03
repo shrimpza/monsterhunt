@@ -46,8 +46,6 @@ function PostBeginPlay() {
 
 	local float DiffScale;
 
-	MonsterReplicationInfo(GameReplicationInfo).MaxEscapees = MaxEscapees;
-
 	foreach AllActors(class'FlagBase', flag) {
 		if (flag.team == 0) {
 			bothFlags[0] = flag;
@@ -108,6 +106,18 @@ function PostBeginPlay() {
 	spawnInterval = 2.2 - DiffScale;
 
 	Super.PostBeginPlay();
+}
+
+
+function InitGameReplicationInfo() {
+	local MonsterReplicationInfo mri;
+
+  Super.InitGameReplicationInfo();
+
+	mri = MonsterReplicationInfo(GameReplicationInfo);
+	if (mri != None) {
+		mri.MaxEscapees = MaxEscapees;
+	}
 }
 
 function StartMatch() {

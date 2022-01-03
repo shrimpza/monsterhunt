@@ -1,5 +1,12 @@
 # Changelog 
 
+## 602 to 603:
+ - Better re-trigger prevention for MonsterEnd (thanks sector2111)
+ - New higher resolution graphics for settings windows
+ - Removed MonsterHunt type-check on MonsterEnd triggers, so other gametypes can use them
+ - Improved and optimised bot waypoint finding to better support missed waypoints and no waypoints
+ - Moved `MonsterReplicationInfo` setup into `InitGameReplicationInfo()` where it should be 
+
 ## 601 to 602:
  - Fix incorrect `UIWeapon` reference in MonsterBase.CheckReplacement
  - Remove NaliRabit from ScriptedPawn checks
