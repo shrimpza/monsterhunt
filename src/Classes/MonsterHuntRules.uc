@@ -25,7 +25,7 @@ var localized string SkillTaunts[4];
 function Created() {
 	local int i;
 	local int ControlWidth, ControlLeft, ControlRight;
-	local int CenterWidth, CenterPos, ButtonWidth, ButtonLeft;
+	local int CenterWidth, CenterPos;
 
 	ControlWidth = WinWidth / 2.5;
 	ControlLeft = (WinWidth / 2 - ControlWidth) / 2;
@@ -56,7 +56,7 @@ function Created() {
 
 function BeforePaint(Canvas C, float X, float Y) {
 	local int ControlWidth, ControlLeft, ControlRight;
-	local int CenterWidth, CenterPos, ButtonWidth, ButtonLeft;
+	local int CenterWidth, CenterPos;
 
 	Super.BeforePaint(C, X, Y);
 
@@ -179,7 +179,7 @@ function DifficultyChanged() {
 
 defaultproperties {
 	TourneyText="Force team colours"
-	TourneyHelp="if enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
+	TourneyHelp="If enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
 	FragText="Lives"
 	FragHelp="Set the number of lives each hunter starts with for each round. Set it to 0 for no limit."
 

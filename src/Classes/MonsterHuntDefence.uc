@@ -383,6 +383,7 @@ defaultproperties {
 	MonstersEscapedMessage="Too many monsters escaped!"
 	EscapedMessage="escaped!"
 	DefaultBotOrders='Defend'
+	RulesMenuType="{{package}}.MonsterHuntDefenceRules"
 
 	TeleportEffectTexture=Texture'Botpack.Skins.MuzzyPulse'
 }
