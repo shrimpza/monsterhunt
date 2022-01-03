@@ -36,12 +36,6 @@ function LoadCurrentValues() {
 	else NumBotsEdit.SetValue(string(class'MonsterHunt'.Default.InitialBots));
 }
 
-function BaseChanged() {
-	Super.BaseChanged();
-	class<MonsterHunt>(BotmatchParent.GameClass).Default.MonsterSkill = BaseCombo.GetSelectedIndex();
-	class<MonsterHunt>(BotmatchParent.GameClass).static.StaticSaveConfig();
-}
-
 defaultproperties {
 	MinPlayersText="Min. Total Hunters"
 	BaseText="AI Hunter Skill:"
