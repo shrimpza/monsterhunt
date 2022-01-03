@@ -780,7 +780,7 @@ defaultproperties {
 	TimeOutMessage="Time up, hunt failed!"
 	NoHuntersMessage="Hunting party eliminated!"
 	NoLivesLeftMessage=" has been lost!"
-	bSpawnInTeamArea=True
+	bSpawnInTeamArea=False
 	bBalanceTeams=False
 	bPlayersBalanceTeams=False
 	MaxTeams=1
