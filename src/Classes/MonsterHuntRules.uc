@@ -185,7 +185,7 @@ defaultproperties {
 
 	DifficultyCombo=None
 	DifficultyText="Monster Difficulty:"
-	DifficultyHelp="This is the Difficulty skill level of the bots."
+	DifficultyHelp="The difficulty skill level of Monsters."
 	TauntLabel=None
 	Skills(0)="Easy"
 	Skills(1)="Medium"
