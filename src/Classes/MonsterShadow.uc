@@ -25,7 +25,10 @@ simulated function Tick(float DeltaTime) {
 	local Actor HitActor;
 	local Vector HitNormal, HitLocation, ShadowStart, ShadowDir;
 
-	if (Owner == None) return;
+	if (Owner == None) {
+		Destroy();
+		return;
+	}
 
 	if (OldOwnerLocation == Owner.Location) return;
 
