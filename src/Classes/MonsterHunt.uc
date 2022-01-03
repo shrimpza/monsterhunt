@@ -407,13 +407,15 @@ function Killed(pawn killer, pawn Other, name damageType) {
 }
 
 function ScoreKill(pawn Killer, pawn Other) {
+	local bool bEnemy;
+
 	if (Killer == None) return;
 
-	if (Killer == Other || !Other.bIsPlayer || (Killer.PlayerReplicationInfo.Team != Other.PlayerReplicationInfo.Team)) {
+	if (Killer == Other || !Other.bIsPlayer) {
 		Super.ScoreKill(Killer, Other);
 	}
 
-	if (Other.bIsPlayer && MonsterReplicationInfo(GameReplicationInfo).bUseLives) {
+	if (Other.bIsPlayer && Other.PlayerReplicationInfo != None && MonsterReplicationInfo(GameReplicationInfo).bUseLives) {
 		Other.PlayerReplicationInfo.Deaths -= 1;
 	}
 
@@ -424,17 +426,35 @@ function ScoreKill(pawn Killer, pawn Other) {
 // =========================================================================
 // Score depending on which monster type the player kills
 
-	if (Killer.bIsPlayer) {
+	if (Killer.bIsPlayer && Killer.PlayerReplicationInfo != None) {
 		if (Other.IsA('Titan') || Other.IsA('Queen') || Other.IsA('WarLord')) Killer.PlayerReplicationInfo.Score += 4;
 		else if (Other.IsA('GiantGasBag') || Other.IsA('GiantManta')) Killer.PlayerReplicationInfo.Score += 3;
 		else if (Other.IsA('SkaarjWarrior') || Other.IsA('MercenaryElite') || Other.IsA('Brute')) Killer.PlayerReplicationInfo.Score += 2;
 		// Lose points for killing innocent creatures. Shame ;-)
-		else if (Other.IsA('Nali') || Other.IsA('Cow') || Other.IsA('NaliRabbit')) Killer.PlayerReplicationInfo.Score -= 6;
+		else 	if ( Other.IsA('Nali') || Other.IsA('Cow') )
+		{
+			switch (ScriptedPawn(Other).AttitudeToCreature(Killer))
+			{
+				case ATTITUDE_Hate:
+				case ATTITUDE_Frenzy:
+					bEnemy = true;
+			}
+			switch (Other.AttitudeToPlayer)
+			{
+				case ATTITUDE_Hate:
+				case ATTITUDE_Frenzy:
+					bEnemy = true;
+			}
+			if (!bEnemy)
+				Killer.PlayerReplicationInfo.Score -= 6;
+			else
+				Killer.PlayerReplicationInfo.Score += 1;
+		}
 		// be default, score 1 for all other kills
 		else Killer.PlayerReplicationInfo.Score += 1;
 
 		// Get 10 extra points for killing the boss!!
-		if ((Killer.bIsPlayer) && (ScriptedPawn(Other).bIsBoss)) Killer.PlayerReplicationInfo.Score += 9;
+		if (ScriptedPawn(Other).bIsBoss) Killer.PlayerReplicationInfo.Score += 9;
 	}
 }
 
