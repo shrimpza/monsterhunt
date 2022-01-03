@@ -50,7 +50,7 @@ function Created() {
 
 	Super.Created();
 
-	ForceRespawnCheck.HideWindow();
+	if (ForceRespawnCheck != None) ForceRespawnCheck.HideWindow();
 }
 
 

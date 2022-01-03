@@ -484,20 +484,22 @@ function bool IsOnTeam(Pawn Other, int TeamNum) {
 }
 
 function StartMatch() {
-	CountHunters();
+	local ScriptedPawn S;
 
-	bGameStarted = true;
+	CountHunters();
 
 	foreach AllActors(class'ScriptedPawn', S) {
 		if (!S.IsA('Nali') && !S.IsA('Cow')) S.AttitudeToPlayer = ATTITUDE_Hate;
 	}
+
+	bGameStarted = true;
 
 	super.StartMatch();
 }
 
 function Timer() {
 	CountHunters();
-	countMonsters();
+	CountMonsters();
 
 	Super.Timer();
 }

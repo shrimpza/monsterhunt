@@ -2,7 +2,8 @@
 
 ## 602 to 603:
  - Decoupled monster difficulty from bot skill - difficulty is its own option on the Rules tab
- - Make Defence max escapees configurable in Rules tab 
+ - Add configurable Warmup time to Defence, before monsters start spawning
+ - Make Defence max escapees configurable in Rules tab
  - Monster attitude to player set in difficulty, rather than when the match starts
  - Better re-trigger prevention for MonsterEnd (thanks sector2111)
  - Removed `MonsterHunt` type-check on `MonsterEnd` triggers, so other gametypes can use them (thanks sector2111)

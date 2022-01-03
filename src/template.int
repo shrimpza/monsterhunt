@@ -24,6 +24,7 @@ Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=UMenu.UMenuModMenuI
 [MonsterHunt]
 TimeOutMessage="Time up, hunt failed!"
 NoHuntersMessage="Hunting party eliminated!"
+NoLivesLeftMessage=" has been lost!"
 StartUpTeamMessage="Welcome to the hunt!"
 StartUpMessage="Work with your teammates to hunt down the monsters!"
 StartMessage="The hunt has begun!"
@@ -55,6 +56,7 @@ MonstersRemainLabel="Monsters"
 [MonsterHuntDefence]
 MonstersEscapedMessage="Too many monsters escaped!"
 EscapedMessage="escaped!"
+WarmupMessage="seconds until the monsters arrive!"
 StartUpMessage="Work with your teammates to defend your base against the monsters!"
 StartMessage="The defence has begun!"
 GameEndedMessage="Defence Successful!"
@@ -90,6 +92,8 @@ SkillTaunts[3]="Death wish."
 [MonsterHuntDefenceRules]
 EscapeesText="Max Escapees"
 EscapeesHelp="The maximum number of Monsters which are allowed to escape, before the round is lost."
+WarmupText="Warmup Time"
+WarmupHelp="Number of seconds to wait before monsters start attacking, set to 0 for no warmup."
 
 [MonsterBotConfig]
 MinPlayersText="Min. Total Hunters"
