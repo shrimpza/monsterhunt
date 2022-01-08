@@ -278,27 +278,28 @@ function PlayStartUpMessage(PlayerPawn NewPlayer) {
 	if (Level.NetMode == NM_Standalone) NewPlayer.SetProgressMessage(SingleWaitingMessage, i++);
 }
 
-function playerpawn Login(
+function PlayerPawn Login(
 	string Portal,
 	string Options,
 	out string Error,
 	class<PlayerPawn> SpawnClass
 ) {
-	local PlayerPawn newPlayer;
+	local PlayerPawn NewPlayer;
 	local NavigationPoint StartSpot;
 
-	newPlayer = Super.Login(Portal, Options, Error, SpawnClass);
-	if (newPlayer == None) return None;
+	NewPlayer = Super(DeathMatchPlus).Login(Portal, Options, Error, SpawnClass);
+	if (NewPlayer == None) return None;
 
-	if (bSpawnInTeamArea) {
-		StartSpot = FindPlayerStart(NewPlayer, 0, Portal);
-		if (StartSpot != None) {
-			NewPlayer.SetLocation(StartSpot.Location);
-			NewPlayer.SetRotation(StartSpot.Rotation);
-			NewPlayer.ViewRotation = StartSpot.Rotation;
-			NewPlayer.ClientSetRotation(NewPlayer.Rotation);
-			StartSpot.PlayTeleportEffect(NewPlayer, true);
-		}
+	// force finding a red team start spot
+	StartSpot = FindPlayerStart(NewPlayer, 0, Portal);
+	if (StartSpot != None) {
+		NewPlayer.SetCollision(False); // don't collide actors, in case of triggers in start area
+		NewPlayer.SetLocation(StartSpot.Location);
+		NewPlayer.SetRotation(StartSpot.Rotation);
+		NewPlayer.ViewRotation = StartSpot.Rotation;
+		NewPlayer.ClientSetRotation(NewPlayer.Rotation);
+		StartSpot.PlayTeleportEffect(NewPlayer, true);
+		NewPlayer.SetCollision(True); // After setup, re-enable actor collision
 	}
 	PlayerTeamNum = NewPlayer.PlayerReplicationInfo.Team;
 
@@ -308,7 +309,7 @@ function playerpawn Login(
 
 	CountHunters();
 
-	return newPlayer;
+	return NewPlayer;
 }
 
 function bool RestartPlayer(pawn aPlayer) {
@@ -360,6 +361,11 @@ function bool RestartPlayer(pawn aPlayer) {
 	} else return Super.RestartPlayer(aPlayer);
 }
 
+function EndGame(string Reason) {
+	if (bGameEnded) return;
+	Super.EndGame(Reason);
+}
+
 function CheckEndGame() {
 	local Pawn PawnLink;
 	local bot B;
@@ -407,35 +413,44 @@ function Killed(pawn killer, pawn Other, name damageType) {
 }
 
 function ScoreKill(pawn Killer, pawn Other) {
+	local int Score;
+
 	if (Killer == None) return;
 
-	if (Killer == Other || !Other.bIsPlayer || (Killer.PlayerReplicationInfo.Team != Other.PlayerReplicationInfo.Team)) {
-		Super.ScoreKill(Killer, Other);
-	}
+	if (Killer != Other) Killer.KillCount ++;
+	if (Other != None) Other.DieCount ++;
 
-	if (Other.bIsPlayer && MonsterReplicationInfo(GameReplicationInfo).bUseLives) {
+	if (Other.bIsPlayer
+			&& Other.PlayerReplicationInfo != None
+			&& MonsterReplicationInfo(GameReplicationInfo).bUseLives
+	) {
 		Other.PlayerReplicationInfo.Deaths -= 1;
 	}
 
-	if (!Other.IsA('ScriptedPawn')) return;
+	BroadcastMessage(Killer.GetHumanName() @ "killed" $ Other.GetHumanName());
 
-	if (Killer != None) BroadcastMessage(Killer.GetHumanName() @ "killed" $ Other.GetHumanName());
+	// =========================================================================
+	// Score depending on which monster type the player kills
+	if (Killer.bIsPlayer && Killer.PlayerReplicationInfo != None) {
+		// by default, score 1 for all kills
+		Score = 1;
 
-// =========================================================================
-// Score depending on which monster type the player kills
-
-	if (Killer.bIsPlayer) {
-		if (Other.IsA('Titan') || Other.IsA('Queen') || Other.IsA('WarLord')) Killer.PlayerReplicationInfo.Score += 4;
-		else if (Other.IsA('GiantGasBag') || Other.IsA('GiantManta')) Killer.PlayerReplicationInfo.Score += 3;
-		else if (Other.IsA('SkaarjWarrior') || Other.IsA('MercenaryElite') || Other.IsA('Brute')) Killer.PlayerReplicationInfo.Score += 2;
+		if (Other.IsA('Titan') || Other.IsA('Queen') || Other.IsA('WarLord')) Score = 5;
+		else if (Other.IsA('GiantGasBag') || Other.IsA('GiantManta') || Other.IsA('SkaarjTrooper')) Score = 4;
+		else if (Other.IsA('SkaarjWarrior') || Other.IsA('MercenaryElite') || Other.IsA('Brute') || Other.IsA('GiantManta')) Score = 3;
+		else if (Other.IsA('Krall') || Other.IsA('Slith') || Other.IsA('GasBag')) Score = 2;
 		// Lose points for killing innocent creatures. Shame ;-)
-		else if (Other.IsA('Nali') || Other.IsA('Cow') || Other.IsA('NaliRabbit')) Killer.PlayerReplicationInfo.Score -= 6;
-		// be default, score 1 for all other kills
-		else Killer.PlayerReplicationInfo.Score += 1;
+		else if (Other.IsA('Nali') || Other.IsA('Cow')) {
+			if (!MaybeEvilFriendlyPawn(ScriptedPawn(Other), Killer)) Score = -5;
+		}
 
 		// Get 10 extra points for killing the boss!!
-		if ((Killer.bIsPlayer) && (ScriptedPawn(Other).bIsBoss)) Killer.PlayerReplicationInfo.Score += 9;
+		if ((ScriptedPawn(Other) != None && ScriptedPawn(Other).bIsBoss)) Score = 10;
+
+		Killer.PlayerReplicationInfo.Score += Score;
 	}
+
+	BaseMutator.ScoreKill(Killer, Other);
 }
 
 function AddToTeam(int num, Pawn Other) {
@@ -473,12 +488,9 @@ function AddToTeam(int num, Pawn Other) {
 
 		if (MonsterReplicationInfo(GameReplicationInfo).bUseTeamSkins) {
 			Other.static.GetMultiSkin(Other, SkinName, FaceName);
-			if (SkinName ~= "None")
-				SkinName = string(Other.Skin);
-			if (SkinName ~= "None")
-				SkinName = string(Other.MultiSkins[1]);
-			if (!(SkinName ~= "None"))
-				Other.static.SetMultiSkin(Other, SkinName, FaceName, 0);
+			if (SkinName ~= "None") SkinName = string(Other.Skin);
+			if (SkinName ~= "None") SkinName = string(Other.MultiSkins[1]);
+			if (!(SkinName ~= "None")) Other.static.SetMultiSkin(Other, SkinName, FaceName, 0);
 		}
 	}
 }
@@ -511,7 +523,6 @@ function Timer() {
 
 function bool FindSpecialAttractionFor(Bot aBot) {
 	local ScriptedPawn S;
-	local bool bEnemy;
 
 	if (aBot == None) return false;
 
@@ -523,25 +534,9 @@ function bool FindSpecialAttractionFor(Bot aBot) {
 	if (aBot.LastAttractCheck == Level.TimeSeconds) return false;
 
 	foreach AllActors(class'ScriptedPawn', S) {
-		if ( S.isA('Titan') && S.GetStateName() == 'Sitting' )
-			continue;
-		if ( S.IsA('Nali') || S.IsA('Cow') )
-		{
-			bEnemy = false;
-			switch (S.AttitudeToCreature(aBot))
-			{
-				case ATTITUDE_Hate:
-				case ATTITUDE_Frenzy:
-					bEnemy = true;
-			}
-			switch (S.AttitudeToPlayer)
-			{
-				case ATTITUDE_Hate:
-				case ATTITUDE_Frenzy:
-					bEnemy = true;
-			}
-			if (!bEnemy)
-				continue;
+		if (S.isA('Titan') && S.GetStateName() == 'Sitting') continue;
+		if (S.IsA('Nali') || S.IsA('Cow')) {
+			if (!MaybeEvilFriendlyPawn(S, aBot)) continue;
 		}
 		if (S.CanSee(aBot)) {
 			if (((S.Enemy == None) || ((S.Enemy.IsA('PlayerPawn')) && (FRand() >= 0.5))) && (S.Health >= 1)) {
@@ -800,11 +795,46 @@ function SetBotOrders(Bot NewBot) {
 	NewBot.SetOrders(DefaultBotOrders, None, true);
 }
 
-function EndGame( string Reason )
-{
-	if ( bGameEnded )
-		return;
-	Super.EndGame(Reason);
+/*
+		AssessBotAttitude returns a value that translates to an attitude
+		0 = ATTITUDE_Fear;
+		1 = return ATTITUDE_Hate;
+		2 = return ATTITUDE_Ignore;
+		3 = return ATTITUDE_Friendly;
+*/
+function byte AssessBotAttitude(Bot aBot, Pawn Other) {
+	if (Other.isA('Titan') && Other.GetStateName() == 'Sitting') return 2; // ATTITUDE_Ignore
+	if (!aBot.LineOfSightTo(Other))	return 2; // ATTITUDE_Ignore
+	if (Other.IsA('Nali') || Other.IsA('Cow')) {
+		if (MaybeEvilFriendlyPawn(ScriptedPawn(Other), aBot)) return 1; // ATTITUDE_Hate
+		else return 3; // ATTITUDE_Friendly
+	}
+	if (Other.bIsPlayer && Other.PlayerReplicationInfo != None && Other.PlayerReplicationInfo.Team == aBot.PlayerReplicationInfo.Team) {
+		return 3; // ATTITUDE_Friendly
+	}
+	if (Other.IsA('TeamCannon')) {
+		if (TeamCannon(Other).SameTeamAs(0)) return 3; // ATTITUDE_Friendly
+		if (Other.GetStateName() != 'ActiveCannon') return 2; // ATTITUDE_Ignore
+	}
+	if (!(Other.bIsPlayer && Other.PlayerReplicationInfo != None) && Other.CollisionHeight < 75) return 1; // ATTITUDE_Hate
+	if (!(Other.bIsPlayer && Other.PlayerReplicationInfo != None) && Other.CollisionHeight >= 75) return 0; // ATTITUDE_Fear
+
+	return super(DeathMatchPlus).AssessBotAttitude(aBot, Other);
+}
+
+function bool MaybeEvilFriendlyPawn(ScriptedPawn Pawn, Pawn Other) {
+	switch (Pawn.Default.AttitudeToPlayer) {
+		case ATTITUDE_Hate:
+		case ATTITUDE_Frenzy:
+			return true;
+		default:
+			switch (Pawn.AttitudeToCreature(Other)) {
+				case ATTITUDE_Hate:
+				case ATTITUDE_Frenzy:
+					return true;
+			}
+	}
+	return false;
 }
 
 defaultproperties {

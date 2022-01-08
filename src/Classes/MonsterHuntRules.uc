@@ -96,11 +96,11 @@ function LoadCurrentValues() {
 	Super.LoadCurrentValues();
 	TimeEdit.SetValue(string(Class<MonsterHunt>(BotmatchParent.GameClass).Default.TimeLimit));
 
-	if (MaxPlayersEdit != None){
+	if (MaxPlayersEdit != None) {
 		MaxPlayersEdit.SetValue(string(Class<MonsterHunt>(BotmatchParent.GameClass).Default.MaxPlayers));
 	}
 
-	if (MaxSpectatorsEdit != None){
+	if (MaxSpectatorsEdit != None) {
 		MaxSpectatorsEdit.SetValue(string(Class<MonsterHunt>(BotmatchParent.GameClass).Default.MaxSpectators));
 	}
 
@@ -174,6 +174,10 @@ function DifficultyChanged() {
 	}
 
 	class<MonsterHunt>(BotmatchParent.GameClass).Default.MonsterSkill = skill;
+}
+
+function SaveConfigs() {
+	Super.SaveConfigs();
 	class<MonsterHunt>(BotmatchParent.GameClass).static.StaticSaveConfig();
 }
 
