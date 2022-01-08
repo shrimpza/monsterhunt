@@ -1,5 +1,16 @@
 # Changelog 
 
+## 603 to 604:
+ - Fix saving of game rule settings
+ - Refactor scoring implementation, including default scores for more monster types
+ - Fix upgrade dispersion pistol (thanks SeriousBuggie)
+ - Fix zoom for old rifle (thanks SeriousBuggie)
+ - Prevent call endgame if game already ended (thanks SeriousBuggie)
+ - Fix destroy shadow for bugged monsters (thanks SeriousBuggie)
+ - Fix break broken team skins like Cow and Nali (thanks SeriousBuggie)
+ - Refactor Login function to work around bug with triggers in start areas (thanks SeriousBuggie)
+ - Fix killing friendly Nalis and Cows, and bots waking up Titans (thanks SeriousBuggie)
+
 ## 602 to 603:
  - Decoupled monster difficulty from bot skill - difficulty is its own option on the Rules tab
  - Add configurable Warmup time to Defence, before monsters start spawning

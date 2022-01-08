@@ -112,6 +112,11 @@ function WarmupChanged() {
 	Class<MonsterHuntDefence>(BotmatchParent.GameClass).Default.WarmupTime = int(WarmupEdit.GetValue());
 }
 
+function SaveConfigs() {
+	Super.SaveConfigs();
+	class<MonsterHuntDefence>(BotmatchParent.GameClass).static.StaticSaveConfig();
+}
+
 defaultproperties {
 	EscapeesEdit=None
 	EscapeesText="Max Escapees"
