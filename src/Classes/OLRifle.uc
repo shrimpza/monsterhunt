@@ -65,7 +65,7 @@ function AltFire(float Value) {
 }
 
 simulated function bool ClientAltFire(float Value) {
-	PlayAltFiring();
+	// PlayAltFiring(); // fix zoom bug https://ut99.org/viewtopic.php?f=4&t=14512
 	GotoState('Zooming');
 	return true;
 }
