@@ -774,6 +774,13 @@ function SetBotOrders(Bot NewBot) {
 	NewBot.SetOrders(DefaultBotOrders, None, true);
 }
 
+function EndGame( string Reason )
+{
+	if ( bGameEnded )
+		return;
+	Super.EndGame(Reason);
+}
+
 defaultproperties {
 	MonsterSkill=5
 	Lives=6
