@@ -76,7 +76,7 @@ function float SuggestAttackStyle() {
 }
 
 function bool HandlePickupQuery(inventory Item) {
-	if (Item.IsA('osWeaponPowerup')) {
+	if (Item.IsA('osWeaponPowerup') || Item.IsA('WeaponPowerup')) {
 		AmmoType.AddAmmo(AmmoType.MaxAmmo);
 		Pawn(Owner).ClientMessage(Item.PickupMessage, 'Pickup');
 		Item.PlaySound (PickupSound);
