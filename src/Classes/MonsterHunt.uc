@@ -511,6 +511,7 @@ function Timer() {
 
 function bool FindSpecialAttractionFor(Bot aBot) {
 	local ScriptedPawn S;
+	local bool bEnemy;
 
 	if (aBot == None) return false;
 
@@ -522,6 +523,26 @@ function bool FindSpecialAttractionFor(Bot aBot) {
 	if (aBot.LastAttractCheck == Level.TimeSeconds) return false;
 
 	foreach AllActors(class'ScriptedPawn', S) {
+		if ( S.isA('Titan') && S.GetStateName() == 'Sitting' )
+			continue;
+		if ( S.IsA('Nali') || S.IsA('Cow') )
+		{
+			bEnemy = false;
+			switch (S.AttitudeToCreature(aBot))
+			{
+				case ATTITUDE_Hate:
+				case ATTITUDE_Frenzy:
+					bEnemy = true;
+			}
+			switch (S.AttitudeToPlayer)
+			{
+				case ATTITUDE_Hate:
+				case ATTITUDE_Frenzy:
+					bEnemy = true;
+			}
+			if (!bEnemy)
+				continue;
+		}
 		if (S.CanSee(aBot)) {
 			if (((S.Enemy == None) || ((S.Enemy.IsA('PlayerPawn')) && (FRand() >= 0.5))) && (S.Health >= 1)) {
 				S.Hated = aBot;
