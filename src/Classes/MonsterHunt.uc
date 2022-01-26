@@ -94,6 +94,7 @@ function bool IsRelevant(Actor Other) {
 	pawn = ScriptedPawn(Other);
 	if (pawn != None) {
 		SetPawnDifficulty(MonsterSkill, pawn);
+		pawn.MenuName = FancyName(pawn);
 
 		if (Level.NetMode != NM_DedicatedServer) {
 			if (pawn.Shadow == None) pawn.Shadow = Spawn(class'MonsterShadow', pawn);
@@ -138,9 +139,43 @@ function SetPawnDifficulty(int MonsterSkill, ScriptedPawn S) {
 		if (bGameStarted) S.AttitudeToPlayer = ATTITUDE_Hate;
 		else S.AttitudeToPlayer = ATTITUDE_Ignore;
 	}
+}
 
-	S.TeamTag = 'MHMonsterTeam';
-	S.Team = 128;
+function String FancyName(Pawn Other, optional Bool upperArticle) {
+	local ScriptedPawn S;
+	local String baseName, newName, c;
+	local int i, a, p;
+
+	S = ScriptedPawn(Other);
+	if (S == None) return Other.MenuName;
+
+	baseName = S.MenuName;
+	if (baseName == "") baseName = GetItemName(String(S.class));
+
+	newName = Left(baseName, 1);
+	for (i = 1; i < Len(baseName); i++) {
+		c = Mid(baseName, i, 1);
+		p = Asc(Mid(baseName, i-1, 1));
+		a = Asc(c);
+		if (a >= 65 && a <= 90 && p >= 97 && p <= 122)  newName = newName @ c;
+		else newName = newName $ c;
+	}
+
+	return newName;
+}
+
+function String UppercaseFirst(String S) {
+	local String trimmed, c;
+	local int i, start;
+
+	for (i = 0; i < Len(S); i++) {
+		if (Mid(S, i, 1) != " ") {
+			trimmed = Mid(S, i);
+			break;
+		}
+	}
+
+	return Caps(Left(trimmed, 1)) $ Mid(trimmed, 1);
 }
 
 function AddDefaultInventory(pawn PlayerPawn) {

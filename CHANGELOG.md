@@ -1,5 +1,10 @@
 # Changelog 
 
+## 604 to 605:
+ - Remove automatically assigning monsters to team
+ - Show monster names better, "KrallElite" becomes "Krall Elite" 
+ - Grammatically correct escape message
+
 ## 603 to 604:
  - Fix saving of game rule settings
  - Refactor scoring implementation, including default scores for more monster types
