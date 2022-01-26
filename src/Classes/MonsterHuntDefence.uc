@@ -142,7 +142,7 @@ function bool IsRelevant(Actor Other) {
 function monsterEscaped(ScriptedPawn escapee) {
 	MonsterReplicationInfo(GameReplicationInfo).Escapees++;
 
-	BroadcastMessage(escapee.GetHumanName() @ EscapedMessage, false, 'MonsterCriticalEvent');
+	BroadcastMessage(UppercaseFirst(escapee.GetHumanName()) @ EscapedMessage, false, 'MonsterCriticalEvent');
 
 	if (MonsterReplicationInfo(GameReplicationInfo).Escapees >= MaxEscapees) EndGame("Monsters Escaped");
 }
