@@ -351,7 +351,7 @@ defaultproperties {
 	PickupAmmoCount=50
 	bInstantHit=True
 	bAltInstantHit=True
-	FireOffset=(Y=-5.000000, Z=-4.000000)
+	FireOffset=(Y=-5.000000,Z=-4.000000)
 	shakemag=135.000000
 	shakevert=8.000000
 	AIRating=0.600000
@@ -366,7 +366,7 @@ defaultproperties {
 	InventoryGroup=10
 	PickupMessage="You got the Minigun"
 	ItemName="Minigun"
-	PlayerViewOffset=(X=5.600000, Y=-1.500000, Z=-1.800000)
+	PlayerViewOffset=(X=5.600000,Y=-1.500000,Z=-1.800000)
 	PlayerViewMesh=LodMesh'UnrealI.minigunM'
 	PickupViewMesh=LodMesh'UnrealI.minipick'
 	ThirdPersonMesh=LodMesh'UnrealI.SMini3'

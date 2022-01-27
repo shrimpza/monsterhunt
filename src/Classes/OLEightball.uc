@@ -724,7 +724,7 @@ defaultproperties {
 	InventoryGroup=5
 	PickupMessage="You got the Eightball gun"
 	ItemName="Eightball"
-	PlayerViewOffset=(X=1.900000, Z=-1.890000)
+	PlayerViewOffset=(X=1.900000,Z=-1.890000)
 	PlayerViewMesh=LodMesh'UnrealShare.EightB'
 	BobDamping=0.985000
 	PickupViewMesh=LodMesh'UnrealShare.EightPick'

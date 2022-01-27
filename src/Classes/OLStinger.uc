@@ -182,7 +182,7 @@ defaultproperties {
 	PickupAmmoCount=40
 	bAltWarnTarget=True
 	bSpecialIcon=False
-	FireOffset=(X=12.000000, Y=-10.000000, Z=-15.000000)
+	FireOffset=(X=12.000000,Y=-10.000000,Z=-15.000000)
 	ProjectileClass=Class'{{package}}.OSStingerProjectile'
 	AltProjectileClass=Class'{{package}}.OSStingerProjectile'
 	shakemag=120.000000
@@ -197,7 +197,7 @@ defaultproperties {
 	InventoryGroup=3
 	PickupMessage="You picked up the Stinger"
 	ItemName="Stinger"
-	PlayerViewOffset=(X=4.200000, Y=-3.000000, Z=-4.000000)
+	PlayerViewOffset=(X=4.200000,Y=-3.000000,Z=-4.000000)
 	PlayerViewMesh=LodMesh'UnrealShare.StingerM'
 	PlayerViewScale=1.700000
 	PickupViewMesh=LodMesh'UnrealShare.StingerPickup'

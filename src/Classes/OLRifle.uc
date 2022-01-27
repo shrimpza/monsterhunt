@@ -312,7 +312,7 @@ defaultproperties {
 	PickupAmmoCount=8
 	bInstantHit=True
 	bAltInstantHit=True
-	FireOffset=(Y=-5.000000, Z=-2.000000)
+	FireOffset=(Y=-5.000000,Z=-2.000000)
 	MyDamageType=shot
 	AltDamageType=Decapitated
 	shakemag=400.000000
@@ -328,7 +328,7 @@ defaultproperties {
 	InventoryGroup=9
 	PickupMessage="You got the Rifle"
 	ItemName="Sniper Rifle"
-	PlayerViewOffset=(X=3.200000, Y=-1.200000, Z=-1.700000)
+	PlayerViewOffset=(X=3.200000,Y=-1.200000,Z=-1.700000)
 	PlayerViewMesh=LodMesh'UnrealI.RifleM'
 	PickupViewMesh=LodMesh'UnrealI.RiPick'
 	ThirdPersonMesh=LodMesh'UnrealI.Rifle3rd'

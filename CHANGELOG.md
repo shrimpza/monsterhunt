@@ -1,5 +1,8 @@
 # Changelog 
 
+## 605 to 606:
+ - Fix incorrect view offsets for U1 weapons making them seem invisible
+
 ## 604 to 605:
  - Remove automatically assigning monsters to team
  - Show monster names better, "KrallElite" becomes "Krall Elite" 

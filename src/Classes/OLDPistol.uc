@@ -438,7 +438,7 @@ defaultproperties {
 	PickupAmmoCount=50
 	bAltWarnTarget=True
 	bSpecialIcon=False
-	FireOffset=(X=12.000000, Y=-8.000000, Z=-15.000000)
+	FireOffset=(X=12.000000,Y=-8.000000,Z=-15.000000)
 	ProjectileClass=Class'{{package}}.OSDispersionAmmo'
 	AltProjectileClass=Class'{{package}}.OSDispersionAmmo'
 	shakemag=200.000000
@@ -453,7 +453,7 @@ defaultproperties {
 	DeathMessage="%o was killed by %k's %w.  What a loser!"
 	PickupMessage="You got the Dispersion Pistol"
 	ItemName="Dispersion Pistol"
-	PlayerViewOffset=(X=3.800000, Y=-2.000000, Z=-2.000000)
+	PlayerViewOffset=(X=3.800000,Y=-2.000000,Z=-2.000000)
 	PlayerViewMesh=LodMesh'UnrealShare.DPistol'
 	PickupViewMesh=LodMesh'UnrealShare.DPistolPick'
 	ThirdPersonMesh=LodMesh'UnrealShare.DPistol3rd'

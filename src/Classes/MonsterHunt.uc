@@ -165,8 +165,8 @@ function String FancyName(Pawn Other, optional Bool upperArticle) {
 }
 
 function String UppercaseFirst(String S) {
-	local String trimmed, c;
-	local int i, start;
+	local String trimmed;
+	local int i;
 
 	for (i = 0; i < Len(S); i++) {
 		if (Mid(S, i, 1) != " ") {

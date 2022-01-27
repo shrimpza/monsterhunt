@@ -183,7 +183,7 @@ defaultproperties {
 	WeaponDescription="Classification: Skaarj Blade Launcher"
 	AmmoName=Class'UnrealI.RazorAmmo'
 	PickupAmmoCount=15
-	FireOffset=(X=16.000000, Z=-15.000000)
+	FireOffset=(X=16.000000,Z=-15.000000)
 	ProjectileClass=Class'{{package}}.OSRazorBlade'
 	AltProjectileClass=Class'{{package}}.OSRazorBladeAlt'
 	shakemag=120.000000
@@ -196,7 +196,7 @@ defaultproperties {
 	InventoryGroup=7
 	PickupMessage="You got the RazorJack"
 	ItemName="Razorjack"
-	PlayerViewOffset=(X=2.000000, Z=-0.900000)
+	PlayerViewOffset=(X=2.000000,Z=-0.900000)
 	PlayerViewMesh=LodMesh'UnrealI.Razor'
 	BobDamping=0.970000
 	PickupViewMesh=LodMesh'UnrealI.RazPick'
