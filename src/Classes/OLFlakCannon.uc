@@ -325,7 +325,7 @@ defaultproperties {
 	bWarnTarget=True
 	bAltWarnTarget=True
 	bSplashDamage=True
-	FireOffset=(X=10.000000, Y=-12.000000, Z=-15.000000)
+	FireOffset=(X=10.000000,Y=-12.000000,Z=-15.000000)
 	ProjectileClass=Class'{{package}}.OSMasterChunk'
 	AltProjectileClass=Class'{{package}}.OSFlakShell'
 	shakemag=350.000000
@@ -343,7 +343,7 @@ defaultproperties {
 	InventoryGroup=6
 	PickupMessage="You got the Flak Cannon"
 	ItemName="Flak Cannon"
-	PlayerViewOffset=(X=2.100000, Y=-1.500000, Z=-1.250000)
+	PlayerViewOffset=(X=2.100000,Y=-1.500000,Z=-1.250000)
 	PlayerViewMesh=LodMesh'UnrealI.flak'
 	PlayerViewScale=1.200000
 	PickupViewMesh=LodMesh'UnrealI.FlakPick'

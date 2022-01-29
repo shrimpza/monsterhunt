@@ -233,11 +233,11 @@ simulated function DripSound() {
 defaultproperties {
 	WeaponDescription="Classification: Toxic Tarydium waste Rifle"
 	InstFlash=-0.150000
-	InstFog=(X=139.000000, Y=218.000000, Z=72.000000)
+	InstFog=(X=139.000000,Y=218.000000,Z=72.000000)
 	AmmoName=Class'UnrealI.Sludge'
 	PickupAmmoCount=25
 	bAltWarnTarget=True
-	FireOffset=(X=12.000000, Y=-9.000000, Z=-16.000000)
+	FireOffset=(X=12.000000,Y=-9.000000,Z=-16.000000)
 	ProjectileClass=Class'{{package}}.OSBioGel'
 	AltProjectileClass=Class'{{package}}.OSBigBiogel'
 	AIRating=0.600000
@@ -255,7 +255,7 @@ defaultproperties {
 	InventoryGroup=8
 	PickupMessage="You got the GES BioRifle"
 	ItemName="GES Bio Rifle"
-	PlayerViewOffset=(X=2.000000, Y=-0.700000, Z=-1.150000)
+	PlayerViewOffset=(X=2.000000,Y=-0.700000,Z=-1.150000)
 	PlayerViewMesh=LodMesh'UnrealI.BRifle'
 	PickupViewMesh=LodMesh'UnrealI.BRiflePick'
 	ThirdPersonMesh=LodMesh'UnrealI.BRifle3'

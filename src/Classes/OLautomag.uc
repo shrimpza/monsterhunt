@@ -992,13 +992,13 @@ defaultproperties {
 	wepcanreload=True
 	WeaponDescription="Classification: Automatic Magnum"
 	InstFlash=-0.200000
-	InstFog=(X=325.000000, Y=225.000000, Z=95.000000)
+	InstFog=(X=325.000000,Y=225.000000,Z=95.000000)
 	AmmoName=Class'UnrealShare.ShellBox'
 	PickupAmmoCount=20
 	bInstantHit=True
 	bAltInstantHit=True
 	FiringSpeed=1.500000
-	FireOffset=(Y=-10.000000, Z=-4.000000)
+	FireOffset=(Y=-10.000000,Z=-4.000000)
 	MyDamageType=shot
 	shakemag=200.000000
 	shakevert=4.000000
@@ -1012,12 +1012,12 @@ defaultproperties {
 	Misc1Sound=Sound'UnrealShare.flak.Click'
 	Misc2Sound=Sound'UnrealShare.AutoMag.Reload'
 	DeathMessage="%o got gatted by %k's %w."
-	NameColor=(R=200, G=200)
+	NameColor=(R=200,G=200)
 	AutoSwitchPriority=2
 	InventoryGroup=2
 	PickupMessage="You got the AutoMag"
 	ItemName="Automag"
-	PlayerViewOffset=(X=4.800000, Y=-1.700000, Z=-2.700000)
+	PlayerViewOffset=(X=4.800000,Y=-1.700000,Z=-2.700000)
 	PlayerViewMesh=LodMesh'UnrealShare.AutoMagL'
 	PickupViewMesh=LodMesh'UnrealShare.AutoMagPickup'
 	ThirdPersonMesh=LodMesh'UnrealShare.auto3rd'

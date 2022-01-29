@@ -400,7 +400,7 @@ defaultproperties {
 	bInstantHit=True
 	bAltWarnTarget=True
 	bSplashDamage=True
-	FireOffset=(X=12.000000, Y=-6.000000, Z=-7.000000)
+	FireOffset=(X=12.000000,Y=-6.000000,Z=-7.000000)
 	AltProjectileClass=Class'{{package}}.OLTazerProj'
 	MyDamageType=jolted
 	AIRating=0.600000
@@ -414,7 +414,7 @@ defaultproperties {
 	InventoryGroup=4
 	PickupMessage="You got the ASMD"
 	ItemName="ASMD"
-	PlayerViewOffset=(X=3.500000, Y=-1.800000, Z=-2.000000)
+	PlayerViewOffset=(X=3.500000,Y=-1.800000,Z=-2.000000)
 	PlayerViewMesh=LodMesh'UnrealShare.ASMDM'
 	PickupViewMesh=LodMesh'UnrealShare.ASMDPick'
 	ThirdPersonMesh=LodMesh'UnrealShare.ASMD3'
