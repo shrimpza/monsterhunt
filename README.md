@@ -1,4 +1,4 @@
-![](./resources/Help/MonsterHunt/header.png)
+<div style="text-align:center"><img src="./resources/Help/MonsterHunt/header.png" /></div>
 
 Monster Hunt is a team based modification for Unreal Tournament comprising two 
 new game types, Monster Hunt, Monster Arena, and Monster Defence.
