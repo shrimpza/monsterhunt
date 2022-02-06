@@ -11,6 +11,11 @@ class MonsterHuntObjective extends Keypoint;
 
 #exec Texture Import File=textures\MHObjective.pcx Name=MHObjective Mips=Off Flags=2
 
+replication {
+	reliable if (Role == ROLE_Authority)
+		bActive, bCompleted;
+}
+
 /**
   Message string displayed on HUD and in broadcasts.
 */
@@ -40,6 +45,9 @@ var() Name CompletedEvent;
 */
 var() byte DisplayOrder;
 
+var() Sound SoundActivated;
+var() Sound SoundCompleted;
+
 // internal state management
 var bool bActive;
 var bool bCompleted;
@@ -53,11 +61,25 @@ function PostBeginPlay() {
 }
 
 function Trigger(Actor Other, Pawn EventInstigator) {
+	local Pawn P;
+
 	if (bCompleted) return;
 
   if (bActive && (CompletedEvent == '' || Tag == CompletedEvent)) bCompleted = True;
 
-  if (!bActive && bBroadcastMessage) BroadcastMessage(Message, true, 'MonsterCriticalEvent');
+  if (!bActive && bBroadcastMessage) BroadcastMessage(Message, False, 'MonsterCriticalEvent');
+
+  if (!bInitiallyActive && !bActive && SoundActivated != None) {
+		for (P = Level.PawnList; P != None; P = P.nextPawn) {
+			if (P.bIsPlayer) P.PlaySound(SoundActivated, SLOT_Interface, 2.0);
+		}
+  }
+
+  if (bCompleted && SoundCompleted != None) {
+		for (P = Level.PawnList; P != None; P = P.nextPawn) {
+			if (P.bIsPlayer) P.PlaySound(SoundCompleted, SLOT_Interface, 2.0);
+		}
+  }
 
   bActive = !bActive;
   if (CompletedEvent != '') Tag = CompletedEvent;
@@ -73,4 +95,5 @@ defaultproperties {
 	Texture=Texture'{{package}}.MHObjective'
 	bAlwaysRelevant=true
 	DisplayOrder=0
+	SoundActivated=Sound'UnrealShare.Pickups.TransA3'
 }

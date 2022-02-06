@@ -92,36 +92,36 @@ simulated function DrawGameSynopsis(Canvas Canvas) {
 			YOffset -= YL;
 		}
 
-		if (MonsterHunt(Level.Game) != None) {
-			Canvas.StrLen(RankString, XL, YL);
-			for (i = 15; i >= 0; i--) { // backwards, since we're rendering hud elements from bottom up
-				obj = MonsterHunt(Level.Game).objectives[i];
-				if (obj != None) {
-					if (!obj.bActive && !obj.bAlwaysShown) {
-					if (!obj.bCompleted || (obj.bCompleted && !obj.bShowWhenComplete))	continue;
-					}
-					if (!obj.bActive) {
-						Canvas.Style = ERenderStyle.STY_Translucent;
-						Canvas.DrawColor = WhiteColor * 0.5;
-					} else {
-						Canvas.DrawColor = GoldColor;
-					}
-
-					Canvas.SetPos(XOffset + YL, YOffset);
-					Canvas.DrawText(obj.message, False);
-
-					Canvas.Style = ERenderStyle.STY_Translucent;
-					Canvas.SetPos(XOffset + 4, YOffset + 4);
-					if (obj.bCompleted) {
-						Canvas.DrawTile(Texture'{{package}}.Hud.ObjComplete', (YL - 8) * Scale, (YL - 8) * Scale, 0, 0, 32, 32);
-					} else {
-						Canvas.DrawTile(Texture'{{package}}.Hud.ObjIncomplete', (YL - 8) * Scale, (YL - 8) * Scale, 0, 0, 32, 32);
-					}
-
-					Canvas.Style = Style;
-
-					YOffset -= YL;
+		//
+		// objectives rendering
+		YOffset -= YL;
+		for (i = 15; i >= 0; i--) { // backwards, since we're rendering hud elements from bottom up
+			obj = mri.objectives[i];
+			if (obj != None) {
+				if (!obj.bActive && !obj.bAlwaysShown) {
+				if (!obj.bCompleted || (obj.bCompleted && !obj.bShowWhenComplete))	continue;
 				}
+				if (!obj.bActive) {
+					Canvas.Style = ERenderStyle.STY_Translucent;
+					Canvas.DrawColor = WhiteColor * 0.5;
+				} else {
+					Canvas.DrawColor = GoldColor;
+				}
+
+				Canvas.SetPos(XOffset + YL, YOffset);
+				Canvas.DrawText(obj.message, False);
+
+				Canvas.Style = ERenderStyle.STY_Translucent;
+				Canvas.SetPos(XOffset + 4, YOffset + 4);
+				if (obj.bCompleted) {
+					Canvas.DrawTile(Texture'{{package}}.Hud.ObjComplete', (YL - 8) * Scale, (YL - 8) * Scale, 0, 0, 32, 32);
+				} else {
+					Canvas.DrawTile(Texture'{{package}}.Hud.ObjIncomplete', (YL - 8) * Scale, (YL - 8) * Scale, 0, 0, 32, 32);
+				}
+
+				Canvas.Style = Style;
+
+				YOffset -= YL;
 			}
 		}
 	}

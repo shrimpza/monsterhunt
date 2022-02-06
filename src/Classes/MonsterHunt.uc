@@ -35,31 +35,6 @@ var int NumEndPoints;
 
 var bool bGameStarted;
 
-var MonsterHuntObjective objectives[16];
-
-function RegisterObjective(MonsterHuntObjective objective) {
-	local MonsterHuntObjective obj;
-	local int i, j;
-	for (i = 0; i < 16; i++) {
-		if (objectives[i] == None) {
-			objectives[i] = objective;
-			break;
-		} else if (objectives[i] == objective) break; // already known
-	}
-
-	for (i = 0; i < 16 - 1; i++) {
-		if (objectives[i] == None) return;
-		for (j = i + 1; j < 16 - i - 1; j++) {
-			if (objectives[j] == None) return;
-			if (objectives[i].DisplayOrder > objectives[j].DisplayOrder) {
-				obj = objectives[j];
-				objectives[j] = objectives[i];
-				objectives[j+1] = obj;
-			}
-		}
-	}
-}
-
 function PostBeginPlay() {
 	LastPoint = 0;
 
@@ -69,6 +44,25 @@ function PostBeginPlay() {
 	CountMonsters();
 
 	Super.PostBeginPlay();
+}
+
+function InitGameReplicationInfo() {
+	local MonsterReplicationInfo mri;
+
+	Super.InitGameReplicationInfo();
+
+	mri = MonsterReplicationInfo(GameReplicationInfo);
+	if (mri != None) {
+		mri.Lives = Lives;
+		mri.bUseTeamSkins = bUseTeamSkins;
+		mri.bUseLives = Lives > 0;
+	}
+}
+
+function RegisterObjective(MonsterHuntObjective objective) {
+	local MonsterReplicationInfo mri;
+	mri = MonsterReplicationInfo(GameReplicationInfo);
+	if (mri != None) mri.RegisterObjective(objective);
 }
 
 function FindWaypoints() {
@@ -97,19 +91,6 @@ function FindWaypoints() {
 				waypoints[j+1] = WP;
 			}
 		}
-	}
-}
-
-function InitGameReplicationInfo() {
-	local MonsterReplicationInfo mri;
-
-	Super.InitGameReplicationInfo();
-
-	mri = MonsterReplicationInfo(GameReplicationInfo);
-	if (mri != None) {
-		mri.Lives = Lives;
-		mri.bUseTeamSkins = bUseTeamSkins;
-		mri.bUseLives = Lives > 0;
 	}
 }
 
