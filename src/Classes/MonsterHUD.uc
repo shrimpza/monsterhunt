@@ -9,9 +9,11 @@
 
 class MonsterHUD extends ChallengeTeamHUD;
 
-#exec TEXTURE IMPORT NAME=HudIcon  FILE=Textures\hudicon.PCX GROUP="Hud" MIPS=OFF LODSET=0
-#exec TEXTURE IMPORT NAME=BlackStuff  FILE=Textures\BlackStuff.PCX GROUP="Hud" MIPS=OFF LODSET=0
-#exec TEXTURE IMPORT NAME=BlackStuff2  FILE=Textures\BlackStuff2.PCX GROUP="Hud" MIPS=OFF LODSET=0
+#exec TEXTURE IMPORT NAME=HudIcon FILE=Textures\HUDIcon.PCX GROUP=Hud MIPS=OFF LODSET=0
+#exec TEXTURE IMPORT NAME=BlackStuff FILE=Textures\BlackStuff.PCX GROUP=Hud MIPS=OFF LODSET=0
+#exec TEXTURE IMPORT NAME=BlackStuff2 FILE=Textures\BlackStuff2.PCX GROUP=Hud MIPS=OFF LODSET=0
+#exec TEXTURE IMPORT NAME=ObjComplete FILE=Textures\ObjComplete.pcx GROUP=Hud MIPS=OFF LODSET=0
+#exec TEXTURE IMPORT NAME=ObjIncomplete FILE=Textures\ObjIncomplete.pcx GROUP=Hud MIPS=OFF LODSET=0
 
 var localized string TimeRemainingLabel;
 var localized string LivesRemainLabel;
@@ -26,10 +28,13 @@ simulated function PostBeginPlay() {
 }
 
 simulated function DrawGameSynopsis(Canvas Canvas) {
-	local float XL, YL, YOffset;
+	local float XL, YL, YOffset, XOffset;
 	local string escapesString;
 	local MonsterReplicationInfo mri;
-	local int Minutes, Seconds;
+	local int Minutes, Seconds, i;
+	local MonsterHuntObjective obj;
+
+	XOffset = 10;
 
 	if ((PawnOwner.PlayerReplicationInfo == None) || PawnOwner.PlayerReplicationInfo.bIsSpectator) return;
 
@@ -48,17 +53,17 @@ simulated function DrawGameSynopsis(Canvas Canvas) {
 	}
 
 	if (mri != None) {
-		Canvas.SetPos(0, YOffset);
-		Canvas.DrawText(" " $ MonstersRemainLabel $ ": " $ string(mri.Monsters), False);
+		Canvas.SetPos(XOffset, YOffset);
+		Canvas.DrawText(MonstersRemainLabel $ ": " $ string(mri.Monsters), False);
 		YOffset -= YL;
 
-		Canvas.SetPos(0, YOffset);
-		Canvas.DrawText(" " $ HuntersRemainLabel $ ": " $ string(mri.Hunters), False);
+		Canvas.SetPos(XOffset, YOffset);
+		Canvas.DrawText(HuntersRemainLabel $ ": " $ string(mri.Hunters), False);
 		YOffset -= YL;
 
 		if (Level.Game.IsA('MonsterHuntDefence')) {
-			Canvas.SetPos(0, YOffset);
-			escapesString = " " $ EscapedMonstersLabel $ ": " $ string(mri.Escapees);
+			Canvas.SetPos(XOffset, YOffset);
+			escapesString = EscapedMonstersLabel $ ": " $ string(mri.Escapees);
 			if (mri.MaxEscapees > 0) {
 				escapesString = escapesString $ "/" $ string(mri.MaxEscapees);
 				if (mri.MaxEscapees - mri.Escapees < 5) Canvas.DrawColor = RedColor;
@@ -72,19 +77,52 @@ simulated function DrawGameSynopsis(Canvas Canvas) {
 		if (mri.bUseLives) {
 		  if (PawnOwner.PlayerReplicationInfo.Deaths < 3) Canvas.DrawColor = RedColor;
 		  else Canvas.DrawColor = WhiteColor;
-			Canvas.SetPos(0, YOffset);
-			Canvas.DrawText(" " $ LivesRemainLabel $ ": " $ int(PawnOwner.PlayerReplicationInfo.Deaths), False);
+			Canvas.SetPos(XOffset, YOffset);
+			Canvas.DrawText(LivesRemainLabel $ ": " $ int(PawnOwner.PlayerReplicationInfo.Deaths), False);
 			YOffset -= YL;
 		}
 
 		if (mri.RemainingTime > 0) {
 			if (mri.RemainingTime < 30) Canvas.DrawColor = RedColor;
 			else Canvas.DrawColor = WhiteColor;
-			Canvas.SetPos(0, YOffset);
+			Canvas.SetPos(XOffset, YOffset);
 			Minutes = mri.RemainingTime / 60;
 			Seconds = mri.RemainingTime % 60;
-			Canvas.DrawText(" " $ TimeRemainingLabel $ ": " $ TwoDigitString(Minutes) $ ":" $ TwoDigitString(Seconds), true);
+			Canvas.DrawText(TimeRemainingLabel $ ": " $ TwoDigitString(Minutes) $ ":" $ TwoDigitString(Seconds), true);
 			YOffset -= YL;
+		}
+
+		if (MonsterHunt(Level.Game) != None) {
+			Canvas.StrLen(RankString, XL, YL);
+			for (i = 15; i >= 0; i--) { // backwards, since we're rendering hud elements from bottom up
+				obj = MonsterHunt(Level.Game).objectives[i];
+				if (obj != None) {
+					if (!obj.bActive && !obj.bAlwaysShown) {
+					if (!obj.bCompleted || (obj.bCompleted && !obj.bShowWhenComplete))	continue;
+					}
+					if (!obj.bActive) {
+						Canvas.Style = ERenderStyle.STY_Translucent;
+						Canvas.DrawColor = WhiteColor * 0.5;
+					} else {
+						Canvas.DrawColor = GoldColor;
+					}
+
+					Canvas.SetPos(XOffset + YL, YOffset);
+					Canvas.DrawText(obj.message, False);
+
+					Canvas.Style = ERenderStyle.STY_Translucent;
+					Canvas.SetPos(XOffset + 4, YOffset + 4);
+					if (obj.bCompleted) {
+						Canvas.DrawTile(Texture'{{package}}.Hud.ObjComplete', (YL - 8) * Scale, (YL - 8) * Scale, 0, 0, 32, 32);
+					} else {
+						Canvas.DrawTile(Texture'{{package}}.Hud.ObjIncomplete', (YL - 8) * Scale, (YL - 8) * Scale, 0, 0, 32, 32);
+					}
+
+					Canvas.Style = Style;
+
+					YOffset -= YL;
+				}
+			}
 		}
 	}
 }
