@@ -151,7 +151,7 @@
 	<h3>Monster Hunt</h3>
 	</p>
 	<ul>
-		<li>Before you start on a map, open the MonsterHunt.u package in the class-browser so you have access to all the Monster Hunt-specific
+		<li>Before you start on a map, open the MonsterHunt.u package in the class browser, so you have access to all the Monster Hunt-specific
 			stuff.
 		</li>
 		<li>Maps should be more of a single player style,
@@ -163,13 +163,13 @@
 			to worry about the surrounding architecture.
 		</li>
 		<li>Make an escape route for the players to run
-			through and place a MonsterEnd trigger (found in the classe-browser: Triggers
-			-> Trigger -> MonsterEnd) where the players will run to end the level.
+			through and place a MonsterEnd trigger (found in the class browser: Triggers
+			-&gt; Trigger -&gt; MonsterEnd) where the players will run to end the level.
 		</li>
 		<li>If you want to add bot support to your map (very highly recommended), you can use the MonsterWaypoint actor (found in the
-			classe-browser: Keypoint
-			-> MonsterWaypoint). Just put the MonsterWaypoint actors wherever you want a bot waypoint to be, like near a button or a lever, or
-			just along the path through the level. Set it's Position property to tell the bots in which order the waypoints must be visited. Set
+			class browser: Keypoint
+			-&gt; MonsterWaypoint). Just put the MonsterWaypoint actors wherever you want a bot waypoint to be, like near a button or a lever, or
+			just along the path through the level. Set its Position property to tell the bots in which order the waypoints must be visited. Set
 			the first one at 1, the next at 2, then 3, and so on. You can also enter the Event tag of a particular actor so when the bot gets to
 			the waypoint, something can be triggered to happen.
 		</li>
@@ -198,18 +198,37 @@
 		<li>Don't put any monsters near to where the players
 			will start, they'll all be slaughtered as soon as they spawn.
 		</li>
-		<li>Environmental hazzards (slime, lava, huge drops,
+		<li>Environmental hazards (slime, lava, huge drops,
 			etc.) are great, but make sure the boss monster(s) can't fall in, or it'll spoil
 			the fun of defeating them.
 		</li>
 		<li>Don't give the players the best guns at the
 			beginning, or they'll mow through the monsters too easily.
 		</li>
-		<li>Use the MonsterEvent (under Triggers &gt; SpecialEvent)
+		<li>Use the MonsterEvent (under Triggers -&gt; SpecialEvent)
 			to display messages for the players, everything has already been pre-configured,
 			just type the message and connect it to a trigger.
 		</li>
 		<li>Set the boss monster's bIsBoss to True so the player can get extra points for killing him.</li>
+		<li><b>Objectives</b>
+			<ul>
+				<li>Objectives can be used to guide players or provide story details and context for the map play-through.</li>
+				<li>To add an objective, add a MonsterHuntObjective (under Keypoints in the class browser) to your map. Each
+					MonsterHuntObjective represents a single objective, and you can add up to 16 per map.</li>
+				<li>Active objectives are shown on the player's HUD. If an objective has bAlwaysShown, it will be visible even
+				  when not active, with an icon matching its complete or incomplete status.
+					If an objective has bShowWhenComplete, it will continue to be shown on the HUD after it's completed, even if
+					not bAlwaysShown.</li>
+				<li>An objective will become active when it's triggered based on its Tag, and triggering it again will make it
+				  completed. An objective may have a separate CompletedEvent set, which corresponds to an event which will
+				  set this objective as complete. So for example, one event (matching the Tag) will set an objective as active
+				  and another event (matching the CompletedEvent) will set the objective as completed.</li>
+				<li>Multiple objectives may be active at once, and similarly it's not required for any objectives to be active
+				  at any given time.</li>
+				<li>Sounds may be configured for when the objective becomes active, and when it's completed. These are UI sounds
+				  broadcast to players, and not played in-map like a sound effect.</li>
+			</ul>
+		</li>
 	</ul>
 
 	<p>
@@ -286,6 +305,14 @@
 
 <section>
 	<h2 id="history">Release History</h2>
+
+	<h3>Release 13 (607)</h3>
+	<ul>
+		<li>Introduction of support for optional objectives in maps, which can show up on the HUD, and tell players what they need to be doing
+		<li>Cleaned up some chat log kill messaging, and do not show suicide messages as "Player1 killed Player1"
+		<li>Polish pass for MH-Lonely][, fixing bad geometry, general cleanup and visual improvements
+		<li>Added objectives to all standard MH maps
+	</ul>
 
 	<h3>Release 12 (606)</h3>
 	<ul>

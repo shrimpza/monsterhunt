@@ -468,7 +468,13 @@ function ScoreKill(pawn Killer, pawn Other) {
 		Other.PlayerReplicationInfo.Deaths -= 1;
 	}
 
-	BroadcastMessage(Killer.GetHumanName() @ "killed" $ Other.GetHumanName());
+	if (Killer != Other) {
+		if (Killer.IsA('ScriptedPawn')) {
+			BroadcastMessage(UppercaseFirst(Killer.GetHumanName()) @ "killed" @ Other.GetHumanName());
+		} else {
+			BroadcastMessage(Killer.GetHumanName() @ "killed" @ Other.GetHumanName());
+		}
+	}
 
 	// =========================================================================
 	// Score depending on which monster type the player kills
