@@ -46,6 +46,25 @@ function PostBeginPlay() {
 	Super.PostBeginPlay();
 }
 
+function InitGameReplicationInfo() {
+	local MonsterReplicationInfo mri;
+
+	Super.InitGameReplicationInfo();
+
+	mri = MonsterReplicationInfo(GameReplicationInfo);
+	if (mri != None) {
+		mri.Lives = Lives;
+		mri.bUseTeamSkins = bUseTeamSkins;
+		mri.bUseLives = Lives > 0;
+	}
+}
+
+function RegisterObjective(MonsterHuntObjective objective) {
+	local MonsterReplicationInfo mri;
+	mri = MonsterReplicationInfo(GameReplicationInfo);
+	if (mri != None) mri.RegisterObjective(objective);
+}
+
 function FindWaypoints() {
 	local int i, j;
 	local MonsterWaypoint WP;
@@ -72,19 +91,6 @@ function FindWaypoints() {
 				waypoints[j+1] = WP;
 			}
 		}
-	}
-}
-
-function InitGameReplicationInfo() {
-	local MonsterReplicationInfo mri;
-
-	Super.InitGameReplicationInfo();
-
-	mri = MonsterReplicationInfo(GameReplicationInfo);
-	if (mri != None) {
-		mri.Lives = Lives;
-		mri.bUseTeamSkins = bUseTeamSkins;
-		mri.bUseLives = Lives > 0;
 	}
 }
 
@@ -462,7 +468,13 @@ function ScoreKill(pawn Killer, pawn Other) {
 		Other.PlayerReplicationInfo.Deaths -= 1;
 	}
 
-	BroadcastMessage(Killer.GetHumanName() @ "killed" $ Other.GetHumanName());
+	if (Killer != Other) {
+		if (Killer.IsA('ScriptedPawn')) {
+			BroadcastMessage(UppercaseFirst(Killer.GetHumanName()) @ "killed" @ Other.GetHumanName());
+		} else {
+			BroadcastMessage(Killer.GetHumanName() @ "killed" @ Other.GetHumanName());
+		}
+	}
 
 	// =========================================================================
 	// Score depending on which monster type the player kills

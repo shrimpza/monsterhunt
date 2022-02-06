@@ -1,5 +1,11 @@
 # Changelog 
 
+## 606 to 607:
+- Introduction of support for optional objectives in maps, which can show up on the HUD, and tell players what they need to be doing
+- Cleaned up some chat log kill messaging, and do not show suicide messages as "Player1 killed Player1"
+- Polish pass for MH-Lonely][, fixing bad geometry, general cleanup and visual improvements
+- Added objectives to all standard MH maps
+
 ## 605 to 606:
  - Fix incorrect view offsets for U1 weapons making them seem invisible
 
