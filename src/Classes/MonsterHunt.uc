@@ -56,6 +56,7 @@ function InitGameReplicationInfo() {
 		mri.Lives = Lives;
 		mri.bUseTeamSkins = bUseTeamSkins;
 		mri.bUseLives = Lives > 0;
+		mri.MonsterSkill = MonsterSkill;
 	}
 }
 
@@ -665,7 +666,12 @@ function CountMonsters() {
 	local int monsterCount;
 
 	monsterCount = 0;
-	foreach AllActors(class'ScriptedPawn', S) if (S.Health >= 1) monsterCount ++;
+	foreach AllActors(class'ScriptedPawn', S) {
+		if (S.Health >= 1) {
+			if ((S.IsA('Nali') || S.IsA('Cow')) && !MaybeEvilFriendlyPawn(S)) continue;
+			monsterCount ++;
+		}
+	}
 
 	MonsterReplicationInfo(GameReplicationInfo).Monsters = monsterCount;
 }
@@ -869,16 +875,18 @@ function byte AssessBotAttitude(Bot aBot, Pawn Other) {
 	return super(DeathMatchPlus).AssessBotAttitude(aBot, Other);
 }
 
-function bool MaybeEvilFriendlyPawn(ScriptedPawn Pawn, Pawn Other) {
+function bool MaybeEvilFriendlyPawn(ScriptedPawn Pawn, optional Pawn Other) {
 	switch (Pawn.Default.AttitudeToPlayer) {
 		case ATTITUDE_Hate:
 		case ATTITUDE_Frenzy:
 			return true;
 		default:
-			switch (Pawn.AttitudeToCreature(Other)) {
-				case ATTITUDE_Hate:
-				case ATTITUDE_Frenzy:
-					return true;
+		  if (Other != None) {
+				switch (Pawn.AttitudeToCreature(Other)) {
+					case ATTITUDE_Hate:
+					case ATTITUDE_Frenzy:
+						return true;
+				}
 			}
 	}
 	return false;

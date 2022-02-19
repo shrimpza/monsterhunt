@@ -14,6 +14,7 @@ var bool bUseTeamSkins;
 var int Lives;
 var int Monsters;
 var int Hunters;
+var int MonsterSkill;
 
 // objectives
 var MonsterHuntObjective objectives[16];
@@ -24,7 +25,7 @@ var int Escapees;
 
 replication {
 	reliable if (Role == ROLE_Authority)
-		Lives, Monsters, bUseLives, bUseTeamSkins, Hunters, Escapees, objectives;
+		Lives, Monsters, bUseLives, bUseTeamSkins, Hunters, Escapees, objectives, MonsterSkill;
 }
 
 function RegisterObjective(MonsterHuntObjective objective) {

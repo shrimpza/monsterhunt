@@ -99,7 +99,7 @@ simulated function DrawGameSynopsis(Canvas Canvas) {
 			obj = mri.objectives[i];
 			if (obj != None) {
 				if (!obj.bActive && !obj.bAlwaysShown) {
-				if (!obj.bCompleted || (obj.bCompleted && !obj.bShowWhenComplete))	continue;
+					if (!obj.bCompleted || (obj.bCompleted && !obj.bShowWhenComplete)) continue;
 				}
 				if (!obj.bActive) {
 					Canvas.Style = ERenderStyle.STY_Translucent;
@@ -114,9 +114,9 @@ simulated function DrawGameSynopsis(Canvas Canvas) {
 				Canvas.Style = ERenderStyle.STY_Translucent;
 				Canvas.SetPos(XOffset + 4, YOffset + 4);
 				if (obj.bCompleted) {
-					Canvas.DrawTile(Texture'{{package}}.Hud.ObjComplete', (YL - 8) * Scale, (YL - 8) * Scale, 0, 0, 32, 32);
+					Canvas.DrawTile(Texture'{{package}}.Hud.ObjComplete', (YL - 8), (YL - 8), 0, 0, 32, 32);
 				} else {
-					Canvas.DrawTile(Texture'{{package}}.Hud.ObjIncomplete', (YL - 8) * Scale, (YL - 8) * Scale, 0, 0, 32, 32);
+					Canvas.DrawTile(Texture'{{package}}.Hud.ObjIncomplete', (YL - 8), (YL - 8), 0, 0, 32, 32);
 				}
 
 				Canvas.Style = Style;

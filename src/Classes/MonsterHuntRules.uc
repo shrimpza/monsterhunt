@@ -91,7 +91,7 @@ function Notify(UWindowDialogControl C, byte E) {
 }
 
 function LoadCurrentValues() {
-	local int skill, difficulty;
+	local int difficulty;
 
 	Super.LoadCurrentValues();
 	TimeEdit.SetValue(string(Class<MonsterHunt>(BotmatchParent.GameClass).Default.TimeLimit));
@@ -113,16 +113,19 @@ function LoadCurrentValues() {
 	FragEdit.SetValue(string(Class<MonsterHunt>(BotmatchParent.GameClass).Default.Lives));
 	TourneyCheck.bChecked = Class<MonsterHunt>(BotmatchParent.GameClass).Default.bUseTeamSkins;
 
-	// translate difficulty on scale of 8 (based on bot skill) to 4 (based on Unreal skills)
-	skill = class<MonsterHunt>(BotmatchParent.GameClass).Default.MonsterSkill;
-	if (skill <= 1) difficulty = 0;
-	else if (skill <= 3) difficulty = 1;
-	else if (skill <= 5) difficulty = 2;
-	else if (skill <= 7) difficulty = 3;
-	else difficulty = 2;
+	difficulty = TranslateMonsterSkillIndex(class<MonsterHunt>(BotmatchParent.GameClass).Default.MonsterSkill);
 
 	DifficultyCombo.SetSelectedIndex(Min(difficulty, 7));
 	TauntLabel.SetText(SkillTaunts[DifficultyCombo.GetSelectedIndex()]);
+}
+
+// translate difficulty on scale of 8 (based on bot skill) to 4 (based on Unreal skills)
+static function int TranslateMonsterSkillIndex(int skill) {
+	if (skill <= 1) return 0;
+ 	else if (skill <= 3) return 1;
+ 	else if (skill <= 5) return 2;
+ 	else if (skill <= 7) return 3;
+ 	else return 2;
 }
 
 function Paint(Canvas C, float X, float Y) {
