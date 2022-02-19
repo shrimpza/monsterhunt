@@ -10,6 +10,7 @@
 class MonsterBoard extends TournamentScoreBoard;
 
 var color LightGreenColor, DarkGreenColor;
+var localized String MonsterDifficultyJoinString, ObjectivesString;
 
 function DrawHeader(canvas Canvas) {
 	local GameReplicationInfo GRI;
@@ -57,39 +58,50 @@ function DrawTrailer(canvas Canvas) {
 	local int Hours, Minutes, Seconds;
 	local float XL, YL;
 	local PlayerPawn PlayerOwner;
-	local string TitleQuote;
+	local GameReplicationInfo GRI;
+	local string TitleQuote, DifficultyQuote;
 
 	Canvas.bCenter = true;
 	Canvas.StrLen("Test", XL, YL);
 	Canvas.DrawColor = LightGreenColor;
-	PlayerOwner = PlayerPawn(Owner);
 	Canvas.SetPos(0, Canvas.ClipY - 2 * YL);
 
-	if ((Level.NetMode == NM_Standalone) && Level.Game.IsA('DeathMatchPlus')) {
-		TitleQuote = PlayerOwner.GameReplicationInfo.GameName @ MapTitle @ MapTitleQuote $ Level.Title $ MapTitleQuote;
-		if (DeathMatchPlus(Level.Game).bRatedGame) {
-			Canvas.DrawText(DeathMatchPlus(Level.Game).RatedGameLadderObj.SkillText @ TitleQuote, true);
-		} else if (DeathMatchPlus(Level.Game).bNoviceMode) {
-			Canvas.DrawText(class'ChallengeBotInfo'.default.Skills[Level.Game.Difficulty] @ TitleQuote, true);
-		} else {
-			Canvas.DrawText(class'ChallengeBotInfo'.default.Skills[Level.Game.Difficulty + 4] @ TitleQuote, true);
-		}
-	}	else {
-		Canvas.DrawText(PlayerOwner.GameReplicationInfo.GameName @ MapTitle @ Level.Title, true);
+	PlayerOwner = PlayerPawn(Owner);
+	GRI = PlayerPawn(Owner).GameReplicationInfo;
+
+	if (Level.Game.IsA('MonsterHunt') && GRI.IsA('MonsterReplicationInfo')) {
+		DifficultyQuote = class'MonsterHuntRules'.default.Skills[
+			class'MonsterHuntRules'.static.TranslateMonsterSkillIndex(MonsterReplicationInfo(GRI).MonsterSkill)
+		] @ MonsterDifficultyJoinString;
+	} else {
+		DifficultyQuote = "";
 	}
 
+	if ((Level.NetMode == NM_Standalone) && Level.Game.IsA('MonsterHunt')) {
+		TitleQuote = GRI.GameName @ MapTitle @ MapTitleQuote $ Level.Title $ MapTitleQuote;
+		if (DeathMatchPlus(Level.Game).bNoviceMode) {
+			TitleQuote = class'ChallengeBotInfo'.default.Skills[Level.Game.Difficulty] @ TitleQuote;
+		} else {
+			TitleQuote = class'ChallengeBotInfo'.default.Skills[Level.Game.Difficulty + 4] @ TitleQuote;
+		}
+	}	else {
+		TitleQuote = GRI.GameName @ MapTitle @ Level.Title;
+	}
+
+	Canvas.DrawText(DifficultyQuote @ TitleQuote, true);
+
 	Canvas.SetPos(0, Canvas.ClipY - YL);
-	if (bTimeDown || (PlayerOwner.GameReplicationInfo.RemainingTime > 0)) {
+	if (bTimeDown || (GRI.RemainingTime > 0)) {
 		bTimeDown = true;
-		if (PlayerOwner.GameReplicationInfo.RemainingTime <= 0) {
+		if (GRI.RemainingTime <= 0) {
 			Canvas.DrawText(RemainingTime @ "00:00", true);
 		} else {
-			Minutes = PlayerOwner.GameReplicationInfo.RemainingTime / 60;
-			Seconds = PlayerOwner.GameReplicationInfo.RemainingTime % 60;
+			Minutes = GRI.RemainingTime / 60;
+			Seconds = GRI.RemainingTime % 60;
 			Canvas.DrawText(RemainingTime @ TwoDigitString(Minutes) $ ":" $ TwoDigitString(Seconds), true);
 		}
 	} else {
-		Seconds = PlayerOwner.GameReplicationInfo.ElapsedTime;
+		Seconds = GRI.ElapsedTime;
 		Minutes = Seconds / 60;
 		Hours   = Minutes / 60;
 		Seconds = Seconds - (Minutes * 60);
@@ -97,7 +109,7 @@ function DrawTrailer(canvas Canvas) {
 		Canvas.DrawText(ElapsedTime @ TwoDigitString(Hours) $ ":" $ TwoDigitString(Minutes) $ ":" $ TwoDigitString(Seconds), true);
 	}
 
-	if (PlayerOwner.GameReplicationInfo.GameEndedComments != "") {
+	if (GRI.GameEndedComments != "") {
 		Canvas.bCenter = true;
 		Canvas.StrLen("Test", XL, YL);
 		Canvas.SetPos(0, Canvas.ClipY - Min(YL * 6, Canvas.ClipY * 0.1));
@@ -112,6 +124,8 @@ function DrawTrailer(canvas Canvas) {
 		Canvas.DrawText(Restart, true);
 	}
 	Canvas.bCenter = false;
+
+	DrawObjectivesList(Canvas);
 }
 
 function DrawCategoryHeaders(Canvas Canvas) {
@@ -196,96 +210,65 @@ function DrawNameAndPing(Canvas Canvas, PlayerReplicationInfo PRI, float XOffset
 	}
 }
 
-function SortScores(int N) {
-	local int I, J, Max;
-	local PlayerReplicationInfo TempPRI;
-	
-	for (I = 0; I < N - 1; I++) {
-		Max = I;
-		for (J = I + 1; J < N; J++) {
-			if (Ordered[J].Score > Ordered[Max].Score) {
-				Max = J;
-			} else if ((Ordered[J].Score == Ordered[Max].Score) && (Ordered[J].Deaths < Ordered[Max].Deaths)) {
-				Max = J;
-			}	else if ((Ordered[J].Score == Ordered[Max].Score) && (Ordered[J].Deaths == Ordered[Max].Deaths)
-								&& (Ordered[J].PlayerID < Ordered[Max].Score)) {
-				Max = J;
-			}
-		}
+function DrawObjectivesList(Canvas Canvas) {
+	local float XL, YL, YOffset, XOffset;
+	local int i;
+	local MonsterReplicationInfo mri;
+	local MonsterHuntObjective obj;
+	local bool wasObjectives;
 
-		TempPRI = Ordered[Max];
-		Ordered[Max] = Ordered[I];
-		Ordered[I] = TempPRI;
-	}
-}
+	if (PlayerPawn(Owner) == None) return;
 
-function ShowScores(canvas Canvas) {
-	local PlayerReplicationInfo PRI;
-	local int PlayerCount, i;
-	local float XL, YL;
-	local float YOffset, YStart;
-	local font CanvasFont;
+	mri = MonsterReplicationInfo(PlayerPawn(Owner).GameReplicationInfo);
 
-	Canvas.Style = ERenderStyle.STY_Normal;
+	if (mri == None) return;
 
-	// Header
-	Canvas.SetPos(0, 0);
-	DrawHeader(Canvas);
-
-	// Wipe everything.
-	for (i = 0; i < ArrayCount(Ordered); i++) Ordered[i] = None;
-	for (i = 0; i < 32; i++) {
-		if (PlayerPawn(Owner).GameReplicationInfo.PRIArray[i] != None) {
-			PRI = PlayerPawn(Owner).GameReplicationInfo.PRIArray[i];
-			if (!PRI.bIsSpectator || PRI.bWaitingPlayer) {
-				Ordered[PlayerCount] = PRI;
-				PlayerCount++;
-
-				if (PlayerCount == ArrayCount(Ordered))	break;
-			}
-		}
-	}
-
-	SortScores(PlayerCount);
-	
-	CanvasFont = Canvas.Font;
 	Canvas.Font = MyFonts.GetBigFont(Canvas.ClipX);
+	Canvas.StrLen("Test", XL, YL);
 
-	Canvas.SetPos(0, 160.0 / 768.0 * Canvas.ClipY);
-	DrawCategoryHeaders(Canvas);
+	YOffset = Canvas.ClipY - (YL * 6);
+	XOffset = Canvas.ClipX * 0.1875; // in line with names list
 
-	Canvas.StrLen("TEST", XL, YL);
-	YStart = Canvas.CurY;
-	YOffset = YStart;
-	if (PlayerCount > 15) PlayerCount = FMin(PlayerCount, (Canvas.ClipY - YStart) / YL - 1);
+	for (i = 15; i >= 0; i--) { // rendering bottom-up
+		obj = mri.objectives[i];
+		if (obj == None) continue;
+		if (!obj.bActive && !obj.bAlwaysShown) {
+			if (!obj.bCompleted || (obj.bCompleted && !obj.bShowWhenComplete)) continue;
+		}
 
-	Canvas.SetPos(0, 0);
-	for (I = 0; I < PlayerCount; I++) {
-		YOffset = YStart + I * YL;
-		DrawNameAndPing(Canvas, Ordered[I], 0, YOffset, false);
+		if (!obj.bActive) {
+			Canvas.Style = ERenderStyle.STY_Translucent;
+			Canvas.DrawColor = WhiteColor * 0.5;
+		} else {
+			Canvas.DrawColor = GoldColor;
+		}
+
+		Canvas.SetPos(XOffset + YL, YOffset);
+		Canvas.DrawText(obj.message, False);
+
+		Canvas.Style = ERenderStyle.STY_Translucent;
+		Canvas.SetPos(XOffset + 4, YOffset + 4);
+		if (obj.bCompleted) {
+			Canvas.DrawTile(Texture'{{package}}.Hud.ObjComplete', (YL - 8), (YL - 8), 0, 0, 32, 32);
+		} else {
+			Canvas.DrawTile(Texture'{{package}}.Hud.ObjIncomplete', (YL - 8), (YL - 8), 0, 0, 32, 32);
+		}
+
+		Canvas.Style = Style;
+
+		YOffset -= YL;
+
+		wasObjectives = true;
 	}
-	Canvas.DrawColor = LightGreenColor;
-	Canvas.Font = CanvasFont;
 
-	// Trailer
-	if (!Level.bLowRes) {
-		Canvas.Font = MyFonts.GetSmallFont(Canvas.ClipX);
-		DrawTrailer(Canvas);
+	if (wasObjectives) {
+		Canvas.SetPos(XOffset, YOffset);
+		Canvas.DrawColor = GreenColor;
+		Canvas.DrawText(ObjectivesString, False);
 	}
-	Canvas.DrawColor = WhiteColor;
-	Canvas.Font = CanvasFont;
 }
 
-defaultproperties {
-	GreenColor=(G=255)
-	WhiteColor=(R=255, G=255, B=255)
-	GoldColor=(R=255, G=255)
-	BlueColor=(B=255)
-	LightCyanColor=(R=128, G=255, B=255)
-	SilverColor=(R=138, G=164, B=166)
-	BronzeColor=(R=203, G=147, B=52)
-	CyanColor=(G=128, B=255)
-	RedColor=(R=255)
+defaultproperties
 	LightGreenColor=(G=136)
 	DarkGreenColor=(G=255, B=128)
 	Restart="You have been killed.  Hit [Fire] to continue the hunt!"
@@ -294,4 +277,6 @@ defaultproperties {
 	PlayerString="Hunter"
 	FragsString="Score"
 	DeathsString="Lives"
+	MonsterDifficultyJoinString="Monsters /"
+	ObjectivesString="Objectives"
 }

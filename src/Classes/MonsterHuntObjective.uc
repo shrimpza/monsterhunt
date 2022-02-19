@@ -71,13 +71,13 @@ function Trigger(Actor Other, Pawn EventInstigator) {
 
   if (!bInitiallyActive && !bActive && SoundActivated != None) {
 		for (P = Level.PawnList; P != None; P = P.nextPawn) {
-			if (P.bIsPlayer) P.PlaySound(SoundActivated, SLOT_Interface, 2.0);
+			if (P.bIsPlayer) P.PlaySound(SoundActivated, SLOT_Interface, 1.5);
 		}
   }
 
   if (bCompleted && SoundCompleted != None) {
 		for (P = Level.PawnList; P != None; P = P.nextPawn) {
-			if (P.bIsPlayer) P.PlaySound(SoundCompleted, SLOT_Interface, 2.0);
+			if (P.bIsPlayer) P.PlaySound(SoundCompleted, SLOT_Interface, 1.5);
 		}
   }
 

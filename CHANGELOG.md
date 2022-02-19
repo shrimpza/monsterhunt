@@ -1,4 +1,12 @@
-# Changelog 
+# Changelog
+
+## 607 to 608:
+- Re-worked and improved MH-NaliVillage]\[ map, included as MH-NaliVillage][-SE
+- Include monster difficulty in scoreboard footer message
+- Show objectives on scoreboard
+- Reduce volume of objective activated/completed sounds
+- Only include unfriendly creatures in monsters remaining count
+- Tweak levers/waypoints in MH-NaliVillage]\[ map to prevent double-triggering by AI
 
 ## 606 to 607:
 - Introduction of support for optional objectives in maps, which can show up on the HUD, and tell players what they need to be doing
