@@ -1,0 +1,17 @@
+[LevelInfo0]
+Title="Nali Village"
+IdealPlayerCount="Up to 4"
+
+[MonsterHuntObjective0]
+Message="Hunt down the Titan"
+
+[LevelSummary]
+Title="Nali Village"
+IdealPlayerCount="Up to 4"
+
+[MonsterHuntObjective3]
+Message="Return to the escape ships"
+
+[MonsterHuntObjective2]
+Message="Defeat the other Titan!"
+

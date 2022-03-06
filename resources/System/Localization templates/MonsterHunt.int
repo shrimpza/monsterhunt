@@ -1,0 +1,308 @@
+[Public]
+; EN: Object=(Name=MonsterHunt.ChainsawArena,Class=Class,MetaClass=Engine.Mutator,Description="Chainsaw Arena v608,Replaces all weapons with the Chainsaw!")
+Object=(Name=MonsterHunt.ChainsawArena,Class=Class,MetaClass=Engine.Mutator,Description="Chainsaw Arena v608,Replaces all weapons with the Chainsaw!")
+
+Object=(Name=MonsterHunt.MonsterHunt,Class=Class,MetaClass=Botpack.TournamentGameInfo)
+; EN: Preferences=(Caption="Monster Hunt v608",Parent="Game Types",Class=MonsterHunt.MonsterHunt,Immediate=True)
+Preferences=(Caption="Monster Hunt v608",Parent="Game Types",Class=MonsterHunt.MonsterHunt,Immediate=True)
+Object=(Name=MonsterHunt.MonsterHuntArena,Class=Class,MetaClass=Botpack.TournamentGameInfo)
+; EN: Preferences=(Caption="Monster Arena v608",Parent="Game Types",Class=MonsterHunt.MonsterHuntArena,Immediate=True)
+Preferences=(Caption="Monster Arena v608",Parent="Game Types",Class=MonsterHunt.MonsterHuntArena,Immediate=True)
+Object=(Name=MonsterHunt.MonsterHuntDefence,Class=Class,MetaClass=Botpack.TournamentGameInfo)
+; EN: Preferences=(Caption="Monster Defence v608",Parent="Game Types",Class=MonsterHunt.MonsterHuntDefence,Immediate=True)
+Preferences=(Caption="Monster Defence v608",Parent="Game Types",Class=MonsterHunt.MonsterHuntDefence,Immediate=True)
+
+; EN: Object=(Name=MonsterHunt.MonsterDefaultMaps,Class=Class,MetaClass=MonsterHunt.MonsterMapList,Description="Default Maps v608")
+Object=(Name=MonsterHunt.MonsterDefaultMaps,Class=Class,MetaClass=MonsterHunt.MonsterMapList,Description="Default Maps v608")
+; EN: Object=(Name=MonsterHunt.MonsterArenaDefaultMaps,Class=Class,MetaClass=MonsterHunt.MonsterArenaMapList,Description="Default Maps v608")
+Object=(Name=MonsterHunt.MonsterArenaDefaultMaps,Class=Class,MetaClass=MonsterHunt.MonsterArenaMapList,Description="Default Maps v608")
+
+Object=(Name=MonsterHunt.MonsterBrowserWindow,Class=Class,MetaClass=UTBrowser.UTBrowserServerListWindow)
+Object=(Name=MonsterHunt.MonsterArenaBrowserWindow,Class=Class,MetaClass=UTBrowser.UTBrowserServerListWindow)
+
+; EN: Object=(Name=MonsterHunt.MonsterMenuItem,Class=Class,MetaClass=UMenu.UMenuModMenuItem,Description="&Monster Hunt Credits v608,The people behind Monster Hunt.")
+Object=(Name=MonsterHunt.MonsterMenuItem,Class=Class,MetaClass=UMenu.UMenuModMenuItem,Description="&Monster Hunt Credits v608,The people behind Monster Hunt.")
+
+[MonsterHunt]
+; EN: TimeOutMessage="Time up, hunt failed!"
+TimeOutMessage="Time up, hunt failed!"
+; EN: NoHuntersMessage="Hunting party eliminated!"
+NoHuntersMessage="Hunting party eliminated!"
+; EN: NoLivesLeftMessage=" has been lost!"
+NoLivesLeftMessage=" has been lost!"
+; EN: StartUpTeamMessage="Welcome to the hunt!"
+StartUpTeamMessage="Welcome to the hunt!"
+; EN: StartUpMessage="Work with your teammates to hunt down the monsters!"
+StartUpMessage="Work with your teammates to hunt down the monsters!"
+; EN: StartMessage="The hunt has begun!"
+StartMessage="The hunt has begun!"
+; EN: GameEndedMessage="Hunt Successful!"
+GameEndedMessage="Hunt Successful!"
+; EN: SingleWaitingMessage="Press Fire to begin the hunt."
+SingleWaitingMessage="Press Fire to begin the hunt."
+; EN: ExplodeMessage=" was blown up"
+ExplodeMessage=" was blown up"
+; EN: BurnedMessage=" was incinerated"
+BurnedMessage=" was incinerated"
+; EN: CorrodedMessage=" was slimed"
+CorrodedMessage=" was slimed"
+; EN: HackedMessage=" was hacked"
+HackedMessage=" was hacked"
+; EN: LeftMessage=" left the hunt."
+LeftMessage=" left the hunt."
+; EN: EnteredMessage=" has joined the hunt!"
+EnteredMessage=" has joined the hunt!"
+; EN: GameName="Monster Hunt"
+GameName="Monster Hunt"
+
+[MonsterBoard]
+; EN: MonsterDifficultyJoinString="Monsters /"
+MonsterDifficultyJoinString="Monsters /"
+; EN: ObjectivesString="Objectives"
+ObjectivesString="Objectives"
+; EN: Restart="You have been killed.  Hit [Fire] to continue the hunt!"
+Restart="You have been killed.  Hit [Fire] to continue the hunt!"
+; EN: Continue="Hit [Fire] to begin the next hunt!"
+Continue="Hit [Fire] to begin the next hunt!"
+; EN: Ended="The hunt has ended."
+Ended="The hunt has ended."
+; EN: PlayerString="Hunter"
+PlayerString="Hunter"
+; EN: FragsString="Score"
+FragsString="Score"
+; EN: DeathsString="Lives"
+DeathsString="Lives"
+
+[MonsterHUD]
+; EN: TimeRemainingLabel="Time Remaining"
+TimeRemainingLabel="Time Remaining"
+; EN: LivesRemainLabel="Lives"
+LivesRemainLabel="Lives"
+; EN: EscapedMonstersLabel="Escaped Monsters"
+EscapedMonstersLabel="Escaped Monsters"
+; EN: HuntersRemainLabel="Hunters"
+HuntersRemainLabel="Hunters"
+; EN: MonstersRemainLabel="Monsters"
+MonstersRemainLabel="Monsters"
+
+[MonsterHuntDefence]
+; EN: MonstersEscapedMessage="Too many monsters escaped!"
+MonstersEscapedMessage="Too many monsters escaped!"
+; EN: EscapedMessage="escaped!"
+EscapedMessage="escaped!"
+; EN: WarmupMessage="seconds until the monsters arrive!"
+WarmupMessage="seconds until the monsters arrive!"
+; EN: StartUpMessage="Work with your teammates to defend your base against the monsters!"
+StartUpMessage="Work with your teammates to defend your base against the monsters!"
+; EN: StartMessage="The defence has begun!"
+StartMessage="The defence has begun!"
+; EN: GameEndedMessage="Defence Successful!"
+GameEndedMessage="Defence Successful!"
+; EN: SingleWaitingMessage="Press Fire to begin defending."
+SingleWaitingMessage="Press Fire to begin defending."
+; EN: GameName="Monster Defence"
+GameName="Monster Defence"
+
+[MonsterHuntArena]
+; EN: StartUpTeamMessage="Welcome to the ultimate arena battle!"
+StartUpTeamMessage="Welcome to the ultimate arena battle!"
+; EN: StartUpMessage="Work with your teammates to overcome the monsters!"
+StartUpMessage="Work with your teammates to overcome the monsters!"
+; EN: StartMessage="The battle has begun!"
+StartMessage="The battle has begun!"
+; EN: GameEndedMessage="Arena Cleared!"
+GameEndedMessage="Arena Cleared!"
+; EN: SingleWaitingMessage="Press Fire to enter the arena."
+SingleWaitingMessage="Press Fire to enter the arena."
+; EN: LeftMessage=" left the arena."
+LeftMessage=" left the arena."
+; EN: EnteredMessage=" has entered the arena!"
+EnteredMessage=" has entered the arena!"
+; EN: GameName="Monster Arena"
+GameName="Monster Arena"
+
+[MonsterHuntRules]
+; EN: TourneyText="Force team colours"
+TourneyText="Force team colours"
+; EN: TourneyHelp="if enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
+TourneyHelp="if enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
+; EN: FragText="Lives"
+FragText="Lives"
+; EN: FragHelp="Set the number of lives each hunter starts with for each round. Set it to 0 for no limit."
+FragHelp="Set the number of lives each hunter starts with for each round. Set it to 0 for no limit."
+; EN: DifficultyText="Monster Difficulty:"
+DifficultyText="Monster Difficulty:"
+; EN: DifficultyHelp="The difficulty skill level of Monsters."
+DifficultyHelp="The difficulty skill level of Monsters."
+; EN: Skills[0]="Easy"
+Skills[0]="Easy"
+; EN: Skills[1]="Medium"
+Skills[1]="Medium"
+; EN: Skills[2]="Hard"
+Skills[2]="Hard"
+; EN: Skills[3]="Unreal"
+Skills[3]="Unreal"
+; EN: SkillTaunts[0]="Tourist mode."
+SkillTaunts[0]="Tourist mode."
+; EN: SkillTaunts[1]="Ready for some action!"
+SkillTaunts[1]="Ready for some action!"
+; EN: SkillTaunts[2]="Not for the faint of heart."
+SkillTaunts[2]="Not for the faint of heart."
+; EN: SkillTaunts[3]="Death wish."
+SkillTaunts[3]="Death wish."
+
+[MonsterHuntDefenceRules]
+; EN: EscapeesText="Max Escapees"
+EscapeesText="Max Escapees"
+; EN: EscapeesHelp="The maximum number of Monsters which are allowed to escape, before the round is lost."
+EscapeesHelp="The maximum number of Monsters which are allowed to escape, before the round is lost."
+; EN: WarmupText="Warmup Time"
+WarmupText="Warmup Time"
+; EN: WarmupHelp="Number of seconds to wait before monsters start attacking, set to 0 for no warmup."
+WarmupHelp="Number of seconds to wait before monsters start attacking, set to 0 for no warmup."
+
+[MonsterBotConfig]
+; EN: MinPlayersText="Min. Total Hunters"
+MinPlayersText="Min. Total Hunters"
+; EN: BaseText="AI Hunter Skill:"
+BaseText="AI Hunter Skill:"
+; EN: SkillTaunts[0]="They might know how to kill a Fly."
+SkillTaunts[0]="They might know how to kill a Fly."
+; EN: SkillTaunts[2]="Look out monsters!"
+SkillTaunts[2]="Look out monsters!"
+; EN: SkillTaunts[3]="Monsters are in for a good beating."
+SkillTaunts[3]="Monsters are in for a good beating."
+; EN: SkillTaunts[4]="I wouldn't like to be in the monsters shoes..."
+SkillTaunts[4]="I wouldn't like to be in the monsters shoes..."
+; EN: SkillTaunts[5]="It's a pity the monsters can't respawn."
+SkillTaunts[5]="It's a pity the monsters can't respawn."
+; EN: SkillTaunts[6]="Those poor monsters are already dead."
+SkillTaunts[6]="Those poor monsters are already dead."
+; EN: SkillTaunts[7]="Rest in peace, monsters..."
+SkillTaunts[7]="Rest in peace, monsters..."
+
+[MonsterCreditsCW]
+; EN: ArtText="Testers"
+ArtText="Testers"
+; EN: MusicSoundText="Special Thanks"
+MusicSoundText="Special Thanks"
+; EN: BizText="Contact info"
+BizText="Contact info"
+
+[MonsterCreditsWindow]
+; EN: WindowTitle="Monster Hunt Credits (v608)"
+WindowTitle="Monster Hunt Credits (v608)"
+
+[HuntMessage]
+; EN: NewTeamMessage="has joined the hunt!"
+NewTeamMessage="has joined the hunt!"
+
+[MonsterMenuItem]
+; EN: MenuCaption="&Monster Hunt Credits"
+MenuCaption="&Monster Hunt Credits"
+; EN: MenuHelp="All the people behind Monster Hunt!"
+MenuHelp="All the people behind Monster Hunt!"
+
+[OLautomag]
+; EN: WeaponDescription="Classification: Automatic Magnum"
+WeaponDescription="Classification: Automatic Magnum"
+; EN: DeathMessage="%o got gatted by %k's %w."
+DeathMessage="%o got gatted by %k's %w."
+; EN: PickupMessage="You got the AutoMag"
+PickupMessage="You got the AutoMag"
+; EN: ItemName="Automag"
+ItemName="Automag"
+
+[OLDPistol]
+; EN: WeaponDescription="Classification: Energy Pistol"
+WeaponDescription="Classification: Energy Pistol"
+; EN: DeathMessage="%o was killed by %k's %w.  What a loser!"
+DeathMessage="%o was killed by %k's %w.  What a loser!"
+; EN: PickupMessage="You got the Dispersion Pistol"
+PickupMessage="You got the Dispersion Pistol"
+; EN: ItemName="Dispersion Pistol"
+ItemName="Dispersion Pistol"
+
+[MonsterHuntObjective]
+; EN: Message="Complete the objective"
+Message="Complete the objective"
+
+[OLASMD]
+; EN: WeaponDescription="Classification: Energy Rifle"
+WeaponDescription="Classification: Energy Rifle"
+; EN: DeathMessage="%k inflicted mortal damage upon %o with the %w."
+DeathMessage="%k inflicted mortal damage upon %o with the %w."
+; EN: PickupMessage="You got the ASMD"
+PickupMessage="You got the ASMD"
+; EN: ItemName="ASMD"
+ItemName="ASMD"
+
+[OLEightball]
+; EN: WeaponDescription="Classification: Heavy Ballistic"
+WeaponDescription="Classification: Heavy Ballistic"
+; EN: DeathMessage="%o was smacked down multiple times by %k's %w."
+DeathMessage="%o was smacked down multiple times by %k's %w."
+; EN: PickupMessage="You got the Eightball gun"
+PickupMessage="You got the Eightball gun"
+; EN: ItemName="Eightball"
+ItemName="Eightball"
+
+[OLRifle]
+; EN: WeaponDescription="Classification: Long-Range Ballistic"
+WeaponDescription="Classification: Long-Range Ballistic"
+; EN: DeathMessage="%k put a bullet through %o's head."
+DeathMessage="%k put a bullet through %o's head."
+; EN: PickupMessage="You got the Rifle"
+PickupMessage="You got the Rifle"
+; EN: ItemName="Sniper Rifle"
+ItemName="Sniper Rifle"
+
+[OLFlakCannon]
+; EN: WeaponDescription="Classification: Heavy Shrapnel"
+WeaponDescription="Classification: Heavy Shrapnel"
+; EN: DeathMessage="%o was ripped to shreds by %k's %w."
+DeathMessage="%o was ripped to shreds by %k's %w."
+; EN: PickupMessage="You got the Flak Cannon"
+PickupMessage="You got the Flak Cannon"
+; EN: ItemName="Flak Cannon"
+ItemName="Flak Cannon"
+
+[OLRazorjack]
+; EN: WeaponDescription="Classification: Skaarj Blade Launcher"
+WeaponDescription="Classification: Skaarj Blade Launcher"
+; EN: DeathMessage="%k took a bloody chunk out of %o with the %w."
+DeathMessage="%k took a bloody chunk out of %o with the %w."
+; EN: PickupMessage="You got the RazorJack"
+PickupMessage="You got the RazorJack"
+; EN: ItemName="Razorjack"
+ItemName="Razorjack"
+
+[OLMinigun]
+; EN: WeaponDescription="Classification: Gatling Gun"
+WeaponDescription="Classification: Gatling Gun"
+; EN: DeathMessage="%k's %w turned %o into a leaky piece of meat."
+DeathMessage="%k's %w turned %o into a leaky piece of meat."
+; EN: PickupMessage="You got the Minigun"
+PickupMessage="You got the Minigun"
+; EN: ItemName="Minigun"
+ItemName="Minigun"
+
+[OLGESBioRifle]
+; EN: WeaponDescription="Classification: Toxic Tarydium waste Rifle"
+WeaponDescription="Classification: Toxic Tarydium waste Rifle"
+; EN: DeathMessage="%o drank a glass of %k's dripping green load."
+DeathMessage="%o drank a glass of %k's dripping green load."
+; EN: PickupMessage="You got the GES BioRifle"
+PickupMessage="You got the GES BioRifle"
+; EN: ItemName="GES Bio Rifle"
+ItemName="GES Bio Rifle"
+
+[OLStinger]
+; EN: WeaponDescription="Classification: Tarydium Shard Launcher"
+WeaponDescription="Classification: Tarydium Shard Launcher"
+; EN: DeathMessage="%o was perforated by %k's %w."
+DeathMessage="%o was perforated by %k's %w."
+; EN: PickupMessage="You picked up the Stinger"
+PickupMessage="You picked up the Stinger"
+; EN: ItemName="Stinger"
+ItemName="Stinger"

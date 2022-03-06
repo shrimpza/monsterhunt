@@ -1,0 +1,26 @@
+[LevelInfo0]
+Title="The Trials"
+IdealPlayerCount="Up to 10"
+
+[MonsterHuntObjective2]
+Message="Activate the outdoor beam"
+
+[LevelSummary]
+Title="The Trials"
+IdealPlayerCount="Up to 10"
+
+[MonsterHuntObjective5]
+Message="Escape!"
+
+[MonsterHuntObjective1]
+Message="Open the final gateway"
+
+[MonsterHuntObjective4]
+Message="Activate the temple beam"
+
+[MonsterHuntObjective0]
+Message="Activate the underwater beam"
+
+[MonsterHuntObjective3]
+Message="Activate the caves beam"
+

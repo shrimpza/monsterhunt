@@ -1,0 +1,56 @@
+[LevelInfo0]
+; EN: Title="Lonely Sanctuary ]["
+Title="Santuario Solitario ]["
+; EN: IdealPlayerCount="Up to 10"
+IdealPlayerCount="Hasta 10"
+; EN: LevelEnterText="Let the killing begin!"
+LevelEnterText="¡Que la matanza comience!"
+
+[MonsterEvent0]
+; EN: Message="All boss monsters eliminated. Access to the gatehouse granted."
+Message="Todos los monstruos jefes han sido asesinados. Acceso a la entrada autorizado."
+
+[Counter1]
+CountMessage=""
+CompleteMessage=""
+
+[LevelSummary]
+; EN: Title="Lonely Sanctuary ]["
+Title="Santuario Solitario ]["
+; EN: IdealPlayerCount="Up to 10"
+IdealPlayerCount="Hasta 10"
+; EN: LevelEnterText="Let the killing begin!"
+LevelEnterText="¡Que la matanza comience!"
+
+[Counter0]
+CountMessage=""
+CompleteMessage=""
+
+[MonsterHuntObjective2]
+; EN: Message="Open the main gate and escape!"
+Message="¡Abre las puertas principales y escapa!"
+
+[Counter2]
+CountMessage=""
+CompleteMessage=""
+
+[MonsterHuntObjective0]
+; EN: Message="Defeat the Gasbag, Titan, and Queen to access the bridge controls"
+Message="Derrota a la Bolsa Gaseosa, al Titán y a la Reina para poder acceder a los controles del puente"
+
+[MonsterHuntObjective1]
+; EN: Message="Lower the bridge"
+Message="Baja el puente"
+
+[Titan0]
+; EN: NameArticle=" the "
+NameArticle=" el "
+; EN: MenuName="Titan"
+MenuName="Titán"
+
+[GiantGasbag0]
+; EN: NameArticle=" the "
+NameArticle=" la "
+; EN: MenuName="Giant Gasbag"
+MenuName="Bolsa Gaseosa"
+

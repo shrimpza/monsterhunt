@@ -1,0 +1,29 @@
+[LevelInfo0]
+Title="Forbidden Journey"
+IdealPlayerCount="Up to 6"
+
+[LevelSummary]
+Title="Forbidden Journey"
+IdealPlayerCount="Up to 6"
+
+[Counter0]
+CompleteMessage=""
+
+[MonsterHuntObjective3]
+Message="Escape!"
+
+[MonsterHuntObjective1]
+Message="Release the Titan"
+
+[MonsterHuntObjective0]
+Message="Reach the top of the tower"
+
+[MonsterHuntObjective2]
+Message="Defeat the Titan"
+
+[SpecialEvent0]
+Message="Look out!!!"
+
+[MonsterEvent5]
+Message="The Titan has been freed!!"
+
