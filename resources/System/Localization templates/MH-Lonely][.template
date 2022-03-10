@@ -1,14 +1,14 @@
 [LevelInfo0]
 ; EN: Title="Lonely Sanctuary ]["
-Title="Lonely Sanctuary ]["
+Title=""
 ; EN: IdealPlayerCount="Up to 10"
-IdealPlayerCount="Up to 10"
+IdealPlayerCount=""
 ; EN: LevelEnterText="Let the killing begin!"
-LevelEnterText="Let the killing begin!"
+LevelEnterText=""
 
 [MonsterEvent0]
 ; EN: Message="All boss monsters eliminated. Access to the gatehouse granted."
-Message="All boss monsters eliminated. Access to the gatehouse granted."
+Message=""
 
 [Counter1]
 CountMessage=""
@@ -16,11 +16,11 @@ CompleteMessage=""
 
 [LevelSummary]
 ; EN: Title="Lonely Sanctuary ]["
-Title="Lonely Sanctuary ]["
+Title=""
 ; EN: IdealPlayerCount="Up to 10"
-IdealPlayerCount="Up to 10"
+IdealPlayerCount=""
 ; EN: LevelEnterText="Let the killing begin!"
-LevelEnterText="Let the killing begin!"
+LevelEnterText=""
 
 [Counter0]
 CountMessage=""
@@ -28,7 +28,7 @@ CompleteMessage=""
 
 [MonsterHuntObjective2]
 ; EN: Message="Open the main gate and escape!"
-Message="Open the main gate and escape!"
+Message=""
 
 [Counter2]
 CountMessage=""
@@ -36,21 +36,21 @@ CompleteMessage=""
 
 [MonsterHuntObjective0]
 ; EN: Message="Defeat the Gasbag, Titan, and Queen to access the bridge controls"
-Message="Defeat the Gasbag, Titan, and Queen to access the bridge controls"
+Message=""
 
 [MonsterHuntObjective1]
 ; EN: Message="Lower the bridge"
-Message="Lower the bridge"
+Message=""
 
 [Titan0]
 ; EN: NameArticle=" the "
-NameArticle=" the "
+NameArticle=""
 ; EN: MenuName="Titan"
-MenuName="Titan"
+MenuName=""
 
 [GiantGasbag0]
 ; EN: NameArticle=" the "
-NameArticle=" the "
+NameArticle=""
 ; EN: MenuName="Giant Gasbag"
-MenuName="Giant Gasbag"
+MenuName=""
 

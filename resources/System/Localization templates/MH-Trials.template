@@ -1,36 +1,36 @@
 [LevelInfo0]
 ; EN: Title="The Trials"
-Title="The Trials"
+Title=""
 ; EN: IdealPlayerCount="Up to 10"
-IdealPlayerCount="Up to 10"
+IdealPlayerCount=""
 
 [MonsterHuntObjective2]
 ; EN: Message="Activate the outdoor beam"
-Message="Activate the outdoor beam"
+Message=""
 
 [LevelSummary]
 ; EN: Title="The Trials"
-Title="The Trials"
+Title=""
 ; EN: IdealPlayerCount="Up to 10"
-IdealPlayerCount="Up to 10"
+IdealPlayerCount=""
 
 [MonsterHuntObjective5]
 ; EN: Message="Escape!"
-Message="Escape!"
+Message=""
 
 [MonsterHuntObjective1]
 ; EN: Message="Open the final gateway"
-Message="Open the final gateway"
+Message=""
 
 [MonsterHuntObjective4]
 ; EN: Message="Activate the temple beam"
-Message="Activate the temple beam"
+Message=""
 
 [MonsterHuntObjective0]
 ; EN: Message="Activate the underwater beam"
-Message="Activate the underwater beam"
+Message=""
 
 [MonsterHuntObjective3]
 ; EN: Message="Activate the caves beam"
-Message="Activate the caves beam"
+Message=""
 

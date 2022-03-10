@@ -20,7 +20,7 @@ IdealPlayerCount="Hasta 8"
 
 [MonsterEvent2]
 ; EN: Message="The final castle has been opened!"
-Message="¡Se ha abierto la entrada al castillo final!"
+Message="¡La entrada al castillo final ha sido abierta!"
 
 [MonsterEvent1]
 ; EN: Message="The castle doors have been opened!"

@@ -124,7 +124,7 @@ GameName="Estadio de Monstruos"
 [MonsterHuntRules]
 ; EN: TourneyText="Force team colours"
 TourneyText="Forzar colores de equipo"
-; EN: TourneyHelp="if enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
+; EN: TourneyHelp="If enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
 TourneyHelp="Si está activo, los jugadores utilizarán pieles de equipo y Monitor Frontal coloreados en rojo, de otro modo utilizarán su propia piel y configuración de MF."
 ; EN: FragText="Lives"
 FragText="Vidas"
