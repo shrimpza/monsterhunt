@@ -2,6 +2,8 @@
 ; EN: Object=(Name=MonsterHunt.ChainsawArena,Class=Class,MetaClass=Engine.Mutator,Description="Chainsaw Arena v608,Replaces all weapons with the Chainsaw!")
 Object=(Name=MonsterHunt.ChainsawArena,Class=Class,MetaClass=Engine.Mutator,Description="Solo Motosierras v608,¡Reemplaza a todas las herramientas con la Motosierra!")
 
+; EN: Preferences=(Caption="Game Types",Parent="Advanced Options")
+Preferences=(Caption="Tipos de Juego",Parent="Opciones Avanzadas")
 Object=(Name=MonsterHunt.MonsterHunt,Class=Class,MetaClass=Botpack.TournamentGameInfo)
 ; EN: Preferences=(Caption="Monster Hunt v608",Parent="Game Types",Class=MonsterHunt.MonsterHunt,Immediate=True)
 Preferences=(Caption="Cacería de Monstruos v608",Parent="Tipos de Juego",Class=MonsterHunt.MonsterHunt,Immediate=True)
