@@ -1,0 +1,183 @@
+[Public]
+Object=(Name=MonsterHunt.ChainsawArena,Class=Class,MetaClass=Engine.Mutator,Description="Chainsaw Arena v608,Replaces all weapons with the Chainsaw!")
+
+Preferences=(Caption="Game Types",Parent="Advanced Options")
+Object=(Name=MonsterHunt.MonsterHunt,Class=Class,MetaClass=Botpack.TournamentGameInfo)
+Preferences=(Caption="Monster Hunt v608",Parent="Game Types",Class=MonsterHunt.MonsterHunt,Immediate=True)
+Object=(Name=MonsterHunt.MonsterHuntArena,Class=Class,MetaClass=Botpack.TournamentGameInfo)
+Preferences=(Caption="Monster Arena v608",Parent="Game Types",Class=MonsterHunt.MonsterHuntArena,Immediate=True)
+Object=(Name=MonsterHunt.MonsterHuntDefence,Class=Class,MetaClass=Botpack.TournamentGameInfo)
+Preferences=(Caption="Monster Defence v608",Parent="Game Types",Class=MonsterHunt.MonsterHuntDefence,Immediate=True)
+
+Object=(Name=MonsterHunt.MonsterDefaultMaps,Class=Class,MetaClass=MonsterHunt.MonsterMapList,Description="Default Maps v608")
+Object=(Name=MonsterHunt.MonsterArenaDefaultMaps,Class=Class,MetaClass=MonsterHunt.MonsterArenaMapList,Description="Default Maps v608")
+
+Object=(Name=MonsterHunt.MonsterBrowserWindow,Class=Class,MetaClass=UTBrowser.UTBrowserServerListWindow)
+Object=(Name=MonsterHunt.MonsterArenaBrowserWindow,Class=Class,MetaClass=UTBrowser.UTBrowserServerListWindow)
+
+Object=(Name=MonsterHunt.MonsterMenuItem,Class=Class,MetaClass=UMenu.UMenuModMenuItem,Description="&Monster Hunt Credits v608,The people behind Monster Hunt.")
+
+[MonsterHunt]
+TimeOutMessage="Time up, hunt failed!"
+NoHuntersMessage="Hunting party eliminated!"
+NoLivesLeftMessage=" has been lost!"
+StartUpTeamMessage="Welcome to the hunt!"
+StartUpMessage="Work with your teammates to hunt down the monsters!"
+StartMessage="The hunt has begun!"
+GameEndedMessage="Hunt Successful!"
+SingleWaitingMessage="Press Fire to begin the hunt."
+ExplodeMessage=" was blown up"
+BurnedMessage=" was incinerated"
+CorrodedMessage=" was slimed"
+HackedMessage=" was hacked"
+LeftMessage=" left the hunt."
+EnteredMessage=" has joined the hunt!"
+GameName="Monster Hunt"
+
+[MonsterBoard]
+MonsterDifficultyJoinString="Monsters /"
+ObjectivesString="Objectives"
+Restart="You have been killed.  Hit [Fire] to continue the hunt!"
+Continue="Hit [Fire] to begin the next hunt!"
+Ended="The hunt has ended."
+PlayerString="Hunter"
+FragsString="Score"
+DeathsString="Lives"
+
+[MonsterHUD]
+TimeRemainingLabel="Time Remaining"
+LivesRemainLabel="Lives"
+EscapedMonstersLabel="Escaped Monsters"
+HuntersRemainLabel="Hunters"
+MonstersRemainLabel="Monsters"
+
+[MonsterHuntDefence]
+MonstersEscapedMessage="Too many monsters escaped!"
+EscapedMessage="escaped!"
+WarmupMessage="seconds until the monsters arrive!"
+StartUpMessage="Work with your teammates to defend your base against the monsters!"
+StartMessage="The defence has begun!"
+GameEndedMessage="Defence Successful!"
+SingleWaitingMessage="Press Fire to begin defending."
+GameName="Monster Defence"
+
+[MonsterHuntArena]
+StartUpTeamMessage="Welcome to the ultimate arena battle!"
+StartUpMessage="Work with your teammates to overcome the monsters!"
+StartMessage="The battle has begun!"
+GameEndedMessage="Arena Cleared!"
+SingleWaitingMessage="Press Fire to enter the arena."
+LeftMessage=" left the arena."
+EnteredMessage=" has entered the arena!"
+GameName="Monster Arena"
+
+[MonsterHuntRules]
+TourneyText="Force team colours"
+TourneyHelp="If enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
+FragText="Lives"
+FragHelp="Set the number of lives each hunter starts with for each round. Set it to 0 for no limit."
+DifficultyText="Monster Difficulty:"
+DifficultyHelp="The difficulty skill level of Monsters."
+Skills[0]="Easy"
+Skills[1]="Medium"
+Skills[2]="Hard"
+Skills[3]="Unreal"
+SkillTaunts[0]="Tourist mode."
+SkillTaunts[1]="Ready for some action!"
+SkillTaunts[2]="Not for the faint of heart."
+SkillTaunts[3]="Death wish."
+
+[MonsterHuntDefenceRules]
+EscapeesText="Max Escapees"
+EscapeesHelp="The maximum number of Monsters which are allowed to escape, before the round is lost."
+WarmupText="Warmup Time"
+WarmupHelp="Number of seconds to wait before monsters start attacking, set to 0 for no warmup."
+
+[MonsterBotConfig]
+MinPlayersText="Min. Total Hunters"
+BaseText="AI Hunter Skill:"
+SkillTaunts[0]="They might know how to kill a Fly."
+SkillTaunts[2]="Look out monsters!"
+SkillTaunts[3]="Monsters are in for a good beating."
+SkillTaunts[4]="I wouldn't like to be in the monsters shoes..."
+SkillTaunts[5]="It's a pity the monsters can't respawn."
+SkillTaunts[6]="Those poor monsters are already dead."
+SkillTaunts[7]="Rest in peace, monsters..."
+
+[MonsterCreditsCW]
+ArtText="Testers"
+MusicSoundText="Special Thanks"
+BizText="Contact info"
+
+[MonsterCreditsWindow]
+WindowTitle="Monster Hunt Credits (v608)"
+
+[HuntMessage]
+NewTeamMessage="has joined the hunt!"
+
+[MonsterMenuItem]
+MenuCaption="&Monster Hunt Credits"
+MenuHelp="All the people behind Monster Hunt!"
+
+[OLautomag]
+WeaponDescription="Classification: Automatic Magnum"
+DeathMessage="%o got gatted by %k's %w."
+PickupMessage="You got the AutoMag"
+ItemName="Automag"
+
+[OLDPistol]
+WeaponDescription="Classification: Energy Pistol"
+DeathMessage="%o was killed by %k's %w. What a loser!"
+PickupMessage="You got the Dispersion Pistol"
+ItemName="Dispersion Pistol"
+
+[MonsterHuntObjective]
+Message="Complete the objective"
+
+[OLASMD]
+WeaponDescription="Classification: Energy Rifle"
+DeathMessage="%k inflicted mortal damage upon %o with the %w."
+PickupMessage="You got the ASMD"
+ItemName="ASMD"
+
+[OLEightball]
+WeaponDescription="Classification: Heavy Ballistic"
+DeathMessage="%o was smacked down multiple times by %k's %w."
+PickupMessage="You got the Eightball gun"
+ItemName="Eightball"
+
+[OLRifle]
+WeaponDescription="Classification: Long-Range Ballistic"
+DeathMessage="%k put a bullet through %o's head."
+PickupMessage="You got the Rifle"
+ItemName="Sniper Rifle"
+
+[OLFlakCannon]
+WeaponDescription="Classification: Heavy Shrapnel"
+DeathMessage="%o was ripped to shreds by %k's %w."
+PickupMessage="You got the Flak Cannon"
+ItemName="Flak Cannon"
+
+[OLRazorjack]
+WeaponDescription="Classification: Skaarj Blade Launcher"
+DeathMessage="%k took a bloody chunk out of %o with the %w."
+PickupMessage="You got the RazorJack"
+ItemName="Razorjack"
+
+[OLMinigun]
+WeaponDescription="Classification: Gatling Gun"
+DeathMessage="%k's %w turned %o into a leaky piece of meat."
+PickupMessage="You got the Minigun"
+ItemName="Minigun"
+
+[OLGESBioRifle]
+WeaponDescription="Classification: Toxic Tarydium waste Rifle"
+DeathMessage="%o drank a glass of %k's dripping green load."
+PickupMessage="You got the GES BioRifle"
+ItemName="GES Bio Rifle"
+
+[OLStinger]
+WeaponDescription="Classification: Tarydium Shard Launcher"
+DeathMessage="%o was perforated by %k's %w."
+PickupMessage="You picked up the Stinger"
+ItemName="Stinger"

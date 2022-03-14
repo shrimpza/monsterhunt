@@ -1,0 +1,39 @@
+[LevelInfo0]
+; EN: Title="Forbidden Journey"
+Title="Viaje Prohibido"
+; EN: IdealPlayerCount="Up to 6"
+IdealPlayerCount="Hasta 6"
+
+[LevelSummary]
+; EN: Title="Forbidden Journey"
+Title="Viaje Prohibido"
+; EN: IdealPlayerCount="Up to 6"
+IdealPlayerCount="Hasta 6"
+
+[Counter0]
+CompleteMessage=""
+
+[MonsterHuntObjective3]
+; EN: Message="Escape!"
+Message="¡Escapa!"
+
+[MonsterHuntObjective1]
+; EN: Message="Release the Titan"
+Message="Libera al Titán"
+
+[MonsterHuntObjective0]
+; EN: Message="Reach the top of the tower"
+Message="Llega al tope de la torre"
+
+[MonsterHuntObjective2]
+; EN: Message="Defeat the Titan"
+Message="Derrota al Titán"
+
+[SpecialEvent0]
+; EN: Message="Look out!!!"
+Message="¡¡¡Cuidado!!!"
+
+[MonsterEvent5]
+; EN: Message="The Titan has been freed!!"
+Message="¡¡El Titán ha sido liberado!!"
+

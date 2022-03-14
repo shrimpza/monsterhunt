@@ -1,0 +1,42 @@
+[LevelInfo0]
+Title="Lonely Sanctuary ]["
+IdealPlayerCount="Up to 10"
+LevelEnterText="Let the killing begin!"
+
+[MonsterEvent0]
+Message="All boss monsters eliminated. Access to the gatehouse granted."
+
+[Counter1]
+CountMessage=""
+CompleteMessage=""
+
+[LevelSummary]
+Title="Lonely Sanctuary ]["
+IdealPlayerCount="Up to 10"
+LevelEnterText="Let the killing begin!"
+
+[Counter0]
+CountMessage=""
+CompleteMessage=""
+
+[MonsterHuntObjective2]
+Message="Open the main gate and escape!"
+
+[Counter2]
+CountMessage=""
+CompleteMessage=""
+
+[MonsterHuntObjective0]
+Message="Defeat the Gasbag, Titan, and Queen to access the bridge controls"
+
+[MonsterHuntObjective1]
+Message="Lower the bridge"
+
+[Titan0]
+NameArticle=" the "
+MenuName="Titan"
+
+[GiantGasbag0]
+NameArticle=" the "
+MenuName="Giant Gasbag"
+

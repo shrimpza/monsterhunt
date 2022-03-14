@@ -1,0 +1,24 @@
+[LevelInfo0]
+; EN: Title="Nali Village"
+Title="Aldea Nali"
+; EN: IdealPlayerCount="Up to 4"
+IdealPlayerCount="Hasta 4"
+
+[MonsterHuntObjective0]
+; EN: Message="Hunt down the Titan"
+Message="Caza al Titán"
+
+[LevelSummary]
+; EN: Title="Nali Village"
+Title="Aldea Nali"
+; EN: IdealPlayerCount="Up to 4"
+IdealPlayerCount="Hasta 4"
+
+[MonsterHuntObjective3]
+; EN: Message="Return to the escape ships"
+Message="Regresa a las naves de escape"
+
+[MonsterHuntObjective2]
+; EN: Message="Defeat the other Titan!"
+Message="¡Derrota al otro Titán!"
+

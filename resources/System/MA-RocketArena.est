@@ -1,0 +1,18 @@
+[LevelInfo0]
+; EN: Title="Rocket Arena"
+Title="Estadio de Cohetes"
+; EN: IdealPlayerCount="Up to 8"
+IdealPlayerCount="Hasta 8"
+
+[LavaTitan0]
+; EN: NameArticle=" The "
+NameArticle=" The "
+; EN: MenuName="Lava Titan"
+MenuName="Titán de Lava"
+
+[LevelSummary]
+; EN: Title="Rocket Arena"
+Title="Estadio de Cohetes"
+; EN: IdealPlayerCount="Up to 8"
+IdealPlayerCount="Hasta 8"
+

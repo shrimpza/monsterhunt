@@ -1,0 +1,32 @@
+[LevelInfo0]
+Title="Icy Canyon"
+IdealPlayerCount="Up to 8"
+
+[VacuumZone1]
+DamageString="%o fell into the spike pit!"
+
+[WaterZone0]
+DamageString="%o caught a chill."
+
+[LevelSummary]
+Title="Icy Canyon"
+IdealPlayerCount="Up to 8"
+
+[MonsterEvent2]
+Message="The final castle has been opened!"
+
+[MonsterEvent1]
+Message="The castle doors have been opened!"
+
+[MonsterHuntObjective6]
+Message="Escape!"
+
+[MonsterHuntObjective0]
+Message="Defeat the Ice Skaarj"
+
+[MonsterHuntObjective4]
+Message="Find a way to open the castle"
+
+[MonsterHuntObjective3]
+Message="Make your way to the castle"
+
