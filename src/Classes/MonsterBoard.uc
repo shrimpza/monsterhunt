@@ -9,6 +9,9 @@
 
 class MonsterBoard extends TournamentScoreBoard;
 
+#exec TEXTURE IMPORT NAME=SurvivorStar FILE=Textures\SurvivorStar.pcx GROUP=Hud MIPS=OFF LODSET=0
+#exec TEXTURE IMPORT NAME=DeadSkull FILE=Textures\DeadSkull.pcx GROUP=Hud MIPS=OFF LODSET=0
+
 var color LightGreenColor, DarkGreenColor;
 var localized String MonsterDifficultyJoinString, ObjectivesString;
 
@@ -153,9 +156,11 @@ function DrawNameAndPing(Canvas Canvas, PlayerReplicationInfo PRI, float XOffset
 	local float XL, YL, XL2, YL2, XL3, YL3;
 	local bool bLocalPlayer;
 	local PlayerPawn PlayerOwner;
+	local MonsterReplicationInfo mri;
 	local int Time;
 
 	PlayerOwner = PlayerPawn(Owner);
+	mri = MonsterReplicationInfo(PlayerOwner.GameReplicationInfo);
 
 	bLocalPlayer = (PRI.PlayerName == PlayerOwner.PlayerReplicationInfo.PlayerName);
 	Canvas.Font = MyFonts.GetBigFont(Canvas.ClipX);
@@ -177,11 +182,25 @@ function DrawNameAndPing(Canvas Canvas, PlayerReplicationInfo PRI, float XOffset
 	Canvas.SetPos(Canvas.ClipX * 0.645 + XL * 0.5 - XL2, YOffset);
 	Canvas.DrawText(int(PRI.Score), false);
 
-	// Draw remaining lives
-	if (MonsterReplicationInfo(PlayerPawn(Owner).GameReplicationInfo).bUseLives) {
+	// Draw remaining lives and life-related badges
+	if (mri != None && mri.bUseLives) {
 		Canvas.StrLen(int(PRI.Deaths), XL2, YL);
 		Canvas.SetPos(Canvas.ClipX * 0.775 + XL * 0.5 - XL2, YOffset);
 		Canvas.DrawText(int(PRI.Deaths), false);
+
+		Canvas.Style = ERenderStyle.STY_Translucent;
+		Canvas.SetPos((Canvas.ClipX * 0.1875) - 28, YOffset);
+
+		// no lives left player
+		if (int(PRI.Deaths) <= 0) {
+			Canvas.DrawTile(Texture'{{package}}.Hud.DeadSkull', (YL-2), (YL-2), 0, 0, 32, 32);
+		}
+
+		// end of round survivor star
+		if (mri.GameEndedComments != "" && int(PRI.Deaths) >= mri.Lives) {
+			Canvas.DrawTile(Texture'{{package}}.Hud.SurvivorStar', (YL-2), (YL-2), 0, 0, 32, 32);
+		}
+		Canvas.Style = Style;
 	}
 
 	if ((Canvas.ClipX > 512) && (Level.NetMode != NM_Standalone)) {
@@ -243,11 +262,11 @@ function DrawObjectivesList(Canvas Canvas) {
 			Canvas.DrawColor = GoldColor;
 		}
 
-		Canvas.SetPos(XOffset + YL, YOffset);
+		Canvas.SetPos(XOffset, YOffset);
 		Canvas.DrawText(obj.message, False);
 
 		Canvas.Style = ERenderStyle.STY_Translucent;
-		Canvas.SetPos(XOffset + 4, YOffset + 4);
+		Canvas.SetPos(XOffset - 20, YOffset + 4);
 		if (obj.bCompleted) {
 			Canvas.DrawTile(Texture'{{package}}.Hud.ObjComplete', (YL - 8), (YL - 8), 0, 0, 32, 32);
 		} else {

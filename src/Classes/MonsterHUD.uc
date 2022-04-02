@@ -21,6 +21,8 @@ var localized string EscapedMonstersLabel;
 var localized string HuntersRemainLabel;
 var localized string MonstersRemainLabel;
 
+var globalconfig bool bHideObjectives;
+
 simulated function PostBeginPlay() {
 	Super.PostBeginPlay();
 
@@ -31,8 +33,7 @@ simulated function DrawGameSynopsis(Canvas Canvas) {
 	local float XL, YL, YOffset, XOffset;
 	local string escapesString;
 	local MonsterReplicationInfo mri;
-	local int Minutes, Seconds, i;
-	local MonsterHuntObjective obj;
+	local int Minutes, Seconds;
 
 	XOffset = 10;
 
@@ -94,35 +95,44 @@ simulated function DrawGameSynopsis(Canvas Canvas) {
 
 		//
 		// objectives rendering
-		YOffset -= YL;
-		for (i = 15; i >= 0; i--) { // backwards, since we're rendering hud elements from bottom up
-			obj = mri.objectives[i];
-			if (obj != None) {
-				if (!obj.bActive && !obj.bAlwaysShown) {
-					if (!obj.bCompleted || (obj.bCompleted && !obj.bShowWhenComplete)) continue;
-				}
-				if (!obj.bActive) {
-					Canvas.Style = ERenderStyle.STY_Translucent;
-					Canvas.DrawColor = WhiteColor * 0.5;
-				} else {
-					Canvas.DrawColor = GoldColor;
-				}
+		DrawObjectives(canvas, mri, YL, YOffset, XOffset);
+	}
+}
 
-				Canvas.SetPos(XOffset + YL, YOffset);
-				Canvas.DrawText(obj.message, False);
+function DrawObjectives(Canvas Canvas, MonsterReplicationInfo mri, float YL, float YOffset, float XOffset) {
+	local int i;
+	local MonsterHuntObjective obj;
 
-				Canvas.Style = ERenderStyle.STY_Translucent;
-				Canvas.SetPos(XOffset + 4, YOffset + 4);
-				if (obj.bCompleted) {
-					Canvas.DrawTile(Texture'{{package}}.Hud.ObjComplete', (YL - 8), (YL - 8), 0, 0, 32, 32);
-				} else {
-					Canvas.DrawTile(Texture'{{package}}.Hud.ObjIncomplete', (YL - 8), (YL - 8), 0, 0, 32, 32);
-				}
+	if (bHideObjectives) return;
 
-				Canvas.Style = Style;
-
-				YOffset -= YL;
+	YOffset -= YL;
+	for (i = 15; i >= 0; i--) { // backwards, since we're rendering hud elements from bottom up
+		obj = mri.objectives[i];
+		if (obj != None) {
+			if (!obj.bActive && !obj.bAlwaysShown) {
+				if (!obj.bCompleted || (obj.bCompleted && !obj.bShowWhenComplete)) continue;
 			}
+			if (!obj.bActive) {
+				Canvas.Style = ERenderStyle.STY_Translucent;
+				Canvas.DrawColor = WhiteColor * 0.5;
+			} else {
+				Canvas.DrawColor = GoldColor;
+			}
+
+			Canvas.SetPos(XOffset + YL, YOffset);
+			Canvas.DrawText(obj.message, False);
+
+			Canvas.Style = ERenderStyle.STY_Translucent;
+			Canvas.SetPos(XOffset + 4, YOffset + 4);
+			if (obj.bCompleted) {
+				Canvas.DrawTile(Texture'{{package}}.Hud.ObjComplete', (YL - 8), (YL - 8), 0, 0, 32, 32);
+			} else {
+				Canvas.DrawTile(Texture'{{package}}.Hud.ObjIncomplete', (YL - 8), (YL - 8), 0, 0, 32, 32);
+			}
+
+			Canvas.Style = Style;
+
+			YOffset -= YL;
 		}
 	}
 }
@@ -244,4 +254,5 @@ defaultproperties {
 	EscapedMonstersLabel="Escaped Monsters"
 	HuntersRemainLabel="Hunters"
 	MonstersRemainLabel="Monsters"
+	bHideObjectives=false
 }

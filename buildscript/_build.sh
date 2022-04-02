@@ -80,26 +80,34 @@ cleanup() {
 				)
 				code=$?; [[ $code == 0 ]] || exit $code
 
-				# Format .int with Mustache
-				echo "Formatting: System/$packagefull.int"
-				"$MUSTACHE" "$PACKAGE_SRC_DIR/template.int" < "$TMP_YML" > "System/$packagefull.int"
-
 				# Create the final package template directory
 				PACKAGED="$packagefull"/packaged
 				mkdir -p "$PACKAGED"/System
 
-				# Move over system files
-				mv -v "System/$packagefull.int" "System/$packagefull.u" "$PACKAGED"/System
+				# Format localisation files
+				echo "Formatting localised files: $PACKAGE_RES_DIR"
+				if [[ -d $PACKAGE_RES_DIR ]]; then
+					for res in "$PACKAGE_RES_DIR"/System/*; do
+						res="$(basename "$res")"
+						if [[ $res == 'LocalisationTemplates' ]]; then continue; fi
+						"$MUSTACHE" "$PACKAGE_RES_DIR/System/$res" < "$TMP_YML" > "$PACKAGED"/System/"$res"
+					done
+				fi
 
 				# Overlay additional resources if present
-				echo $PACKAGE_RES_DIR
+				echo "Copy resources directory: $PACKAGE_RES_DIR"
 				if [[ -d $PACKAGE_RES_DIR ]]; then
 					for res in "$PACKAGE_RES_DIR"/**; do
 						res="$(basename "$res")"
+						if [[ $res == 'System' ]]; then continue; fi
 						cp -rvf "$PACKAGE_RES_DIR/$res" "$PACKAGED/$res"
 					done
 				fi
 
+				# Move over system files
+				mv -v "System/$packagefull.u" "$PACKAGED"/System
+
+				echo "Packaging up..."
 				(
 					cd $PACKAGED
 
@@ -110,12 +118,11 @@ cleanup() {
 				)
 
 				# Move to dist
-				echo Packaging up...
 				mkdir -p "$dist/$package/$build"
 				mv "$packagedist."{tar.*,zip} "$dist/$package/$build"
 
 				# Update dist/latest
-				echo Organizing dist directory...
+				echo "Organizing dist directory..."
 				mkdir -p "$dist/$package/latest"
 				rm -f "$dist/$package/latest/"*
 				cp "$dist/$package/$build/"* "$dist/$package/latest"
@@ -129,7 +136,7 @@ code=$?
 rm "$TMP_YML"
 rm "$TMP_INI"
 
-echo Cleaning up...
+echo "Cleaning up..."
 cleanup
 
 exit $code

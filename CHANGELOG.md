@@ -1,18 +1,32 @@
 # Changelog
 
+## 608 to 609:
+ - Properly support `bEnabled` on `MonsterWaypoint`, to allow for more complex AI navigation orchestration
+   - waypoint can now be disabled at start, and then triggered to enable (default is enabled)
+ - Adjust bot behaviour to try to clear monsters in an area before proceeding to next waypoint
+ - Localisation templates and Spanish Localisation (thanks Neon_Knight)
+   - Update build scripts/templates to support localised template variables 
+ - Optimise `MonsterWaypoint` startup, only do `AllActors` traversal if/when touched and only if events configured
+ - Add icons on the scoreboard: 
+   - a skull for players with no remaining lives
+   - a star "award" at the end for players with no deaths for the whole round
+ - Re-worked and improved MH-Revenge]\[ map, included as MH-Revenge]\[-SE
+ - Add option to hide objectives on HUD. Can be Set in `User.ini`:
+   - under `[MonsterHunt.MonsterHUD]` section, set `bHideObjectives=true` (default is false)
+
 ## 607 to 608:
-- Re-worked and improved MH-NaliVillage]\[ map, included as MH-NaliVillage][-SE
-- Include monster difficulty in scoreboard footer message
-- Show objectives on scoreboard
-- Reduce volume of objective activated/completed sounds
-- Only include unfriendly creatures in monsters remaining count
-- Tweak levers/waypoints in MH-NaliVillage]\[ map to prevent double-triggering by AI
+ - Re-worked and improved MH-NaliVillage]\[ map, included as MH-NaliVillage]\[-SE
+ - Include monster difficulty in scoreboard footer message
+ - Show objectives on scoreboard
+ - Reduce volume of objective activated/completed sounds
+ - Only include unfriendly creatures in monsters remaining count
+ - Tweak levers/waypoints in MH-NaliVillage]\[ map to prevent double-triggering by AI
 
 ## 606 to 607:
-- Introduction of support for optional objectives in maps, which can show up on the HUD, and tell players what they need to be doing
-- Cleaned up some chat log kill messaging, and do not show suicide messages as "Player1 killed Player1"
-- Polish pass for MH-Lonely][, fixing bad geometry, general cleanup and visual improvements
-- Added objectives to all standard MH maps
+ - Introduction of support for optional objectives in maps, which can show up on the HUD, and tell players what they need to be doing
+ - Cleaned up some chat log kill messaging, and do not show suicide messages as "Player1 killed Player1"
+ - Polish pass for MH-Lonely][, fixing bad geometry, general cleanup and visual improvements
+ - Added objectives to all standard MH maps
 
 ## 605 to 606:
  - Fix incorrect view offsets for U1 weapons making them seem invisible

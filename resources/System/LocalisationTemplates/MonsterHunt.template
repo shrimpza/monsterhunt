@@ -1,29 +1,24 @@
 [Public]
-; EN: Object=(Name=MonsterHunt.ChainsawArena,Class=Class,MetaClass=Engine.Mutator,Description="Chainsaw Arena v608,Replaces all weapons with the Chainsaw!")
-Object=(Name=MonsterHunt.ChainsawArena,Class=Class,MetaClass=Engine.Mutator,Description=",")
+{{#mutators}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=Engine.Mutator,Description="{{{en.name}}} v{{{version}}},{{{en.description}}}")
+{{/mutators}}
 
-; EN: Preferences=(Caption="Game Types",Parent="Advanced Options")
-Preferences=(Caption="",Parent="")
-Object=(Name=MonsterHunt.MonsterHunt,Class=Class,MetaClass=Botpack.TournamentGameInfo)
-; EN: Preferences=(Caption="Monster Hunt v608",Parent="Game Types",Class=MonsterHunt.MonsterHunt,Immediate=True)
-Preferences=(Caption="",Parent="",Class=MonsterHunt.MonsterHunt,Immediate=True)
-Object=(Name=MonsterHunt.MonsterHuntArena,Class=Class,MetaClass=Botpack.TournamentGameInfo)
-; EN: Preferences=(Caption="Monster Arena v608",Parent="Game Types",Class=MonsterHunt.MonsterHuntArena,Immediate=True)
-Preferences=(Caption="",Parent="",Class=MonsterHunt.MonsterHuntArena,Immediate=True)
-Object=(Name=MonsterHunt.MonsterHuntDefence,Class=Class,MetaClass=Botpack.TournamentGameInfo)
-; EN: Preferences=(Caption="Monster Defence v608",Parent="Game Types",Class=MonsterHunt.MonsterHuntDefence,Immediate=True)
-Preferences=(Caption="",Parent="",Class=MonsterHunt.MonsterHuntDefence,Immediate=True)
+{{#gametypes}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=Botpack.TournamentGameInfo)
+Preferences=(Caption="{{{en.name}}} v{{{version}}}",Parent="Game Types",Class={{{package}}}.{{{class}}},Immediate=True)
+{{/gametypes}}
 
-; EN: Object=(Name=MonsterHunt.MonsterDefaultMaps,Class=Class,MetaClass=MonsterHunt.MonsterMapList,Description="Default Maps v608")
-Object=(Name=MonsterHunt.MonsterDefaultMaps,Class=Class,MetaClass=MonsterHunt.MonsterMapList,Description="")
-; EN: Object=(Name=MonsterHunt.MonsterArenaDefaultMaps,Class=Class,MetaClass=MonsterHunt.MonsterArenaMapList,Description="Default Maps v608")
-Object=(Name=MonsterHunt.MonsterArenaDefaultMaps,Class=Class,MetaClass=MonsterHunt.MonsterArenaMapList,Description="")
+{{#maplists}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass={{{package}}}.{{{metaclass}}},Description="{{{en.description}}} v{{{version}}}")
+{{/maplists}}
 
-Object=(Name=MonsterHunt.MonsterBrowserWindow,Class=Class,MetaClass=UTBrowser.UTBrowserServerListWindow)
-Object=(Name=MonsterHunt.MonsterArenaBrowserWindow,Class=Class,MetaClass=UTBrowser.UTBrowserServerListWindow)
+{{#browsers}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=UTBrowser.UTBrowserServerListWindow)
+{{/browsers}}
 
-; EN: Object=(Name=MonsterHunt.MonsterMenuItem,Class=Class,MetaClass=UMenu.UMenuModMenuItem,Description="&Monster Hunt Credits v608,The people behind Monster Hunt.")
-Object=(Name=MonsterHunt.MonsterMenuItem,Class=Class,MetaClass=UMenu.UMenuModMenuItem,Description=",")
+{{#menus}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=UMenu.UMenuModMenuItem,Description="{{{en.name}}} v{{{version}}},{{{en.description}}}")
+{{/menus}}
 
 [MonsterHunt]
 ; EN: TimeOutMessage="Time up, hunt failed!"
