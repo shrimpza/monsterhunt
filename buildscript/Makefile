@@ -104,7 +104,7 @@ $(DIR_TARG)/System/ucc-bin: | auto-download expect-cmd-tar expect-cmd-gunzip exp
 	tar xjpmvf "$(DIR_DEPS)/OldUnreal-UTPatch469b-Linux.tar.bz2" --overwrite -C "$(DIR_TARG)" ;\
 	echo Done.
 
-$(DIR_DIST)/$(PACKAGE_NAME)/$(BUILD_NUM)/$(PACKAGE_NAME)-$(BUILD_NUM).zip: $(DIR_TARG)/System/ucc-bin $(PACKAGE_ROOT)/Classes/*.uc $(PACKAGE_ROOT)/template.int $(PACKAGE_ROOT)/template-options.yml $(SCRIPTS_DIR)/buildconfig.sh | expect-cmd-tar expect-cmd-gzip expect-cmd-bzip2 expect-cmd-zip expect-cmd-bash
+$(DIR_DIST)/$(PACKAGE_NAME)/$(BUILD_NUM)/$(PACKAGE_NAME)-$(BUILD_NUM).zip: $(DIR_TARG)/System/ucc-bin $(PACKAGE_ROOT)/Classes/*.uc $(PACKAGE_ROOT)/template-options.yml $(SCRIPTS_DIR)/buildconfig.sh | expect-cmd-tar expect-cmd-gzip expect-cmd-bzip2 expect-cmd-zip expect-cmd-bash
 	echo "Building distribution: $(DIR_DIST)/$(PACKAGE_NAME)/$(BUILD_NUM)/$(PACKAGE_NAME)-$(BUILD_NUM).zip"
 	echo "Build directory: $(DIR_TARG_PACKAGE)"
 	echo '=== Starting build!' ;\

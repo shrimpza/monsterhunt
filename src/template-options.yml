@@ -1,23 +1,42 @@
 mutators:
   - class: ChainsawArena
-    name: Chainsaw Arena
-    description: Replaces all weapons with the Chainsaw!
+    en:
+      name: Chainsaw Arena
+      description: Replaces all weapons with the Chainsaw!
+    est:
+      name: Solo Motosierras
+      description: Reemplaza a todas las herramientas con la Motosierra!
 
 gametypes:
   - class: MonsterHunt
-    name: Monster Hunt
+    en:
+      name: Monster Hunt
+    est:
+      name: Caceria de Monstruos
   - class: MonsterHuntArena
-    name: Monster Arena
+    en:
+      name: Monster Arena
+    est:
+      name: Estadio de Monstruos
   - class: MonsterHuntDefence
-    name: Monster Defence
+    en:
+      name: Monster Defence
+    est:
+      name: Defensa de Monstruos
 
 maplists:
   - class: MonsterDefaultMaps
-    description: Default Maps
     metaclass: MonsterMapList
+    en:
+      description: Default Maps
+    est:
+      description: Mapas por defecto
   - class: MonsterArenaDefaultMaps
-    description: Default Maps
     metaclass: MonsterArenaMapList
+    en:
+      description: Default Maps
+    est:
+      description: Mapas por defecto
 
 browsers:
   - class: MonsterBrowserWindow
@@ -25,5 +44,9 @@ browsers:
 
 menus:
   - class: MonsterMenuItem
-    name: "&Monster Hunt Credits"
-    description: The people behind Monster Hunt.
+    en:
+      name: "&Monster Hunt Credits"
+      description: The people behind Monster Hunt.
+    est:
+      name: "Creditos de Caceria de &Monstruos"
+      description: La gente detras de Caceria de Monstruos.

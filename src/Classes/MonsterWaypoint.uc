@@ -15,54 +15,48 @@ var(Waypoint) Name TriggerEvent1;
 var(Waypoint) Name TriggerEvent2;
 var(Waypoint) Name TriggerEvent3;
 var(Waypoint) Name TriggerEvent4;
+var(Waypoint) bool bEnabled;
 
-var actor TriggerActor1;
-var actor TriggerActor2;
-var actor TriggerActor3;
-var actor TriggerActor4;
+var(Waypoint) ScriptedPawn ArrivalTarget;
+
 var bool bVisited;
-var bool bEnabled;
 
-function PostBeginPlay() {
-	local Actor A;
-
-	TriggerActor1 = None;
-	TriggerActor2 = None;
-	TriggerActor3 = None;
-	TriggerActor4 = None;
-	foreach AllActors(class 'Actor', A) {
-		if (A.Event == TriggerEvent1 && TriggerActor1 == None) TriggerActor1 = A;
-		if (A.Event == TriggerEvent2 && TriggerActor2 == None) TriggerActor2 = A;
-		if (A.Event == TriggerEvent3 && TriggerActor3 == None) TriggerActor3 = A;
-		if (A.Event == TriggerEvent4 && TriggerActor4 == None) TriggerActor4 = A;
-	}
+function Trigger(actor Other, pawn EventInstigator) {
+	bEnabled = !bEnabled;
 }
 
 function Touch(actor Other) {
-	if (!bVisited && bEnabled && (Other.IsA('PlayerPawn') || Other.IsA('Bot'))) {
-		if ((TriggerActor1 != None) && Other.IsA('Bot')) {
-			if (TriggerActor1.IsA('Mover')) TriggerActor1.Bump(Other);
-			TriggerActor1.Trigger(Self, Pawn(Other));
+	local Actor A;
+
+  if (bVisited || !bEnabled) return;
+
+	if ((Other.IsA('PlayerPawn') || Other.IsA('Bot'))) {
+		if (TriggerEvent1 != '' || TriggerEvent2 != '' || TriggerEvent3 != '' || TriggerEvent4 != '') {
+			foreach AllActors(class 'Actor', A) {
+				// triggering on 'Event' is technically incorrect, but this is for backward compatibility
+				if (TriggerEvent1 != '' && A.Event == TriggerEvent1) {
+					if (A.IsA('Mover')) A.Bump(Other);
+					A.Trigger(Self, Pawn(Other));
+				} else if (TriggerEvent2 != '' && A.Event == TriggerEvent2) {
+					if (A.IsA('Mover')) A.Bump(Other);
+					A.Trigger(Self, Pawn(Other));
+				} else if (TriggerEvent3 != '' && A.Event == TriggerEvent3) {
+					if (A.IsA('Mover')) A.Bump(Other);
+					A.Trigger(Self, Pawn(Other));
+				} else if (TriggerEvent4 != '' && A.Event == TriggerEvent4) {
+					if (A.IsA('Mover')) A.Bump(Other);
+					A.Trigger(Self, Pawn(Other));
+				}
+			}
 		}
-		if ((TriggerActor2 != None) && Other.IsA('Bot')) {
-			if (TriggerActor2.IsA('Mover')) TriggerActor2.Bump(Other);
-			TriggerActor2.Trigger(Self, Pawn(Other));
-		}
-		if ((TriggerActor3 != None) && Other.IsA('Bot')) {
-			if (TriggerActor3.IsA('Mover')) TriggerActor3.Bump(Other);
-			TriggerActor3.Trigger(Self, Pawn(Other));
-		}
-		if ((TriggerActor4 != None) && Other.IsA('Bot')) {
-			if (TriggerActor4.IsA('Mover')) TriggerActor4.Bump(Other);
-			TriggerActor4.Trigger(Self, Pawn(Other));
-		}
+
 		if ((TriggerItem != None) && Other.IsA('Bot')) {
 			if (TriggerItem.IsA('Mover')) TriggerItem.Bump(Other);
 			TriggerItem.Trigger(Self, Pawn(Other));
 		}
+
 		MonsterHunt(Level.Game).LastPoint = Position;
 		bVisited = True;
-		bEnabled = False;
 	}
 }
 

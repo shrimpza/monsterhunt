@@ -580,52 +580,72 @@ function bool FindSpecialAttractionFor(Bot aBot) {
 	}
 
 	if (aBot.LastAttractCheck == Level.TimeSeconds) return false;
+	aBot.LastAttractCheck = Level.TimeSeconds;
 
 	foreach AllActors(class'ScriptedPawn', S) {
 		if (S.isA('Titan') && S.GetStateName() == 'Sitting') continue;
 		if (S.IsA('Nali') || S.IsA('Cow')) {
 			if (!MaybeEvilFriendlyPawn(S, aBot)) continue;
 		}
+
 		if (S.CanSee(aBot)) {
-			if (((S.Enemy == None) || ((S.Enemy.IsA('PlayerPawn')) && (FRand() >= 0.5))) && (S.Health >= 1)) {
+			if (((S.Enemy == None) || ((S.Enemy.IsA('PlayerPawn')) && (FRand() > 0.7))) && (S.Health >= 1)) {
 				S.Hated = aBot;
 				S.Enemy = aBot;
-				aBot.Enemy = S;
 				S.GotoState('Attacking');
-				if (FRand() >= 0.35) {
-					aBot.GotoState('Attacking');
-					return false;
-				}
 			}
-		} else if (aBot.CanSee(S) && (FRand() >= 0.35) && (S.Health >= 1)) {
-			aBot.Enemy = S;
-			aBot.GotoState('Attacking');
-			S.Enemy = aBot;
-			S.GotoState('Attacking');
-			return false;
+		}
+
+		if (aBot.CanSee(S) && (FRand() > 0.25)) {
+			// a bot will not move towards an objective as long as enemies are around
+			aBot.MoveTarget = None;
+		  if ((aBot.Enemy == None) && (S.Health >= 1)) {
+				aBot.Enemy = S;
+				aBot.GotoState('Attacking');
+			}
+			SetAttractionStateFor(aBot);
+			return true;
 		}
 	}
-
-	aBot.LastAttractCheck = Level.TimeSeconds;
 
 	return FindNextWaypoint(aBot);
 }
 
 function bool FindNextWaypoint(Bot aBot) {
-	local int i;
+	local int i, lastVisited;
 
 	if ((aBot.Orders == 'Attack') || ((aBot.Orders == 'Freelance') && (FRand() > 0.2))) {
 		for (i = 0; i < NumPoints; i++) {
-				if (!waypoints[i].bVisited) {
-					if (aBot.ActorReachable(waypoints[i])) aBot.MoveTarget = waypoints[i];
-					else aBot.MoveTarget = aBot.FindPathToward(waypoints[i]);
+			if (waypoints[i].bVisited) lastVisited = i;
 
-					// there's no path to the next waypoint in line, so try to go to the next one
-					if (aBot.MoveTarget == None) continue;
+			if (!waypoints[i].bVisited && waypoints[i].bEnabled) {
+				if (aBot.ActorReachable(waypoints[i])) aBot.MoveTarget = waypoints[i];
+				else aBot.MoveTarget = aBot.FindPathToward(waypoints[i]);
 
-					SetAttractionStateFor(aBot);
-					return true;
-				}
+				// there's no path to the next waypoint in line, so try to go to the next one
+				if (aBot.MoveTarget == None) continue;
+
+				SetAttractionStateFor(aBot);
+				return true;
+			}
+
+			// the next waypoint in line is not enabled, so stop here
+			if (i > lastVisited && !waypoints[i].bEnabled) {
+				break;
+			}
+		}
+
+		// we have to attack this thing now
+		if (waypoints[lastVisited].ArrivalTarget != None) {
+			if (!aBot.CanSee(waypoints[lastVisited].ArrivalTarget)) {
+				if (aBot.ActorReachable(waypoints[lastVisited].ArrivalTarget)) aBot.MoveTarget = waypoints[lastVisited].ArrivalTarget;
+				else aBot.MoveTarget = aBot.FindPathToward(waypoints[lastVisited].ArrivalTarget);
+			} else {
+				aBot.SetEnemy(waypoints[lastVisited].ArrivalTarget);
+				aBot.SetOrders('Attack', None, false);
+			}
+			SetAttractionStateFor(aBot);
+			return true;
 		}
 
 		// there are no waypoints left, or we can't reach any, so head for an end if possible
