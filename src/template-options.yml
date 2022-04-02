@@ -5,7 +5,7 @@ mutators:
       description: Replaces all weapons with the Chainsaw!
     est:
       name: Solo Motosierras
-      description: Reemplaza a todas las herramientas con la Motosierra!
+      description: Reemplaza todas las armas con la Motosierra!
 
 gametypes:
   - class: MonsterHunt
@@ -17,12 +17,12 @@ gametypes:
     en:
       name: Monster Arena
     est:
-      name: Estadio de Monstruos
+      name: Cacería de Monstruos (Estadio)
   - class: MonsterHuntDefence
     en:
       name: Monster Defence
     est:
-      name: Defensa de Monstruos
+      name: Cacería de Monstruos (Defensa)
 
 maplists:
   - class: MonsterDefaultMaps
