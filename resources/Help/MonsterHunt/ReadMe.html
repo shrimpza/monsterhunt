@@ -288,6 +288,12 @@
 			</ul>
 		</li>
 
+		<li>Localisation:
+			<ul>
+				<li>Neon_Knight (Spanish)</li>
+			</ul>
+		</li>
+
 		<li>Special thanks:
 			<ul>
 				<li>Valkyrie</li>
@@ -305,6 +311,30 @@
 
 <section>
 	<h2 id="history">Release History</h2>
+
+	<h3>Release 16 (610)</h3>
+	<ul>
+		<li>Updated spanish definitions (thanks Neon_Knight)
+		<li>New Mutator - Monster Mess; monster corpses and giblets leave blood splats
+		<li>Unreal ammo and pickup messages appear as UT HUD messages rather than in the chat log
+		<li>Fix positioning of MH HUD icon when growing or shrinking HUD
+	</ul>
+
+	<h3>Release 15 (609)</h3>
+	<ul>
+		<li>Properly support `bEnabled` on `MonsterWaypoint`, to allow for more complex AI navigation orchestration<br/>
+				waypoint can now be disabled at start, and then triggered to enable (default is enabled)
+		<li>Adjust bot behaviour to try to clear monsters in an area before proceeding to next waypoint
+		<li>Localisation templates and Spanish Localisation (thanks Neon_Knight)
+		<li>Update build scripts/templates to support localised template variables
+		<li>Optimise `MonsterWaypoint` startup, only do `AllActors` traversal if/when touched and only if events configured
+		<li>Add icons on the scoreboard:<br/>
+				a skull for players with no remaining lives<br/>
+				a star "award" at the end for players with no deaths for the whole round
+		<li>Re-worked and improved MH-Revenge]\[ map, included as MH-Revenge]\[-SE
+		<li>Add option to hide objectives on HUD. Can be Set in `User.ini`:<br/>
+				under `[MonsterHunt.MonsterHUD]` section, set `bHideObjectives=true` (default is false)
+	</ul>
 
 	<h3>Release 14 (608)</h3>
 	<ul>

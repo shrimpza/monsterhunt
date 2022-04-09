@@ -149,8 +149,11 @@ simulated function DrawStatus(Canvas Canvas) {
 
 	Canvas.DrawColor = HUDColor;
 	if (bHideStatus && bHideAllWeapons) {
-		X = 0.5 * Canvas.ClipX - 128 * Scale;
-		Y = Canvas.ClipY - 64 * Scale;
+		X = Canvas.ClipX - 140 * Scale;
+		Y = 0;
+	} else if (bHideStatus) {
+		X = Canvas.ClipX - 140 * Scale;
+		Y = 128 * Scale;
 	} else {
 		X = Canvas.ClipX - 128 * Scale * StatusScale - 140 * Scale;
 		Y = 128 * Scale;
@@ -175,17 +178,20 @@ simulated function Message(PlayerReplicationInfo PRI, coerce string Msg, name Ms
 			MessageClass = class'CriticalStringPlus';
 			LocalizedMessage(MessageClass, 0, None, None, None, Msg);
 			return;
-
 		case 'MonsterCriticalEvent':
 			MessageClass = class'MonsterCriticalString';
 			LocalizedMessage(MessageClass, 0, None, None, None, Msg);
 			return;
-
 		case 'DeathMessage':
 			MessageClass = class'RedSayMessagePlus';
 			break;
 		case 'Pickup':
+			// makes Unreal pickup messages appear on the HUD like UT ones
+			// this is necessary since Unreal health pickups do not respect their `PickupMessageClass`
+			MessageClass = class'PickupMessagePlus';
 			PickupTime = Level.TimeSeconds;
+			LocalizedMessage(MessageClass, 0, None, None, None, Msg);
+			return;
 		default:
 			MessageClass = class'StringMessagePlus';
 			break;

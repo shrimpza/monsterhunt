@@ -1,5 +1,11 @@
 # Changelog
 
+## 609 to 610:
+ - Updated spanish definitions (thanks Neon_Knight)
+ - New Mutator - Monster Mess; monster corpses and giblets leave blood splats
+ - Unreal ammo and pickup messages appear as UT HUD messages rather than in the chat log
+ - Fix positioning of MH HUD icon when growing or shrinking HUD 
+
 ## 608 to 609:
  - Properly support `bEnabled` on `MonsterWaypoint`, to allow for more complex AI navigation orchestration
    - waypoint can now be disabled at start, and then triggered to enable (default is enabled)
