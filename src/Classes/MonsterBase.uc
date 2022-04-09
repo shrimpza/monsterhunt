@@ -120,6 +120,10 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant) {
 
 	if (Other.IsA('Pickup')) {
 		Pickup(Other).bAutoActivate = true;
+		// makes Unreal pickup messages appear on the HUD like UT ones
+		if (Pickup(Other).PickupMessageClass == None) {
+			Pickup(Other).PickupMessageClass = Class'PickupMessagePlus';
+		}
 		if (Other.IsA('TournamentPickup')) return true;
 	}
 

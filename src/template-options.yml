@@ -6,6 +6,13 @@ mutators:
     est:
       name: Solo Motosierras
       description: Reemplaza todas las armas con la Motosierra!
+  - class: MonsterMess
+    en:
+      name: Monster Mess
+      description: Monsters make a bloody mess!
+    est:
+      name: Monster Mess
+      description: Monsters make a bloody mess!
 
 gametypes:
   - class: MonsterHunt
@@ -17,12 +24,12 @@ gametypes:
     en:
       name: Monster Arena
     est:
-      name: Cacería de Monstruos (Estadio)
+      name: Cacerï¿½a de Monstruos (Estadio)
   - class: MonsterHuntDefence
     en:
       name: Monster Defence
     est:
-      name: Cacería de Monstruos (Defensa)
+      name: Cacerï¿½a de Monstruos (Defensa)
 
 maplists:
   - class: MonsterDefaultMaps
