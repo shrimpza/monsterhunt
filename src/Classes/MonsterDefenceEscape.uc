@@ -26,7 +26,11 @@ function Touch(Actor Other) {
 }
 
 simulated function PostBeginPlay() {
+	local MonsterDefenceFlare scaler;
 	LoopAnim('Teleport', 2.0, 0.0);
+	Spawn(class'{{package}}.MonsterDefenceFlare',,, Location);
+	scaler = Spawn(class'{{package}}.MonsterDefenceFlare',,, Location);
+	if (scaler != None) scaler.SetScaleMode();
 }
 
 function SpawnEffect(Pawn other) {

@@ -1,5 +1,18 @@
 # Changelog
 
+## 610 to 611:
+ - Moved logic for several actions into separate "extension" classes:
+   - `MonsterHuntScoreExtension`: Allows implementation of custom scoring for monster kills and player deaths  
+   - `MonsterHuntBotExtension`: Moves all the bot orders and other checks out of game code, and allows custom behaviour  
+   - `MonsterHuntMonsterExtension`: Allows implementation of custom monster skill settings and behaviours
+   - These are all configurable on the MonsterHunt gametypes
+ - Support for green blood splats in the Monster Mess mutator
+ - Fix missing Monster Mess splats in multiplayer clients
+ - Improve visual effects of Defence escape portal
+ - Reduce occurrences of Enemy AccessNone logs in Defence
+ - Fix overlapping lives/ping stats on multiplayer scoreboard
+ - Show monster difficulty on multiplayer scoreboard
+
 ## 609 to 610:
  - Updated spanish definitions (thanks Neon_Knight)
  - New Mutator - Monster Mess; monster corpses and giblets leave blood splats

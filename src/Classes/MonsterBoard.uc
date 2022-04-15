@@ -72,7 +72,7 @@ function DrawTrailer(canvas Canvas) {
 	PlayerOwner = PlayerPawn(Owner);
 	GRI = PlayerPawn(Owner).GameReplicationInfo;
 
-	if (Level.Game.IsA('MonsterHunt') && GRI.IsA('MonsterReplicationInfo')) {
+	if (GRI.IsA('MonsterReplicationInfo')) {
 		DifficultyQuote = class'MonsterHuntRules'.default.Skills[
 			class'MonsterHuntRules'.static.TranslateMonsterSkillIndex(MonsterReplicationInfo(GRI).MonsterSkill)
 		] @ MonsterDifficultyJoinString;
@@ -80,7 +80,7 @@ function DrawTrailer(canvas Canvas) {
 		DifficultyQuote = "";
 	}
 
-	if ((Level.NetMode == NM_Standalone) && Level.Game.IsA('MonsterHunt')) {
+	if ((Level.NetMode == NM_Standalone)) {
 		TitleQuote = GRI.GameName @ MapTitle @ MapTitleQuote $ Level.Title $ MapTitleQuote;
 		if (DeathMatchPlus(Level.Game).bNoviceMode) {
 			TitleQuote = class'ChallengeBotInfo'.default.Skills[Level.Game.Difficulty] @ TitleQuote;
@@ -210,21 +210,21 @@ function DrawNameAndPing(Canvas Canvas, PlayerReplicationInfo PRI, float XOffset
 		// Draw Time
 		Time = Max(1, (Level.TimeSeconds + PlayerOwner.PlayerReplicationInfo.StartTime - PRI.StartTime) / 60);
 		Canvas.TextSize(TimeString $ ": 999", XL3, YL3);
-		Canvas.SetPos(Canvas.ClipX * 0.75 + XL, YOffset);
+		Canvas.SetPos(Canvas.ClipX * 0.8 + XL, YOffset);
 		Canvas.DrawText(TimeString $ ":" @ Time, false);
 
 		// Draw FPH
 		Canvas.TextSize(FPHString $ ": 999", XL2, YL2);
-		Canvas.SetPos(Canvas.ClipX * 0.75 + XL, YOffset + 0.5 * YL);
+		Canvas.SetPos(Canvas.ClipX * 0.8 + XL, YOffset + 0.5 * YL);
 		Canvas.DrawText(FPHString $ ": " @ int(60 * PRI.Score / Time), false);
 
 		XL3 = FMax(XL3, XL2);
 		// Draw Ping
-		Canvas.SetPos(Canvas.ClipX * 0.75 + XL + XL3 + 16, YOffset);
+		Canvas.SetPos(Canvas.ClipX * 0.8 + XL + XL3 + 16, YOffset);
 		Canvas.DrawText(PingString $ ":" @ PRI.Ping, false);
 
 		// Draw Packetloss
-		Canvas.SetPos(Canvas.ClipX * 0.75 + XL + XL3 + 16, YOffset + 0.5 * YL);
+		Canvas.SetPos(Canvas.ClipX * 0.8 + XL + XL3 + 16, YOffset + 0.5 * YL);
 		Canvas.DrawText(LossString $ ":" @ PRI.PacketLoss $ "%", false);
 	}
 }

@@ -17,8 +17,8 @@ simulated function Landed(vector HitNormal) {
 
 	super.Landed(HitNormal);
 
-	if ((Level.NetMode != NM_DedicatedServer) && !Level.bDropDetail) {
-		if (!bGreenBlood)	{
+	if ((Level.NetMode != NM_DedicatedServer)) {
+		if (!Level.bDropDetail || (FRand() < 0.8)) {
 			splat = Spawn(class'MonsterMessSplat',,, Location, rotator(HitNormal));
 			if (splat != None) splat.rescale(Self);
 		}
@@ -31,14 +31,14 @@ simulated function HitWall(vector HitNormal, actor Wall) {
 	super.HitWall(HitNormal, Wall);
 
 	if ((Level.NetMode != NM_DedicatedServer)) {
-		if (!bGreenBlood && (!Level.bDropDetail || (FRand() < 0.75))) {
+		if (!Level.bDropDetail || (FRand() < 0.75)) {
 			splat = Spawn(class'MonsterMessSplat',,, Location, rotator(HitNormal));
 			if (splat != None) splat.rescale(Self);
 		}
 	}
 }
 
-function Tick(float delta) {
+simulated function Tick(float delta) {
 	// we're effectively polling here, until something sets the original chunk
 	// once set, we'll replace the original chunk, and destroy it, then the
 	// polling will stop
@@ -47,12 +47,13 @@ function Tick(float delta) {
 	if (orig.velocity != vect(0, 0, 0) || orig.CarcassClass != None) {
 		HijackChunk();
 		initialised = true;
+		Disable('Tick');
 	}
 }
 
 /*
-  Copies the properties of an existing chunk and simulates the calls made to
-  CreatureChunks by CreatureCarcass when chunked.
+	Copies the properties of an existing chunk and simulates the calls made to
+	CreatureChunks by CreatureCarcass when chunked.
 */
 function HijackChunk() {
 	// things the carcass sets

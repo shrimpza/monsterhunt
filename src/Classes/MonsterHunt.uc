@@ -25,25 +25,50 @@ var localized string HuntCompleteMessage;
 var int LivePpl;
 var int PlainPpl;
 
-var name DefaultBotOrders;
-
-var int LastPoint;
-var int NumPoints;
-var MonsterWaypoint waypoints[128];
-var MonsterEnd endPoints[8];
-var int NumEndPoints;
-
 var bool bGameStarted;
 
-function PostBeginPlay() {
-	LastPoint = 0;
+var config class<MonsterHuntScoreExtension> ScoreExtensionType;
+var config class<MonsterHuntBotExtension> BotExtensionType;
+var config class<MonsterHuntMonsterExtension> MonsterExtensionType;
+var MonsterHuntScoreExtension scoreExtension;
+var MonsterHuntBotExtension botExtension;
+var MonsterHuntMonsterExtension monsterExtension;
 
-	FindWaypoints();
+function PreBeginPlay() {
+	Super.PreBeginPlay();
 
-	// get initial monster count
-	CountMonsters();
+	// Spawn extensions
+	spawnExtensions();
+}
 
-	Super.PostBeginPlay();
+function spawnExtensions() {
+	scoreExtension = Spawn(ScoreExtensionType);
+	if (scoreExtension != None) {
+		log("Using scoreExtension " $ scoreExtension);
+		scoreExtension.game = Self;
+		scoreExtension.gameReplicationInfo = GameReplicationInfo;
+	}	else {
+		error("*** No score extension spawned, players will not score monster kills!!");
+	}
+
+	botExtension = Spawn(BotExtensionType);
+	if (botExtension != None) {
+		log("Using botExtension " $ botExtension);
+		botExtension.game = Self;
+		botExtension.gameReplicationInfo = GameReplicationInfo;
+	}	else {
+		error("*** No bot extension spawned, bots will be dumb!!");
+	}
+
+	monsterExtension = Spawn(MonsterExtensionType);
+	if (monsterExtension != None) {
+		log("Using monsterExtension " $ monsterExtension);
+		monsterExtension.game = Self;
+		monsterExtension.gameReplicationInfo = GameReplicationInfo;
+		monsterExtension.EvaluatePawns();
+	}	else {
+		error("*** No monster extension spawned, some monster behaviours might not work!!");
+	}
 }
 
 function InitGameReplicationInfo() {
@@ -66,35 +91,6 @@ function RegisterObjective(MonsterHuntObjective objective) {
 	if (mri != None) mri.RegisterObjective(objective);
 }
 
-function FindWaypoints() {
-	local int i, j;
-	local MonsterWaypoint WP;
-	local MonsterEnd EP;
-
-	// we're storing these in local arrays, since they don't change during gameplay, we can save some AllActors iterations later
-	foreach AllActors(class'MonsterWaypoint', WP) {
-		if (NumPoints > 127) break;
-		waypoints[NumPoints] = WP;
-		NumPoints ++;
-	}
-	foreach AllActors(class'MonsterEnd', EP) {
-		if (NumEndPoints > 7) break;
-		endPoints[NumEndPoints] = EP;
-		NumEndPoints ++;
-	}
-
-	// sort waypoints by position
-	for (i = 0; i < NumPoints - 1; i++) {
-		for (j = i + 1; j < NumPoints - i - 1; j++) {
-			if (waypoints[i].Position > waypoints[j].Position) {
-				WP = waypoints[j];
-				waypoints[j] = waypoints[i];
-				waypoints[j+1] = WP;
-			}
-		}
-	}
-}
-
 function bool IsRelevant(Actor Other) {
 	local ScriptedPawn pawn;
 
@@ -114,38 +110,8 @@ function bool IsRelevant(Actor Other) {
 }
 
 function SetPawnDifficulty(int MonsterSkill, ScriptedPawn S) {
-	local float DiffScale;
-
 	if (S == None) return;
-
-	DiffScale = (80 + (MonsterSkill * 10)) / 100;
-
-	S.Health = (S.Health * DiffScale);
-	S.SightRadius = (S.SightRadius * DiffScale);
-	S.Aggressiveness = (S.Aggressiveness * DiffScale);
-	S.ReFireRate = (S.ReFireRate * DiffScale);
-	S.CombatStyle = (S.CombatStyle * DiffScale);
-	S.ProjectileSpeed = (S.ProjectileSpeed * DiffScale);
-	S.GroundSpeed = (S.GroundSpeed * DiffScale);
-	S.AirSpeed = (S.AirSpeed * DiffScale);
-	S.WaterSpeed = (S.WaterSpeed * DiffScale);
-
-	if (S.IsA('Brute')) Brute(S).WhipDamage = (Brute(S).WhipDamage * DiffScale);
-	if (S.IsA('Gasbag')) Gasbag(S).PunchDamage = (Gasbag(S).PunchDamage * DiffScale);
-	if (S.IsA('Titan')) Titan(S).PunchDamage = (Titan(S).PunchDamage * DiffScale);
-	if (S.IsA('Krall')) Krall(S).StrikeDamage = (Krall(S).StrikeDamage * DiffScale);
-	if (S.IsA('Manta')) Manta(S).StingDamage = (Manta(S).StingDamage * DiffScale);
-	if (S.IsA('Mercenary')) Mercenary(S).PunchDamage = (Mercenary(S).PunchDamage * DiffScale);
-	if (S.IsA('Skaarj')) Skaarj(S).ClawDamage = (Skaarj(S).ClawDamage * DiffScale);
-	if (S.IsA('Pupae')) Pupae(S).BiteDamage = (Pupae(S).BiteDamage * DiffScale);
-	if (S.IsA('Queen')) Queen(S).ClawDamage = (Queen(S).ClawDamage * DiffScale);
-	if (S.IsA('Slith')) Slith(S).ClawDamage = (Slith(S).ClawDamage * DiffScale);
-	if (S.IsA('Warlord')) Warlord(S).StrikeDamage = (Warlord(S).StrikeDamage * DiffScale);
-
-	if (!S.IsA('Nali') && !S.IsA('Cow')) {
-		if (bGameStarted) S.AttitudeToPlayer = ATTITUDE_Hate;
-		else S.AttitudeToPlayer = ATTITUDE_Ignore;
-	}
+	if (MonsterExtensionType != None)	MonsterExtensionType.static.setPawnDifficulty(MonsterSkill, S, bGameStarted);
 }
 
 function String FancyName(Pawn Other, optional Bool upperArticle) {
@@ -435,26 +401,22 @@ function CheckEndGame() {
 	}
 }
 
-function Killed(pawn killer, pawn Other, name damageType) {
-	Super.Killed(Killer, Other, damageType);
+function Killed(Pawn killer, Pawn other, name damageType) {
+	Super.Killed(killer, other, damageType);
 
-	if (killer == None || Other == None) return;
+	if (killer == None || other == None) return;
 
-	if (Other.PlayerReplicationInfo == None) return;
+	if (other.PlayerReplicationInfo == None) return;
 
-	if (Killer == Other) Other.PlayerReplicationInfo.Score -= 4;
+	if (scoreExtension != None) other.PlayerReplicationInfo.Score += scoreExtension.PlayerKilled(killer, other);
 
-	if (Killer.IsA('ScriptedPawn') && Other.bIsPlayer && !MonsterReplicationInfo(GameReplicationInfo).bUseLives) {
-		Other.PlayerReplicationInfo.Score -= 5;
-	}
-
-	if (MonsterReplicationInfo(GameReplicationInfo).bUseLives && Other.bIsPlayer) {
-		Other.PlayerReplicationInfo.Deaths -= 1;
+	if (MonsterReplicationInfo(GameReplicationInfo).bUseLives && other.bIsPlayer) {
+		other.PlayerReplicationInfo.Deaths -= 1;
 		CheckEndGame();
 	}
 }
 
-function ScoreKill(pawn Killer, pawn Other) {
+function ScoreKill(Pawn Killer, Pawn Other) {
 	local int Score;
 
 	if (Killer == None) return;
@@ -477,24 +439,9 @@ function ScoreKill(pawn Killer, pawn Other) {
 		}
 	}
 
-	// =========================================================================
-	// Score depending on which monster type the player kills
 	if (Killer.bIsPlayer && Killer.PlayerReplicationInfo != None) {
-		// by default, score 1 for all kills
-		Score = 1;
-
-		if (Other.IsA('Titan') || Other.IsA('Queen') || Other.IsA('WarLord')) Score = 5;
-		else if (Other.IsA('GiantGasBag') || Other.IsA('GiantManta') || Other.IsA('SkaarjTrooper')) Score = 4;
-		else if (Other.IsA('SkaarjWarrior') || Other.IsA('MercenaryElite') || Other.IsA('Brute') || Other.IsA('GiantManta')) Score = 3;
-		else if (Other.IsA('Krall') || Other.IsA('Slith') || Other.IsA('GasBag')) Score = 2;
-		// Lose points for killing innocent creatures. Shame ;-)
-		else if (Other.IsA('Nali') || Other.IsA('Cow')) {
-			if (!MaybeEvilFriendlyPawn(ScriptedPawn(Other), Killer)) Score = -5;
-		}
-
-		// Get 10 extra points for killing the boss!!
-		if ((ScriptedPawn(Other) != None && ScriptedPawn(Other).bIsBoss)) Score = 10;
-
+		if (scoreExtension != None) Score = scoreExtension.ScoreKill(killer, other);
+		else Score = 1;
 		Killer.PlayerReplicationInfo.Score += Score;
 	}
 
@@ -564,107 +511,15 @@ function StartMatch() {
 
 function Timer() {
 	CountHunters();
-	CountMonsters();
+
+	if (monsterExtension != None) monsterExtension.EvaluatePawns();
 
 	Super.Timer();
 }
 
 function bool FindSpecialAttractionFor(Bot aBot) {
-	local ScriptedPawn S;
-
-	if (aBot == None) return false;
-
-	if (aBot.Health < 1) {
-		aBot.GotoState('GameEnded');
-		return false;
-	}
-
-	if (aBot.LastAttractCheck == Level.TimeSeconds) return false;
-	aBot.LastAttractCheck = Level.TimeSeconds;
-
-	foreach AllActors(class'ScriptedPawn', S) {
-		if (S.isA('Titan') && S.GetStateName() == 'Sitting') continue;
-		if (S.IsA('Nali') || S.IsA('Cow')) {
-			if (!MaybeEvilFriendlyPawn(S, aBot)) continue;
-		}
-
-		if (S.CanSee(aBot)) {
-			if (((S.Enemy == None) || ((S.Enemy.IsA('PlayerPawn')) && (FRand() > 0.7))) && (S.Health >= 1)) {
-				S.Hated = aBot;
-				S.Enemy = aBot;
-				S.GotoState('Attacking');
-			}
-		}
-
-		if (aBot.CanSee(S) && (FRand() > 0.25)) {
-			// a bot will not move towards an objective as long as enemies are around
-			aBot.MoveTarget = None;
-		  if ((aBot.Enemy == None) && (S.Health >= 1)) {
-				aBot.Enemy = S;
-				aBot.GotoState('Attacking');
-			}
-			SetAttractionStateFor(aBot);
-			return true;
-		}
-	}
-
-	return FindNextWaypoint(aBot);
-}
-
-function bool FindNextWaypoint(Bot aBot) {
-	local int i, lastVisited;
-
-	if ((aBot.Orders == 'Attack') || ((aBot.Orders == 'Freelance') && (FRand() > 0.2))) {
-		for (i = 0; i < NumPoints; i++) {
-			if (waypoints[i].bVisited) lastVisited = i;
-
-			if (!waypoints[i].bVisited && waypoints[i].bEnabled) {
-				if (aBot.ActorReachable(waypoints[i])) aBot.MoveTarget = waypoints[i];
-				else aBot.MoveTarget = aBot.FindPathToward(waypoints[i]);
-
-				// there's no path to the next waypoint in line, so try to go to the next one
-				if (aBot.MoveTarget == None) continue;
-
-				SetAttractionStateFor(aBot);
-				return true;
-			}
-
-			// the next waypoint in line is not enabled, so stop here
-			if (i > lastVisited && !waypoints[i].bEnabled) {
-				break;
-			}
-		}
-
-		// we have to attack this thing now
-		if (waypoints[lastVisited].ArrivalTarget != None) {
-			if (!aBot.CanSee(waypoints[lastVisited].ArrivalTarget)) {
-				if (aBot.ActorReachable(waypoints[lastVisited].ArrivalTarget)) aBot.MoveTarget = waypoints[lastVisited].ArrivalTarget;
-				else aBot.MoveTarget = aBot.FindPathToward(waypoints[lastVisited].ArrivalTarget);
-			} else {
-				aBot.SetEnemy(waypoints[lastVisited].ArrivalTarget);
-				aBot.SetOrders('Attack', None, false);
-			}
-			SetAttractionStateFor(aBot);
-			return true;
-		}
-
-		// there are no waypoints left, or we can't reach any, so head for an end if possible
-		if (i >= NumPoints) {
-			for (i = 0; i < NumEndPoints; i++) {
-				if (aBot.ActorReachable(endPoints[i])) aBot.MoveTarget = endPoints[i];
-				else aBot.MoveTarget = aBot.FindPathToward(endPoints[i]);
-
-				// we can't reach this endpoint, try the next one
-				if (aBot.MoveTarget == None) continue;
-
-				SetAttractionStateFor(aBot);
-				return true;
-			}
-		}
-	}
-
-	// no waypoints available, no change in bot orders
-	return false;
+	if (botExtension != None) return botExtension.FindSpecialAttractionFor(aBot);
+	else return Super.FindSpecialAttractionFor(aBot);
 }
 
 function CountHunters() {
@@ -679,21 +534,6 @@ function CountHunters() {
 	}
 
 	MonsterReplicationInfo(GameReplicationInfo).Hunters = playerCount;
-}
-
-function CountMonsters() {
-	local ScriptedPawn S;
-	local int monsterCount;
-
-	monsterCount = 0;
-	foreach AllActors(class'ScriptedPawn', S) {
-		if (S.Health >= 1) {
-			if ((S.IsA('Nali') || S.IsA('Cow')) && !MaybeEvilFriendlyPawn(S)) continue;
-			monsterCount ++;
-		}
-	}
-
-	MonsterReplicationInfo(GameReplicationInfo).Monsters = monsterCount;
 }
 
 /*
@@ -823,49 +663,9 @@ function NavigationPoint FindPlayerStart(Pawn Player, optional byte InTeam, opti
  * Function interned here from TeamGamePlus, to avoid Accessed None errors on
  * accessing P.NextPawn.PlayerReplicationInfo.
  */
-function SetBotOrders(Bot NewBot) {
-	local Pawn P, L;
-	local int num, total;
-
-	// only follow players, if there are any
-	if ((NumSupportingPlayer == 0)
-			|| (NumSupportingPlayer < Teams[NewBot.PlayerReplicationInfo.Team].Size / 2 - 1)) {
-		for (P = Level.PawnList; P != None; P = P.NextPawn) {
-			if (P.IsA('PlayerPawn') && (P.PlayerReplicationInfo.Team == NewBot.PlayerReplicationInfo.Team)
-				&& !P.IsA('Spectator')) {
-				num++;
-				if ((L == None) || (FRand() < 1.0 / float(num))) L = P;
-			}
-		}
-
-		if (L != None) {
-			NumSupportingPlayer++;
-			NewBot.SetOrders('Follow', L, true);
-			return;
-		}
-	}
-
-	num = 0;
-
-	for (P = Level.PawnList; P != None; P = P.NextPawn) {
-		if (!P.IsA('ScriptedPawn')
-				&& P.bIsPlayer
-				&& P.PlayerReplicationInfo != None
-				&& (P.PlayerReplicationInfo.Team == NewBot.PlayerReplicationInfo.Team)) {
-			total++;
-			if ((P != NewBot) && P.IsA('Bot') && (Bot(P).Orders == DefaultBotOrders)) {
-				num++;
-				if ((L == None) || (FRand() < 1 / float(num))) L = P;
-			}
-		}
-	}
-
-	if ((L != None) && (FRand() < float(num) / float(total))) {
-		NewBot.SetOrders('Follow', L, true);
-		return;
-	}
-
-	NewBot.SetOrders(DefaultBotOrders, None, true);
+function SetBotOrders(Bot newBot) {
+	if (botExtension != None) botExtension.SetBotOrders(newBot);
+	else Super.SetBotOrders(newBot);
 }
 
 /*
@@ -876,40 +676,23 @@ function SetBotOrders(Bot NewBot) {
 		3 = return ATTITUDE_Friendly;
 */
 function byte AssessBotAttitude(Bot aBot, Pawn Other) {
-	if (Other.isA('Titan') && Other.GetStateName() == 'Sitting') return 2; // ATTITUDE_Ignore
-	if (!aBot.LineOfSightTo(Other))	return 2; // ATTITUDE_Ignore
-	if (Other.IsA('Nali') || Other.IsA('Cow')) {
-		if (MaybeEvilFriendlyPawn(ScriptedPawn(Other), aBot)) return 1; // ATTITUDE_Hate
-		else return 3; // ATTITUDE_Friendly
+	local byte newAttitude;
+
+	if (botExtension != None) {
+		newAttitude =   botExtension.AssessBotAttitude(aBot, Other);
+		if (newAttitude < 255) return newAttitude;
 	}
-	if (Other.bIsPlayer && Other.PlayerReplicationInfo != None && Other.PlayerReplicationInfo.Team == aBot.PlayerReplicationInfo.Team) {
-		return 3; // ATTITUDE_Friendly
-	}
-	if (Other.IsA('TeamCannon')) {
-		if (TeamCannon(Other).SameTeamAs(0)) return 3; // ATTITUDE_Friendly
-		if (Other.GetStateName() != 'ActiveCannon') return 2; // ATTITUDE_Ignore
-	}
-	if (!(Other.bIsPlayer && Other.PlayerReplicationInfo != None) && Other.CollisionHeight < 75) return 1; // ATTITUDE_Hate
-	if (!(Other.bIsPlayer && Other.PlayerReplicationInfo != None) && Other.CollisionHeight >= 75) return 0; // ATTITUDE_Fear
 
 	return super(DeathMatchPlus).AssessBotAttitude(aBot, Other);
 }
 
 function bool MaybeEvilFriendlyPawn(ScriptedPawn Pawn, optional Pawn Other) {
-	switch (Pawn.Default.AttitudeToPlayer) {
-		case ATTITUDE_Hate:
-		case ATTITUDE_Frenzy:
-			return true;
-		default:
-		  if (Other != None) {
-				switch (Pawn.AttitudeToCreature(Other)) {
-					case ATTITUDE_Hate:
-					case ATTITUDE_Frenzy:
-						return true;
-				}
-			}
-	}
-	return false;
+	if (monsterExtension != None) return monsterExtension.MaybeEvilFriendlyPawn(Pawn, Other);
+	else return false;
+}
+
+function SetLastPoint(int LastPointPosition) {
+	if (botExtension != None) botExtension.LastPoint = LastPointPosition;
 }
 
 defaultproperties {
@@ -955,5 +738,8 @@ defaultproperties {
 	MutatorClass=Class'{{package}}.MonsterBase'
 	GameReplicationInfoClass=Class'{{package}}.MonsterReplicationInfo'
 	bLocalLog=True
-	DefaultBotOrders='Attack'
+
+	ScoreExtensionType=Class'{{package}}.MonsterHuntScoreExtension'
+	BotExtensionType=Class'{{package}}.MonsterHuntBotExtension'
+	MonsterExtensionType=Class'{{package}}.MonsterHuntMonsterExtension'
 }

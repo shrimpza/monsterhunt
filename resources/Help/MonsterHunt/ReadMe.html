@@ -268,7 +268,7 @@
 	<ul>
 		<li>Programming, graphics, website &amp; help files:
 			<ul>
-				<li>Kenneth "Shrimp" Watson</li>
+				<li><a href="https://shrimpworks.za.net/">Kenneth "Shrimp" Watson</a></li>
 			</ul>
 		</li>
 
@@ -311,6 +311,21 @@
 
 <section>
 	<h2 id="history">Release History</h2>
+
+	<h3>Release 17 (611)</h3>
+	<ul>
+		<li>Moved logic for several actions into separate "extension" classes:<br/>
+		 - `MonsterHuntScoreExtension`: Allows implementation of custom scoring for monster kills and player deaths<br/>
+		 - `MonsterHuntBotExtension`: Moves all the bot orders and other checks out of game code, and allows custom behaviour<br/>
+		 - `MonsterHuntMonsterExtension`: Allows implementation of custom monster skill settings and behaviours<br/>
+		 - These are all configurable on the MonsterHunt gametypes
+		<li>Support for green blood splats in the Monster Mess mutator
+		<li>Fix missing Monster Mess splats in multiplayer clients
+		<li>Improve visual effects of Defence escape portal
+		<li>Reduce occurrences of Enemy AccessNone logs in Defence
+		<li>Fix overlapping lives/ping stats on multiplayer scoreboard
+		<li>Show monster difficulty on multiplayer scoreboard
+	</ul>
 
 	<h3>Release 16 (610)</h3>
 	<ul>

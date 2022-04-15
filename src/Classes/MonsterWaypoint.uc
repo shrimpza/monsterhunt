@@ -55,7 +55,7 @@ function Touch(actor Other) {
 			TriggerItem.Trigger(Self, Pawn(Other));
 		}
 
-		MonsterHunt(Level.Game).LastPoint = Position;
+		MonsterHunt(Level.Game).SetLastPoint(Position);
 		bVisited = True;
 	}
 }
