@@ -7,8 +7,8 @@ SCRIPTS_DIR=$(dirname $(realpath $0))
 
 export name="Monster Hunt"
 export package=MonsterHunt
-export build=611
-export version=611
+export build=612
+export version=612
 export packagefull=$package
 export packagedist=$package$version
 export debug=1

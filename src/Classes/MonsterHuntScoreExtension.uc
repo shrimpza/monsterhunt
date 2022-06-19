@@ -53,11 +53,11 @@ function int ScoreKill(Pawn killer, Pawn other) {
 }
 
 function int PlayerKilled(Pawn killer, Pawn other) {
-	// suicide
-	if (Killer == Other) return -4;
+	// suicide, or death by traps
+	if (killer == None || killer == Other) return -4;
 
 	// player was killed by a monster
-	if (Killer.IsA('ScriptedPawn') && Other.bIsPlayer && !MonsterReplicationInfo(GameReplicationInfo).bUseLives) {
+	if (killer.IsA('ScriptedPawn') && Other.bIsPlayer && !MonsterReplicationInfo(GameReplicationInfo).bUseLives) {
 		return -5;
 	}
 
