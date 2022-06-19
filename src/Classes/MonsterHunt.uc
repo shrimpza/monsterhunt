@@ -404,13 +404,17 @@ function CheckEndGame() {
 function Killed(Pawn killer, Pawn other, name damageType) {
 	Super.Killed(killer, other, damageType);
 
-	if (killer == None || other == None) return;
+	if (other == None) return;
 
 	if (other.PlayerReplicationInfo == None) return;
 
 	if (scoreExtension != None) other.PlayerReplicationInfo.Score += scoreExtension.PlayerKilled(killer, other);
 
 	if (MonsterReplicationInfo(GameReplicationInfo).bUseLives && other.bIsPlayer) {
+		// if there was no killer (trap death), super increases the deaths count, while we're decreasing it here.
+		// avoiding introduction of a new PRI value for life countdown, since some things elsewhere may now rely on it.
+		// so we need to decrease it by two, as a giant hack :(
+		if (killer == None) other.PlayerReplicationInfo.Deaths -= 1;
 		other.PlayerReplicationInfo.Deaths -= 1;
 		CheckEndGame();
 	}

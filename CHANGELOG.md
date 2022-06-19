@@ -1,5 +1,9 @@
 # Changelog
 
+## 611 to 612:
+ - Deaths via traps reduce the life count, rather than increasing it
+ - Performance optimisations for monster shadows
+
 ## 610 to 611:
  - Moved logic for several actions into separate "extension" classes:
    - `MonsterHuntScoreExtension`: Allows implementation of custom scoring for monster kills and player deaths  
