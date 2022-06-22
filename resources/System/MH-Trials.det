@@ -1,0 +1,36 @@
+[LevelInfo0]
+; EN: Title="The Trials"
+Title="Die Prüfungen"
+; EN: IdealPlayerCount="Up to 10"
+IdealPlayerCount="Bis zu 10"
+
+[MonsterHuntObjective2]
+; EN: Message="Activate the outdoor beam"
+Message="Aktiviere den Außenstrahl"
+
+[LevelSummary]
+; EN: Title="The Trials"
+Title="Die Prüfungen"
+; EN: IdealPlayerCount="Up to 10"
+IdealPlayerCount="Bis zu 10"
+
+[MonsterHuntObjective5]
+; EN: Message="Escape!"
+Message="Flucht!"
+
+[MonsterHuntObjective1]
+; EN: Message="Open the final gateway"
+Message="Öffne das letzte Tor"
+
+[MonsterHuntObjective4]
+; EN: Message="Activate the temple beam"
+Message="Aktiviere the Tempelstrahl"
+
+[MonsterHuntObjective0]
+; EN: Message="Activate the underwater beam"
+Message="Aktiviere den Unterwasserstrahl"
+
+[MonsterHuntObjective3]
+; EN: Message="Activate the caves beam"
+Message="Aktiviere den Höhlenstrahl"
+

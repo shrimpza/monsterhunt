@@ -3,6 +3,9 @@ mutators:
     en:
       name: Chainsaw Arena
       description: Replaces all weapons with the Chainsaw!
+    det:
+      name: Kettensägen Arena
+      description: Ersetzt alle Waffen mit der Kettensäge!
     est:
       name: Solo Motosierras
       description: Reemplaza todas las armas con la Motosierra!
@@ -10,24 +13,33 @@ mutators:
     en:
       name: Monster Mess
       description: Monsters make a bloody mess!
+    det:
+      name: Monster Sauerei
+      description: Monster veranstalten eine blutige Sauerei!
     est:
-      name: Monster Mess
-      description: Monsters make a bloody mess!
+      name: Monstruos Sucios
+      description: ¡Los monstruos dejan todo ensuciado!
 
 gametypes:
   - class: MonsterHunt
     en:
       name: Monster Hunt
+    det:
+      name: Monsterjagd
     est:
       name: Caceria de Monstruos
   - class: MonsterHuntArena
     en:
+      name: Monster Arena
+    det:
       name: Monster Arena
     est:
       name: Cacer�a de Monstruos (Estadio)
   - class: MonsterHuntDefence
     en:
       name: Monster Defence
+    det:
+      name: Monster Verteidigung
     est:
       name: Cacer�a de Monstruos (Defensa)
 
@@ -36,12 +48,16 @@ maplists:
     metaclass: MonsterMapList
     en:
       description: Default Maps
+    det:
+      description: Standardkarten
     est:
       description: Mapas por defecto
   - class: MonsterArenaDefaultMaps
     metaclass: MonsterArenaMapList
     en:
       description: Default Maps
+    det:
+      description: Standardkarten
     est:
       description: Mapas por defecto
 
@@ -54,6 +70,9 @@ menus:
     en:
       name: "&Monster Hunt Credits"
       description: The people behind Monster Hunt.
+    det:
+      name: "&Monsterjagd Credits"
+      description: Die Leute hinter Monsterjagd.
     est:
       name: "Creditos de Caceria de &Monstruos"
       description: La gente detras de Caceria de Monstruos.

@@ -1,0 +1,18 @@
+[LevelInfo0]
+; EN: Title="Rocket Arena"
+Title="Raketen-Arena"
+; EN: IdealPlayerCount="Up to 8"
+IdealPlayerCount="Bis zu 8"
+
+[LavaTitan0]
+; EN: NameArticle=" the "
+NameArticle=" der "
+; EN: MenuName="Lava Titan"
+MenuName="Lava Titan"
+
+[LevelSummary]
+; EN: Title="Rocket Arena"
+Title="Raketen-Arena"
+; EN: IdealPlayerCount="Up to 8"
+IdealPlayerCount="Bis zu 8"
+
