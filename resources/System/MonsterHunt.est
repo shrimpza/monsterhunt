@@ -5,7 +5,7 @@ Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=Engine.Mutator,Desc
 
 {{#gametypes}}
 Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=Botpack.TournamentGameInfo)
-Preferences=(Caption="{{{es.name}}} v{{{version}}}",Parent="Game Types",Class={{{package}}}.{{{class}}},Immediate=True)
+Preferences=(Caption="{{{est.name}}} v{{{version}}}",Parent="Game Types",Class={{{package}}}.{{{class}}},Immediate=True)
 {{/gametypes}}
 
 {{#maplists}}
