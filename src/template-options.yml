@@ -18,7 +18,7 @@ mutators:
       description: Monster veranstalten eine blutige Sauerei!
     est:
       name: Monstruos Sucios
-      description: ¡Los monstruos dejan todo ensuciado!
+      description: ¡Los monstruos ensucian todo!
 
 gametypes:
   - class: MonsterHunt
