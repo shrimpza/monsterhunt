@@ -1,0 +1,19 @@
+[LevelInfo0]
+Title="Ra's Revenge (Special Edition)"
+IdealPlayerCount="4-8"
+LevelEnterText="Destroy the pyramid!!"
+
+[MonsterEvent4]
+Message="Second spawn point has been activated"
+
+[MonsterHuntObjective1]
+Message="Return to the extraction point"
+
+[MonsterHuntObjective0]
+Message="Find and defeat the Queen"
+
+[LevelSummary]
+Title="Ra's Revenge (Special Edition)"
+IdealPlayerCount="4-8"
+LevelEnterText="Destroy the pyramid!!"
+

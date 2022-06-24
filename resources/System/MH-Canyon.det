@@ -1,0 +1,44 @@
+[LevelInfo0]
+; EN: Title="Icy Canyon"
+Title="Eisige Schlucht"
+; EN: IdealPlayerCount="Up to 8"
+IdealPlayerCount="Bis zu 8"
+
+[VacuumZone1]
+; EN: DamageString="%o fell into the spike pit!"
+DamageString="%o fiel in die Stachelgrube!"
+
+[WaterZone0]
+; EN: DamageString="%o caught a chill."
+DamageString="%o erkältet sich."
+
+[LevelSummary]
+; EN: Title="Icy Canyon"
+Title="Eisige Schlucht"
+; EN: IdealPlayerCount="Up to 8"
+IdealPlayerCount="Bis zu 8"
+
+[MonsterEvent2]
+; EN: Message="The final castle has been opened!"
+Message="Die letzte Burg wurde geöffnet!"
+
+[MonsterEvent1]
+; EN: Message="The castle doors have been opened!"
+Message="Die Burgtore wurden geöffnet!"
+
+[MonsterHuntObjective6]
+; EN: Message="Escape!"
+Message="Flucht!"
+
+[MonsterHuntObjective0]
+; EN: Message="Defeat the Ice Skaarj"
+Message="Besiege den Eis-Skaarj"
+
+[MonsterHuntObjective4]
+; EN: Message="Find a way to open the castle"
+Message="Finde eine Weg die Burg zu öffnen."
+
+[MonsterHuntObjective3]
+; EN: Message="Make your way to the castle"
+Message="Mach dich auf den Weg zur Burg."
+

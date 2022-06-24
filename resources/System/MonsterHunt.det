@@ -1,0 +1,304 @@
+[Public]
+{{#mutators}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=Engine.Mutator,Description="{{{det.name}}} v{{{version}}},{{{det.description}}}")
+{{/mutators}}
+
+{{#gametypes}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=Botpack.TournamentGameInfo)
+Preferences=(Caption="{{{det.name}}} v{{{version}}}",Parent="Game Types",Class={{{package}}}.{{{class}}},Immediate=True)
+{{/gametypes}}
+
+{{#maplists}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass={{{package}}}.{{{metaclass}}},Description="{{{det.description}}} v{{{version}}}")
+{{/maplists}}
+
+{{#browsers}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=UTBrowser.UTBrowserServerListWindow)
+{{/browsers}}
+
+{{#menus}}
+Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=UMenu.UMenuModMenuItem,Description="{{{det.name}}} v{{{version}}},{{{det.description}}}")
+{{/menus}}
+
+[MonsterHunt]
+; EN: TimeOutMessage="Time up, hunt failed!"
+TimeOutMessage="Zeit abgelaufen, Jagd fehlgeschlagen!"
+; EN: NoHuntersMessage="Hunting party eliminated!"
+NoHuntersMessage="Jagdgesellschaft eliminiert!"
+; EN: NoLivesLeftMessage=" has been lost!"
+NoLivesLeftMessage=" ist verloren gegangen!"
+; EN: StartUpTeamMessage="Welcome to the hunt!"
+StartUpTeamMessage="Willkommen zur Jagd!"
+; EN: StartUpMessage="Work with your teammates to hunt down the monsters!"
+StartUpMessage="Arbeite mit deinen Teamkollegen zusammen, um die Monster zu jagen!"
+; EN: StartMessage="The hunt has begun!"
+StartMessage="Die Jagd hat begonnen!"
+; EN: GameEndedMessage="Hunt Successful!"
+GameEndedMessage="Jagd erfolgreich!"
+; EN: SingleWaitingMessage="Press Fire to begin the hunt."
+SingleWaitingMessage="Drücke Feuertaste, um die Jagd zu beginnen."
+; EN: ExplodeMessage=" was blown up"
+ExplodeMessage=" wurde gesprengt"
+; EN: BurnedMessage=" was incinerated"
+BurnedMessage=" wurde verbrannt"
+; EN: CorrodedMessage=" was slimed"
+CorrodedMessage=" wurde geschleimt"
+; EN: HackedMessage=" was hacked"
+HackedMessage=" wurde gehackt"
+; EN: LeftMessage=" left the hunt."
+LeftMessage=" hat die Jagd verlassen."
+; EN: EnteredMessage=" has joined the hunt!"
+EnteredMessage=" hat sich der Jagd angeschlossen!"
+; EN: GameName="Monster Hunt"
+GameName="Monsterjagd"
+
+[MonsterBoard]
+; EN: MonsterDifficultyJoinString="Monsters /"
+MonsterDifficultyJoinString="Monster /"
+; EN: ObjectivesString="Objectives"
+ObjectivesString="Ziele"
+; EN: Restart="You have been killed.  Hit [Fire] to continue the hunt!"
+Restart="Du wurdest getötet. Drücke [Feuer], um die Jagd fortzusetzen!"
+; EN: Continue="Hit [Fire] to begin the next hunt!"
+Continue="Drücke [Feuer], um die nächste Jagd zu beginnen!"
+; EN: Ended="The hunt has ended."
+Ended="Die Jagd ist beendet."
+; EN: PlayerString="Hunter"
+PlayerString="Jäger"
+; EN: FragsString="Score"
+FragsString="Ergebnis"
+; EN: DeathsString="Lives"
+DeathsString="Leben"
+
+[MonsterHUD]
+; EN: TimeRemainingLabel="Time Remaining"
+TimeRemainingLabel="Verbleibende Zeit"
+; EN: LivesRemainLabel="Lives"
+LivesRemainLabel="Leben"
+; EN: EscapedMonstersLabel="Escaped Monsters"
+EscapedMonstersLabel="Entflohene Monster"
+; EN: HuntersRemainLabel="Hunters"
+HuntersRemainLabel="Jäger"
+; EN: MonstersRemainLabel="Monsters"
+MonstersRemainLabel="Monster"
+
+[MonsterHuntDefence]
+; EN: MonstersEscapedMessage="Too many monsters escaped!"
+MonstersEscapedMessage="Zu viele Monster sind entkommen!"
+; EN: EscapedMessage="escaped!"
+EscapedMessage="entkommen!"
+; EN: WarmupMessage="seconds until the monsters arrive!"
+WarmupMessage="Sekunden bis die Monster kommen!"
+; EN: StartUpMessage="Work with your teammates to defend your base against the monsters!"
+StartUpMessage="Arbeite mit deinen Teamkollegen zusammen, um deine Basis gegen die Monster zu verteidigen!"
+; EN: StartMessage="The defence has begun!"
+StartMessage="Die Verteidigung hat begonnen!"
+; EN: GameEndedMessage="Defence Successful!"
+GameEndedMessage="Verteidigung erfolgreich!"
+; EN: SingleWaitingMessage="Press Fire to begin defending."
+SingleWaitingMessage="Drücke Feuer, um mit der Verteidigung zu beginnen."
+; EN: GameName="Monster Defence"
+GameName="Monsterverteidigung"
+
+[MonsterHuntArena]
+; EN: StartUpTeamMessage="Welcome to the ultimate arena battle!"
+StartUpTeamMessage="Willkommen zum ultimativen Arenakampf!"
+; EN: StartUpMessage="Work with your teammates to overcome the monsters!"
+StartUpMessage="Arbeite mit deinen Teamkollegen zusammen, um die Monster zu besiegen!"
+; EN: StartMessage="The battle has begun!"
+StartMessage="Der Kampf hat begonnen!"
+; EN: GameEndedMessage="Arena Cleared!"
+GameEndedMessage="Arena geleert!"
+; EN: SingleWaitingMessage="Press Fire to enter the arena."
+SingleWaitingMessage="Drücke Feuer, um die Arena zu betreten."
+; EN: LeftMessage=" left the arena."
+LeftMessage=" hat die Arena verlassen."
+; EN: EnteredMessage=" has entered the arena!"
+EnteredMessage=" hat die Arena betreten!"
+; EN: GameName="Monster Arena"
+GameName="Monster-Arena"
+
+[MonsterHuntRules]
+; EN: TourneyText="Force team colours"
+TourneyText="Teamfarben erzwingen"
+; EN: TourneyHelp="If enabled, players will use red team skins and HUD, otherwise they will use their own skin and HUD settings."
+TourneyHelp="Wenn aktiviert, verwenden die Spieler rote Team-Skins und HUDs, andernfalls verwenden sie ihre eigenen Skins und HUD-Einstellungen."
+; EN: FragText="Lives"
+FragText="Leben"
+; EN: FragHelp="Set the number of lives each hunter starts with for each round. Set it to 0 for no limit."
+FragHelp="Legen Sie die Anzahl der Leben fest, mit denen jeder Jäger in jeder Runde beginnt. Setze es auf 0 für unbegrenzt."
+; EN: DifficultyText="Monster Difficulty:"
+DifficultyText="Monster-Schwierigkeitsgrad:"
+; EN: DifficultyHelp="The difficulty skill level of Monsters."
+DifficultyHelp="Der Schwierigkeitsgrad von Monstern."
+; EN: Skills[0]="Easy"
+Skills[0]="Einfach"
+; EN: Skills[1]="Medium"
+Skills[1]="Mittel"
+; EN: Skills[2]="Hard"
+Skills[2]="Schwer"
+Skills[3]="Unreal"
+; EN: SkillTaunts[0]="Tourist mode."
+SkillTaunts[0]="Touristenmodus."
+; EN: SkillTaunts[1]="Ready for some action!"
+SkillTaunts[1]="Bereit für bisschen Action!"
+; EN: SkillTaunts[2]="Not for the faint of heart."
+SkillTaunts[2]="Nichts für schwache Nerven."
+; EN: SkillTaunts[3]="Death wish."
+SkillTaunts[3]="Todeswunsch."
+
+[MonsterHuntDefenceRules]
+; EN: EscapeesText="Max Escapees"
+EscapeesText="Maximale Ausbrecher"
+; EN: EscapeesHelp="The maximum number of Monsters which are allowed to escape, before the round is lost."
+EscapeesHelp="Die maximale Anzahl an Monstern, die entkommen dürfen, bevor die Runde verloren ist."
+; EN: WarmupText="Warmup Time"
+WarmupText="Aufwärmzeit"
+; EN: WarmupHelp="Number of seconds to wait before monsters start attacking, set to 0 for no warmup."
+WarmupHelp="Anzahl Sekunden, die gewartet werden soll, bevor Monster angreifen, setze es auf 0 für kein Aufwärmen."
+
+[MonsterBotConfig]
+; EN: MinPlayersText="Min. Total Hunters"
+MinPlayersText="Min. Jäger gesamt"
+; EN: BaseText="AI Hunter Skill:"
+BaseText="KI-Jägerfähigkeit:"
+; EN: SkillTaunts[0]="They might know how to kill a Fly."
+SkillTaunts[0]="Sie wissen vielleicht, wie man eine Fliege tötet."
+; EN: SkillTaunts[2]="Look out monsters!"
+SkillTaunts[2]="Achte auf Monster!"
+; EN: SkillTaunts[3]="Monsters are in for a good beating."
+SkillTaunts[3]="Monster werden ordentlich verprügelt."
+; EN: SkillTaunts[4]="I wouldn't like to be in the monsters shoes..."
+SkillTaunts[4]="Ich möchte nicht in der Haut eines Monsters stecken..."
+; EN: SkillTaunts[5]="It's a pity the monsters can't respawn."
+SkillTaunts[5]="Schade, dass die Monster nicht respawnen können."
+; EN: SkillTaunts[6]="Those poor monsters are already dead."
+SkillTaunts[6]="Diese armen Monster sind bereits tot."
+; EN: SkillTaunts[7]="Rest in peace, monsters..."
+SkillTaunts[7]="Ruhe in Frieden, Monster..."
+
+[MonsterCreditsCW]
+; EN: ArtText="Testers"
+ArtText="Tester"
+; EN: MusicSoundText="Special Thanks"
+MusicSoundText="Besonderer Dank"
+; EN: BizText="Contact info"
+BizText="Kontaktinfo"
+
+[MonsterCreditsWindow]
+; EN: WindowTitle="Monster Hunt Credits (v{{{version}}})"
+WindowTitle="Monsterjagd Credits (v{{{version}}})"
+
+[HuntMessage]
+; EN: NewTeamMessage="has joined the hunt!"
+NewTeamMessage="hat sich der Jagd angeschlossen!"
+
+[MonsterMenuItem]
+; EN: MenuCaption="&Monster Hunt Credits"
+MenuCaption="&Monsterjagd Credits"
+; EN: MenuHelp="All the people behind Monster Hunt!"
+MenuHelp="Alle Leute hinter Monsterjagd!"
+
+[OLautomag]
+; EN: WeaponDescription="Classification: Automatic Magnum"
+WeaponDescription="Klassifizierung: Automatische Magnum"
+; EN: DeathMessage="%o got gatted by %k's %w."
+DeathMessage="%o wurde von %k's %w überfallen."
+; EN: PickupMessage="You got the AutoMag"
+PickupMessage="Du hast die AutoMag"
+; EN: ItemName="Automag"
+ItemName="AutoMag"
+
+[OLDPistol]
+; EN: WeaponDescription="Classification: Energy Pistol"
+WeaponDescription="Klassifizierung: Energiepistole"
+; EN: DeathMessage="%o was killed by %k's %w.  What a loser!"
+DeathMessage="%o wurde von %k's %w getötet. Was für ein Verlierer!"
+; EN: PickupMessage="You got the Dispersion Pistol"
+PickupMessage="Du hast die Dispersionspistole"
+; EN: ItemName="Dispersion Pistol"
+ItemName="Dispersionspistole"
+
+[MonsterHuntObjective]
+; EN: Message="Complete the objective"
+Message="Schließe das Ziel ab"
+
+[OLASMD]
+; EN: WeaponDescription="Classification: Energy Rifle"
+WeaponDescription="Klassifizierung: Energiegewehr"
+; EN: DeathMessage="%k inflicted mortal damage upon %o with the %w."
+DeathMessage="%k hat %o mit dem %w tödlichen Schaden zugefügt."
+; EN: PickupMessage="You got the ASMD"
+PickupMessage="Du hast die ASMD"
+; EN: ItemName="ASMD"
+ItemName="ASMD"
+
+[OLEightball]
+; EN: WeaponDescription="Classification: Heavy Ballistic"
+WeaponDescription="Klassifizierung: Schwere Ballistik"
+; EN: DeathMessage="%o was smacked down multiple times by %k's %w."
+DeathMessage="%o wurde mehrmals niedergeschlagen von %k's %w."
+; EN: PickupMessage="You got the Eightball gun"
+PickupMessage="Du hast den Raketenwerfer"
+; EN: ItemName="Eightball"
+ItemName="Raketenwerfer"
+
+[OLRifle]
+; EN: WeaponDescription="Classification: Long-Range Ballistic"
+WeaponDescription="Klassifizierung: Langstreckenballistik"
+; EN: DeathMessage="%k put a bullet through %o's head."
+DeathMessage="%k hat %o eine Kugel durch den Kopf geschossen."
+; EN: PickupMessage="You got the Rifle"
+PickupMessage="Du hast das Gewehr"
+; EN: ItemName="Sniper Rifle"
+ItemName="Scharfschützengewehr"
+
+[OLFlakCannon]
+; EN: WeaponDescription="Classification: Heavy Shrapnel"
+WeaponDescription="Klassifizierung: Schwerer Schrapnell"
+; EN: DeathMessage="%o was ripped to shreds by %k's %w."
+DeathMessage="%o wurde von %k's %w in Stücke gerissen."
+; EN: PickupMessage="You got the Flak Cannon"
+PickupMessage="Du hast die Flak-Kanone"
+; EN: ItemName="Flak Cannon"
+ItemName="Flak-Kanone"
+
+[OLRazorjack]
+; EN: WeaponDescription="Classification: Skaarj Blade Launcher"
+WeaponDescription="Klassifizierung: Skaarj-Klingenwerfer"
+; EN: DeathMessage="%k took a bloody chunk out of %o with the %w."
+DeathMessage="%k nahm mit dem %w einen blutiges Stück aus %o heraus."
+; EN: PickupMessage="You got the RazorJack"
+PickupMessage="Du hast den Klingenwerfer"
+; EN: ItemName="Razorjack"
+ItemName="Klingenwerfer"
+
+[OLMinigun]
+; EN: WeaponDescription="Classification: Gatling Gun"
+WeaponDescription="Klassifizierung: Gatling Geschütz"
+; EN: DeathMessage="%k's %w turned %o into a leaky piece of meat."
+DeathMessage="%k's %w hat %o in ein undichtes Stück Fleisch verwandelt."
+; EN: PickupMessage="You got the Minigun"
+PickupMessage="Du hast die Minikanone"
+; EN: ItemName="Minigun"
+ItemName="Minikanone"
+
+[OLGESBioRifle]
+; EN: WeaponDescription="Classification: Toxic Tarydium waste Rifle"
+WeaponDescription="Klassifizierung: Giftiges Tarydium-Abfallgewehr"
+; EN: DeathMessage="%o drank a glass of %k's dripping green load."
+DeathMessage="%o hat ein Glas von %k's tropfender grüner Ladung getrunken."
+; EN: PickupMessage="You got the GES BioRifle"
+PickupMessage="Du hast das GES Bio-Gewehr"
+; EN: ItemName="GES Bio Rifle"
+ItemName="GES Bio-Gewehr"
+
+[OLStinger]
+; EN: WeaponDescription="Classification: Tarydium Shard Launcher"
+WeaponDescription="Klassifizierung: Tarydiumsplitterwerfer"
+; EN: DeathMessage="%o was perforated by %k's %w."
+DeathMessage="%o wurde von %k's %w perforiert."
+; EN: PickupMessage="You picked up the Stinger"
+PickupMessage="Du hast den Splitterwerfer"
+; EN: ItemName="Stinger"
+ItemName="Splitterwerfer"

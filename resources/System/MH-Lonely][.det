@@ -1,0 +1,56 @@
+[LevelInfo0]
+; EN: Title="Lonely Sanctuary ]["
+Title="Einsames Heiligtum ]["
+; EN: IdealPlayerCount="Up to 10"
+IdealPlayerCount="Bis zu 10"
+; EN: LevelEnterText="Let the killing begin!"
+LevelEnterText="Lass das Töten beginnen!"
+
+[MonsterEvent0]
+; EN: Message="All boss monsters eliminated. Access to the gatehouse granted."
+Message="Alle Bossmonster eliminiert. Zugang zum Pförtnerhaus gewährt."
+
+[Counter1]
+CountMessage=""
+CompleteMessage=""
+
+[LevelSummary]
+; EN: Title="Lonely Sanctuary ]["
+Title="Einsames Heiligtum ]["
+; EN: IdealPlayerCount="Up to 10"
+IdealPlayerCount="Bis zu 10"
+; EN: LevelEnterText="Let the killing begin!"
+LevelEnterText="Lass das Töten beginnen!"
+
+[Counter0]
+CountMessage=""
+CompleteMessage=""
+
+[MonsterHuntObjective2]
+; EN: Message="Open the main gate and escape!"
+Message="Öffne das Haupttor und entkomme!"
+
+[Counter2]
+CountMessage=""
+CompleteMessage=""
+
+[MonsterHuntObjective0]
+; EN: Message="Defeat the Gasbag, Titan, and Queen to access the bridge controls"
+Message="Besiege den Gasbag, den Titan und die Königin, um Zugang zur Brückensteuerung zu erhalten"
+
+[MonsterHuntObjective1]
+; EN: Message="Lower the bridge"
+Message="Senke die Brücke ab"
+
+[Titan0]
+; EN: NameArticle=" the "
+NameArticle=" der "
+; EN: MenuName="Titan"
+MenuName="Titan"
+
+[GiantGasbag0]
+; EN: NameArticle=" the "
+NameArticle=" der "
+; EN: MenuName="Giant Gasbag"
+MenuName="Riesen-Gasbag"
+

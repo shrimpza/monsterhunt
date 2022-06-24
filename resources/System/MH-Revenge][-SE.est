@@ -1,0 +1,26 @@
+[LevelInfo0]
+; EN: Title="Ra's Revenge (Special Edition)"
+Title="La Venganza de Ra (Edición Especial)"
+IdealPlayerCount="4-8"
+; EN: LevelEnterText="Destroy the pyramid!!"
+LevelEnterText="¡¡Destruye la pirámide!!"
+
+[MonsterEvent4]
+; EN: Message="Second spawn point has been activated"
+Message="El segundo punto de aparición ha sido activado"
+
+[MonsterHuntObjective1]
+; EN: Message="Return to the extraction point"
+Message="Regresa al punto de extracción"
+
+[MonsterHuntObjective0]
+; EN: Message="Find and defeat the Queen"
+Message="Busca y derrota a la Reina"
+
+[LevelSummary]
+; EN: Title="Ra's Revenge (Special Edition)"
+Title="La Venganza de Ra (Edición Especial)"
+IdealPlayerCount="4-8"
+; EN: LevelEnterText="Destroy the pyramid!!"
+LevelEnterText="¡¡Destruye la pirámide!!"
+

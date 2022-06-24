@@ -113,7 +113,7 @@ MusicSoundText="Special Thanks"
 BizText="Contact info"
 
 [MonsterCreditsWindow]
-WindowTitle="Monster Hunt Credits (v608)"
+WindowTitle="Monster Hunt Credits (v{{{version}}})"
 
 [HuntMessage]
 NewTeamMessage="has joined the hunt!"

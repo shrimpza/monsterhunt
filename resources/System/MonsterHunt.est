@@ -5,7 +5,7 @@ Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=Engine.Mutator,Desc
 
 {{#gametypes}}
 Object=(Name={{{package}}}.{{{class}}},Class=Class,MetaClass=Botpack.TournamentGameInfo)
-Preferences=(Caption="{{{est.name}}} v{{{version}}}",Parent="Tipos de Juego",Class={{{package}}}.{{{class}}},Immediate=True)
+Preferences=(Caption="{{{est.name}}} v{{{version}}}",Parent="Game Types",Class={{{package}}}.{{{class}}},Immediate=True)
 {{/gametypes}}
 
 {{#maplists}}
@@ -187,8 +187,8 @@ MusicSoundText="Agrad. Especiales"
 BizText="Info. de Contacto"
 
 [MonsterCreditsWindow]
-; EN: WindowTitle="Monster Hunt Credits (v608)"
-WindowTitle="Cr�ditos de Cacer�a de Monstruos (v608)"
+; EN: WindowTitle="Monster Hunt Credits (v{{{version}}})"
+WindowTitle="Cr�ditos de Cacer�a de Monstruos (v{{{version}}})"
 
 [HuntMessage]
 ; EN: NewTeamMessage="has joined the hunt!"
