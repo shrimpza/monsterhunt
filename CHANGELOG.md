@@ -1,5 +1,10 @@
 # Changelog
 
+## 612 to 613
+ - Spanish localisation updates (thanks Neon_Knight)
+ - German localisation (thanks eGo)
+ - Improve monster's ability to find the objective in Monster Defence on smaller maps, maps with movers
+
 ## 611 to 612:
  - Deaths via traps reduce the life count, rather than increasing it
  - Performance optimisations for monster shadows
