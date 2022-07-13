@@ -21,7 +21,7 @@ var float spawnChanceBaseScale, spawnChanceScaler;
 var int minSpawnDistance;
 
 // monster spawn interval/cycle management
-var float spawnInterval, currentSpawnInterval;
+var float spawnInterval;
 
 // keeps track of players to avoid regular looping
 var Pawn maybeEnemyPlayers[32];
@@ -30,11 +30,16 @@ var int PlayerCountInterval;
 
 var Texture TeleportEffectTexture;
 
+var float minMonsterScale;
+var float miniThreshold;
+var localized String miniPrefix;
+
 function PostBeginPlay() {
 	local FlagBase flag;
 	local FlagBase bothFlags[2];
 	local int maxRange, range;
 	local NavigationPoint nav;
+	local Mover mover;
 
 	foreach AllActors(class'FlagBase', flag) {
 		if (flag.team == 0) bothFlags[0] = flag;
@@ -72,6 +77,14 @@ function PostBeginPlay() {
 	}
 
 	spawnChanceScaler = Max(1000, minSpawnDistance) / spawnChanceBaseScale;
+
+	// Update movers so monsters can use them
+	foreach AllActors(class'Mover', mover) {
+		if (mover.BumpType == BT_PlayerBump) mover.BumpType = BT_PawnBump;
+	}
+
+	// Set the monster spawn timer going
+	SetTimer(spawnInterval, True);
 
 	Super.PostBeginPlay();
 }
@@ -140,16 +153,11 @@ function CoercePawn(ScriptedPawn pawn) {
 	}
 }
 
-function Tick(float delta) {
+event Timer() {
 	if (game.bGameStarted) {
-		currentSpawnInterval += delta;
-		if (currentSpawnInterval >= spawnInterval) {
-			spawnMonsters();
-			currentSpawnInterval = 0;
-		}
+		spawnMonsters();
+		Super.Timer();
 	}
-
-	Super.Tick(delta);
 }
 
 function NavigationPoint findNearSpawn() {
@@ -252,31 +260,72 @@ function ScriptedPawn spawnMonsterAt(
 	// special condition to allow monsters to pass through each other, so they don't block the objective
 	newMonster.bBlockActors = false;
 
-	SetSpawnOrders(newMonster, monsterTarget, tag != '');
-
 	newMonster.SetMovementPhysics();
-	if (newMonster.Physics == PHYS_Walking) newMonster.SetPhysics(PHYS_Falling);
+
+	SetSpawnOrders(newMonster, monsterTarget, tag != '');
 
 	SpawnEffect(newMonster);
 	SpawnUnsticker(newMonster);
 
+	// set physics after orders, since orders navigation determination factors in physics
+	if (newMonster.Physics == PHYS_Walking) newMonster.SetPhysics(PHYS_Falling);
+
 	return newMonster;
+}
+
+function float ResizePawn(ScriptedPawn pawn, float scale) {
+	pawn.SetCollisionSize(pawn.CollisionRadius * scale, pawn.CollisionHeight * scale);
+	pawn.DrawScale = pawn.DrawScale * scale;
+	pawn.Health = pawn.Health * scale;
+	pawn.GroundSpeed = pawn.GroundSpeed * scale;
+	pawn.AirSpeed = pawn.AirSpeed * scale;
+
+	return pawn.CollisionRadius / pawn.Default.CollisionRadius;
 }
 
 function SetSpawnOrders(ScriptedPawn pawn, Actor monsterTarget, bool isRunner) {
 	local Pawn maybePlayer;
+	local bool foundPath;
+	local Float monsterScale;
 
 	// make them advance towards the objective
 	pawn.OrderObject = monsterTarget;
 	pawn.OrderTag = monsterTarget.Tag;
 
 	if (isRunner || FRand() > 0.7) {
-		pawn.AlarmTag = monsterTarget.Tag;
-		pawn.Orders = 'TriggerAlarm';
-		// when an alarm is triggered, TriggerAlarm causes AccessedNone on Enemy, so assign a random enemy
-		if (playerCount > 0) {
-			maybePlayer = maybeEnemyPlayers[Rand(playerCount)];
-			if (maybePlayer != None) pawn.SetEnemy(maybePlayer);
+		monsterScale = 1.0;
+
+		foundPath = pawn.FindBestPathToward(monsterTarget);
+		// there is no path to the target, try scaling down the monster to see if it can fit through doorways
+		while (monsterScale >= minMonsterScale && !foundPath) {
+			pawn.ClearPaths();
+			monsterScale = ResizePawn(pawn, 0.9);
+			foundPath = pawn.FindBestPathToward(monsterTarget);
+		}
+
+		if (foundPath) {
+			// when an alarm is triggered, TriggerAlarm causes AccessedNone on Enemy, so assign a random enemy
+			if (playerCount > 0) {
+				maybePlayer = maybeEnemyPlayers[Rand(playerCount)];
+				if (maybePlayer != None) pawn.SetEnemy(maybePlayer);
+			}
+
+			pawn.AlarmTag = monsterTarget.Tag;
+			pawn.Orders = 'TriggerAlarm';
+		} else {
+			// we didn't find a path to the alarm point, maybe undo the scaling, otherwise keep the mini monster for fun
+		 	if (FRand() > 0.5) {
+		 		monsterScale = 2 - monsterScale;
+				ResizePawn(pawn, monsterScale);
+			}
+
+			// at least lets go try to find a player
+			pawn.Orders = 'Roaming';
+		}
+
+		// set the mini name if the monster is small
+		if (monsterScale <= miniThreshold) {
+			pawn.MenuName = miniPrefix @ pawn.MenuName;
 		}
 	} else {
 		pawn.Orders = 'Roaming';
@@ -309,4 +358,8 @@ defaultproperties {
 	runnerTag="MHDRunner"
 
 	TeleportEffectTexture=Texture'Botpack.Skins.MuzzyPulse'
+
+	minMonsterScale=0.5
+	miniThreshold=0.7
+	miniPrefix="Mini"
 }
