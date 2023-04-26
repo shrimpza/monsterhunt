@@ -13,6 +13,8 @@ class MonsterHuntDefence extends MonsterHunt
 var config int MaxEscapees;
 var config int WarmupTime;
 
+var int WarmupCountdown;
+
 var localized string MonstersEscapedMessage, EscapedMessage, WarmupMessage;
 
 // pre-set tags we use internally
@@ -54,7 +56,8 @@ function InitGameReplicationInfo() {
 function StartMatch() {
 	if (WarmupTime > 0) {
 		bInWarmup = true;
-		BroadcastMessage(WarmupTime @ WarmupMessage, true, 'CriticalEvent');
+		WarmupCountdown = WarmupTime;
+		BroadcastMessage(WarmupCountdown @ WarmupMessage, true, 'CriticalEvent');
 	}
 
 	Super.StartMatch();
@@ -94,18 +97,18 @@ function Timer() {
 
 	Super.Timer();
 
-	if (bGameStarted && bInWarmup && WarmupTime > 0) {
-		if (WarmupTime < 6) {
+	if (bGameStarted && bInWarmup && WarmupCountdown > 0) {
+		if (WarmupCountdown < 6) {
 			for (P = Level.PawnList; P != None; P = P.nextPawn) {
-				if (P.IsA('TournamentPlayer')) TournamentPlayer(P).TimeMessage(WarmupTime);
+				if (P.IsA('TournamentPlayer')) TournamentPlayer(P).TimeMessage(WarmupCountdown);
 			}
-		} else if (WarmupTime % 10 == 0) {
-			BroadcastMessage(WarmupTime @ WarmupMessage, true, 'CriticalEvent');
+		} else if (WarmupCountdown % 10 == 0) {
+			BroadcastMessage(WarmupCountdown @ WarmupMessage, true, 'CriticalEvent');
 		}
 
-		WarmupTime --;
+		WarmupCountdown --;
 	}
-	bInWarmup = WarmupTime > 0;
+	bInWarmup = WarmupCountdown > 0;
 }
 
 defaultproperties {
